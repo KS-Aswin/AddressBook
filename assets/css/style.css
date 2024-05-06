@@ -1,0 +1,117 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background-color: #D8E5F1;
+}
+.navbar{
+    background-color: #337AB7;
+}
+.log{
+    color:#ffffff;
+}
+.book{
+    width: 30px;
+    height: 30px;
+}
+.profile{
+    width: 15px;
+    height: 15px;
+}
+.profileText{
+    color: #ffffff;
+    font-size: 14px;
+}
+.bookTitle{
+    font-size: 24px;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.bodyContainer{
+    border-radius: 10px;
+}
+.bodyBook{
+    width: 90px;
+    height: 100px;   
+}
+.leftBody{   
+    padding:20px;
+    background-color: #337AB7;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+.rightBody{
+    background-color: #ffffff;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.loginInput{
+    font-size:14px;
+    width: 400px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #8f8c8c;
+}
+.login{
+    font-size: 30px;
+    color: #337AB7;
+}
+button{
+    border: 1px solid #337AB7;
+    padding: 5px 35%;
+    margin: 20px;
+    background: transparent;
+    border-radius: 45px;
+    color: #337AB7;
+    font-weight: 600;
+}
+.signin{
+    font-size:16px;
+    color: #8f8c8c;
+}
+.signInImgGoogle{
+    width: 40px;
+    height: 40px;
+}
+a{
+    color: #337AB7;
+    text-decoration: none;
+}
+#signUpMsg{
+    height: 20px;
+    font-size: 18px;
+}
+
+/*List*/
+.downloadContainer{
+    background-color: #ffffff;
+    width: 85%;
+    border-radius: 8px;
+}
+.profileUser{
+    background-color: #ffffff;
+    border-radius: 8px;
+}
+.userName{
+    color: #337AB7;
+    line-height: 1;
+}
+.createContact{
+    padding: 5px;
+    background: #337AB7;
+    border-radius: 45px;
+    color: #ffffff;
+    font-weight: 600;
+}
+.tableHeading{
+    color: #337AB7;
+    font-size: 16px;
+}
+.displayProfiles{
+    width: 69.3%;
+}
+.table{
+    border-radius: 8px;
+}
