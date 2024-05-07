@@ -5,7 +5,7 @@ component
 	this.name = hash( this.baseDirectory );
 	this.applicationTimeout = createTimeSpan( 0, 1, 0, 0 );
 	this.sessionManagement = true;
-	this.datasource = "demo"
+	this.datasource = "DESKTOP-89AF345"
 	this.sessionTimeout = createTimeSpan( 0, 1, 0, 0 );
 	this.mappings[ "/models" ] = (this.baseDirectory & "models/");
 	this.mappings[ "/views" ] = (this.baseDirectory & "views/");
@@ -17,7 +17,8 @@ component
 	}
 
 	function onSessionStart(){
-		session.islogin=false;
+		session.login=false;
+        session.strfullName="";
 	}
 
 	function onRequestStart( String scriptName ){

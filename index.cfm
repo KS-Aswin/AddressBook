@@ -11,10 +11,12 @@
             include "/views/navbar.cfm";
             include "/views/signUpPage.cfm";           
         break;
-        case "display":
+        case "list":
+            include "/controllers/listPageAction.cfm"; 
             include "/views/header.cfm";
-            include "/views/navbar.cfm";
-            include "/views/display.cfm";           
+            include "/views/pageNav.cfm";
+            include "/views/listPage.cfm";  
+                     
         break;
     }
 </cfscript>

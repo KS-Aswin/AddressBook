@@ -47,14 +47,14 @@ body{
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
 }
-.loginInput{
+.loginInput,.signupInput{
     font-size:14px;
     width: 400px;
     outline: none;
     border: none;
     border-bottom: 1px solid #8f8c8c;
 }
-.login{
+.login,.signup{
     font-size: 30px;
     color: #337AB7;
 }
@@ -79,9 +79,10 @@ a{
     color: #337AB7;
     text-decoration: none;
 }
-#signUpMsg{
+#signUpMsg,#loginMsg{
     height: 20px;
     font-size: 18px;
+    color: #337AB7;
 }
 
 /*List*/
@@ -97,9 +98,11 @@ a{
 .userName{
     color: #337AB7;
     line-height: 1;
+    height: 30px;
 }
 .createContact{
-    padding: 5px;
+    padding: 8px;
+    font-size: 14px !important;
     background: #337AB7;
     border-radius: 45px;
     color: #ffffff;
@@ -114,4 +117,63 @@ a{
 }
 .table{
     border-radius: 8px;
+}
+.formSide{
+    width: 70%;
+}
+.modalProfile{
+    background-color: #DAEEF7;
+    width: 30% !important;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+#strRole{
+    width: 100px;
+}
+.nameInput > input{
+    padding: 5px;
+    font-size: 14px;
+    width: 120px;
+    height: 30px;
+    border: none;
+    outline: none;
+    border-top: 1px solid #8f8c8c;
+    border-bottom: 1px solid #8f8c8c;
+}
+.addressInput > input{
+    width: 180px;
+    height: 30px;
+    border: none;
+    outline: none;
+    border-top: 1px solid #8f8c8c;
+    border-bottom: 1px solid #8f8c8c;
+}
+.createAccount{
+    color: #2860AB;
+    width: 80%;
+    background-color: #DAEEF7;
+}
+.personalContact,label,.contactHead{
+    color: #337AB7;
+}
+label{
+    font-weight: 700;
+    font-size: 14px;
+}
+.listBtn{
+    padding: 5px 20px !important;
+    font-size: 14px !important;
+}
+.closeBtn{
+    padding: 5px 40px;
+}
+.viewContactDetails{
+    font-size: 14px;
+    color: #337AB7;
+    width: 70%;
+}
+.addMsg{
+    font-size: 14px;
+    height: 15px;
+    margin: 10px 0px;
 }
