@@ -5,12 +5,15 @@ component
 	this.name = hash( this.baseDirectory );
 	this.applicationTimeout = createTimeSpan( 0, 1, 0, 0 );
 	this.sessionManagement = true;
-	this.datasource = "DESKTOP-89AF345"
+	this.datasource = "DESKTOP-89AF345";
 	this.sessionTimeout = createTimeSpan( 0, 1, 0, 0 );
 	this.mappings[ "/models" ] = (this.baseDirectory & "models/");
 	this.mappings[ "/views" ] = (this.baseDirectory & "views/");
 	this.mappings[ "/controllers" ] = (this.baseDirectory & "controllers/");
 	this.mappings[ "/layouts" ] = (this.baseDirectory & "layouts/");
+	this.ormEnabled = true;
+	this.datasource = "DESKTOP-89AF345";
+	
 
 	function onApplicationStart(){
 		return( true );
@@ -19,6 +22,7 @@ component
 	function onSessionStart(){
 		session.login=false;
         session.strfullName="";
+        session.intUid="";
 	}
 
 	function onRequestStart( String scriptName ){
@@ -26,6 +30,7 @@ component
 			this.onApplicationStart();
 			this.onSessionStart();
 		}
+		ORMReload();
 		request.event = [];
 		if (
 			!isNull( url.event ) &&
@@ -46,6 +51,5 @@ component
 		abort;
 		
 	}
-	
 		
 }

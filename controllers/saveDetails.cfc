@@ -1,6 +1,6 @@
 component{
     remote any function doLogin(userName,password) returnFormat="JSON" {
-        local.objUser = createObject("component","models.signUp");
+        local.objUser = createObject("component","models.saveDetails");
         local.error='';
         if(trim(len(userName)) EQ 0 || trim(len(password)) EQ 0){
             local.error='Please fill all fields';
@@ -12,6 +12,7 @@ component{
             if (local.checkUser.recordCount) {
                 session.login = true;
                 session.strfullName=local.checkUser.fullName;
+                session.intUid=local.checkUser.id;
                 return { "success": true };
             } 
             else {
@@ -23,7 +24,7 @@ component{
         }
     } 
     remote any function saveSignUp(fullName,email,userName,password) returnFormat="JSON"{
-        local.objUser = createObject("component","models.signUp");
+        local.objUser = createObject("component","models.saveDetails");
         local.checkUserDetails = local.objUser.checkUserExists(userName = userName);
         if(local.checkUserDetails.success){     
             local.password = Hash(password,"MD5");
@@ -35,6 +36,20 @@ component{
             }
         }else{
             return {"success":false,"msg":"Username already existing"};
+        }
+    }
+    remote any function contactDetails(strTitle,strFirstName,strLastName,strGender,strDate,strAddress,strStreet,intPhoneNumber,strEmailId,intPinCode) returnFormat="JSON"{
+        local.objContact = createObject("component","models.saveDetails");
+        local.checkContactDetails = local.objContact.checkContactExists(strEmailId = strEmailId);
+        if(local.checkContactDetails.success){     
+            local.saveContactDetails = local.objContact.saveContact(strTitle = strTitle,strFirstName = strFirstName,strLastName = strLastName,strGender = strGender,strDate = strDate,strAddress = strAddress,strStreet = strStreet,intPhoneNumber = intPhoneNumber,strEmailId = strEmailId,intPinCode = intPinCode );
+            if(local.saveContactDetails.success){
+                return {"success":true,"msg":"New Contact added Successfully"};  
+            }else{
+                return {"success":false,"msg":"Something went wrong!"};
+            }
+        }else{
+            return {"success":false,"msg":"Contact with same email id already existing"};
         }
     }  
     public void function checkLogin(){

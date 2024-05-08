@@ -120,6 +120,7 @@ a{
 }
 .formSide{
     width: 70%;
+    background-color: #ffffff;
 }
 .modalProfile{
     background-color: #DAEEF7;
@@ -133,7 +134,7 @@ a{
 .nameInput > input{
     padding: 5px;
     font-size: 14px;
-    width: 120px;
+    width: 121px;
     height: 30px;
     border: none;
     outline: none;
@@ -141,7 +142,7 @@ a{
     border-bottom: 1px solid #8f8c8c;
 }
 .addressInput > input{
-    width: 180px;
+    width: 172px;
     height: 30px;
     border: none;
     outline: none;
@@ -152,6 +153,10 @@ a{
     color: #2860AB;
     width: 80%;
     background-color: #DAEEF7;
+}
+.personalContact,.contactHead{
+    border-bottom: 2px solid #2860AB;
+    width: 75%;
 }
 .personalContact,label,.contactHead{
     color: #337AB7;
@@ -172,8 +177,11 @@ label{
     color: #337AB7;
     width: 70%;
 }
-.addMsg{
+#addMsg{
     font-size: 14px;
-    height: 15px;
+    height: 10px;
     margin: 10px 0px;
+}
+.modalFullBody{
+    background-color: #DAEEF7;
 }

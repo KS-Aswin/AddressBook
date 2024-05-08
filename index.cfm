@@ -16,7 +16,6 @@
             include "/views/header.cfm";
             include "/views/pageNav.cfm";
             include "/views/listPage.cfm";  
-                     
         break;
     }
 </cfscript>

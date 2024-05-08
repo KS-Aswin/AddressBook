@@ -1,4 +1,5 @@
 <cfoutput>
+<cfif session.login>
     <div class="download d-flex align-items-center justify-content-center mb-4">
         <div class="downloadContainer d-flex align-items-center justify-content-end py-3 gap-4 pe-5">
             <img src="./assets/images/pdf.png" class="downloadIcon" alt="pdf">
@@ -13,10 +14,10 @@
             <button type="button" class="createContact m-0" data-bs-toggle="modal" data-bs-target="##myModal">CREATE CONTACT</button>
             <div class="modal bd-example-modal-lg fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="myModal">
                 <div class="modal-dialog modal-lg p-1">
-                    <div class="modal-content d-flex ps-3 formBorder">
-                        <div class="d-flex justify-content-between gap-3">
+                    <div class="modal-content d-flex ps-3 formBorder modalFullBody">
+                        <div class="d-flex justify-content-between gap-3 ">
                             <div class="ps-5 py-5 d-flex flex-column justify-content-between formSide gap-3">
-                                <div class="d-flex align-items-center justify-content-center p-2">
+                                <div class="d-flex align-items-center justify-content-center addMsgStyle p-2">
                                     <h5 class="mb-0" id="addMsg"><b></b></h5>
                                 </div>
                                 <div class="createAccount d-flex align-items-center justify-content-center p-2">
@@ -25,7 +26,7 @@
                                 <div class="personalContact">
                                     <h4 class="mb-0">Personal Contact</h4>
                                 </div>
-                                <form>
+                                <form action="" method="post"  enctype="multipart/form-data">
                                     <div class="formData d-flex flex-column gap-4">
                                         <div class="d-flex gap-3">
                                             <div class="d-flex flex-column">
@@ -95,13 +96,19 @@
                                         <input type="text" id="strEmailId" name="strEmailId" value="#variables.strEmailId#">
                                     </div>
                                 </div>
+                                <div class="d-flex gap-3">
+                                    <div class="addressInput d-flex flex-column">
+                                        <label for="intPinCode">Pincode*</label>
+                                        <input type="text" id="intPinCode" name="intPinCode" value="#variables.intPinCode#">
+                                    </div>
+                                </div>
                                 <div class="d-flex align-items-center justify-content-start gap-5">
                                     <button type="button" class="createContact closeBtn m-0 me-4" id="formSubmit">SUBMIT</button>
                                     <button type="button" class="createContact closeBtn m-0 ms-5" data-bs-dismiss="modal">CLOSE</button>
                                 </div>
                             </div>
-                            <div class="modalProfile d-flex align-items-center justify-content-center p-5">
-                                <img src="./assets/images/modalProfile.png" class="userProfile " alt="userProfile">
+                            <div class="modalProfile d-flex align-items-start justify-content-center mt-5 p-5">
+                                <img src="./assets/images/modalProfile.png" class="userProfile mt-5" alt="userProfile">
                             </div>
                         </div>
                     </div>
@@ -122,90 +129,93 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="tableRow" id="">
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Number</th>
-                        <th><button type="button" class="listBtn m-0" data-bs-toggle="modal" data-bs-target="##myModal">EDIT</button></th>
-                        <th><button class="listBtn m-0" id=" ">DELETE</button></th>
-                        <th>
-                            <button type="button" class="listBtn m-0" data-bs-toggle="modal" data-bs-target="##viewAccount">
-                                VIEW
-                            </button>
-                            <div class="modal bd-example-modal-lg fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="viewAccount">
-                                <div class="modal-dialog modal-lg p-1">
-                                    <div class="modal-content d-flex ps-3 formBorder">
-                                        <div class="d-flex justify-content-between gap-3">
-                                            <div class="ps-5 py-5 d-flex flex-column justify-content-between formSide gap-3">
-                                                <div class="createAccount d-flex align-items-center justify-content-center mb-4 p-2">
-                                                    <h4 class="mb-0"><b>CONTACT DETAILS</b></h4>
-                                                </div>
-                                                <div class="viewContactDetails d-flex align-items-center ">
-                                                    <div class="d-flex justify-content-between w-50">
-                                                        <p class="mb-0">Name</p>
-                                                        <p class="mb-0">:</p>
+                    <cfset contacts = EntityLoad("ormContactFunction")>
+                    <cfloop array="#contacts#" index="contact">
+                        <tr class="tableRow" id="">
+                            <th>Image</th>
+                            <th>#contact.getfirstName()# #contact.getlastName()#</th>
+                            <th>#contact.getemail()#</th>
+                            <th>#contact.getphone()#</th>
+                            <th><button type="button" class="listBtn m-0" data-bs-toggle="modal" data-bs-target="##myModal">EDIT</button></th>
+                            <th><button class="listBtn m-0" id=" ">DELETE</button></th>
+                            <th>
+                                <button type="button" class="listBtn m-0" data-bs-toggle="modal" data-bs-target="##viewAccount">
+                                    VIEW
+                                </button>
+                                <div class="modal bd-example-modal-lg fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="viewAccount">
+                                    <div class="modal-dialog modal-lg p-1">
+                                        <div class="modal-content d-flex ps-3 formBorder">
+                                            <div class="d-flex justify-content-between gap-3">
+                                                <div class="ps-5 py-5 d-flex flex-column justify-content-between formSide gap-3">
+                                                    <div class="createAccount d-flex align-items-center justify-content-center mb-4 p-2">
+                                                        <h4 class="mb-0"><b>CONTACT DETAILS</b></h4>
                                                     </div>
-                                                    <p class="mb-0"></p>
-                                                </div>
-                                                <div class="viewContactDetails d-flex align-items-center ">
-                                                    <div class="d-flex justify-content-between w-50">
-                                                        <p class="mb-0">Gender</p>
-                                                        <p class="mb-0">:</p>
+                                                    <div class="viewContactDetails d-flex align-items-center ">
+                                                        <div class="d-flex justify-content-between w-50">
+                                                            <p class="mb-0">Name</p>
+                                                            <p class="mb-0">:</p>
+                                                        </div>
+                                                        <p class="mb-0"></p>
                                                     </div>
-                                                    <p class="mb-0"></p>
-                                                </div>
-                                                <div class="viewContactDetails d-flex align-items-center ">
-                                                    <div class="d-flex justify-content-between w-50">
-                                                        <p class="mb-0">Date of Birth</p>
-                                                        <p class="mb-0">:</p>
+                                                    <div class="viewContactDetails d-flex align-items-center ">
+                                                        <div class="d-flex justify-content-between w-50">
+                                                            <p class="mb-0">Gender</p>
+                                                            <p class="mb-0">:</p>
+                                                        </div>
+                                                        <p class="mb-0"></p>
                                                     </div>
-                                                    <p class="mb-0"></p>
-                                                </div>
-                                                <div class="viewContactDetails d-flex align-items-center ">
-                                                    <div class="d-flex justify-content-between w-50">
-                                                        <p class="mb-0">Address</p>
-                                                        <p class="mb-0">:</p>
+                                                    <div class="viewContactDetails d-flex align-items-center ">
+                                                        <div class="d-flex justify-content-between w-50">
+                                                            <p class="mb-0">Date of Birth</p>
+                                                            <p class="mb-0">:</p>
+                                                        </div>
+                                                        <p class="mb-0"></p>
                                                     </div>
-                                                    <p class="mb-0"></p>
-                                                </div>
-                                                <div class="viewContactDetails d-flex align-items-center ">
-                                                    <div class="d-flex justify-content-between w-50">
-                                                        <p class="mb-0">Pincode</p>
-                                                        <p class="mb-0">:</p>
+                                                    <div class="viewContactDetails d-flex align-items-center ">
+                                                        <div class="d-flex justify-content-between w-50">
+                                                            <p class="mb-0">Address</p>
+                                                            <p class="mb-0">:</p>
+                                                        </div>
+                                                        <p class="mb-0"></p>
                                                     </div>
-                                                    <p class="mb-0"></p>
-                                                </div>
-                                                <div class="viewContactDetails d-flex align-items-center ">
-                                                    <div class="d-flex justify-content-between w-50">
-                                                        <p class="mb-0">Email Id</p>
-                                                        <p class="mb-0">:</p>
+                                                    <div class="viewContactDetails d-flex align-items-center ">
+                                                        <div class="d-flex justify-content-between w-50">
+                                                            <p class="mb-0">Pincode</p>
+                                                            <p class="mb-0">:</p>
+                                                        </div>
+                                                        <p class="mb-0"></p>
                                                     </div>
-                                                    <p class="mb-0"></p>
-                                                </div>
-                                                <div class="viewContactDetails d-flex align-items-center ">
-                                                    <div class="d-flex justify-content-between w-50">
-                                                        <p class="mb-0">Phone</p>
-                                                        <p class="mb-0">:</p>
+                                                    <div class="viewContactDetails d-flex align-items-center ">
+                                                        <div class="d-flex justify-content-between w-50">
+                                                            <p class="mb-0">Email Id</p>
+                                                            <p class="mb-0">:</p>
+                                                        </div>
+                                                        <p class="mb-0"></p>
                                                     </div>
-                                                    <p class="mb-0"></p>
+                                                    <div class="viewContactDetails d-flex align-items-center ">
+                                                        <div class="d-flex justify-content-between w-50">
+                                                            <p class="mb-0">Phone</p>
+                                                            <p class="mb-0">:</p>
+                                                        </div>
+                                                        <p class="mb-0"></p>
+                                                    </div>
+                                                    <div class="d-flex align-items-center justify-content-center">
+                                                        <button type="button" class="createContact closeBtn m-0" data-bs-dismiss="modal">CLOSE</button>
+                                                    </div>
                                                 </div>
-                                                <div class="d-flex align-items-center justify-content-center">
-                                                    <button type="button" class="createContact closeBtn m-0" data-bs-dismiss="modal">CLOSE</button>
+                                                <div class="modalProfile d-flex align-items-center justify-content-center p-5">
+                                                    <img src="./assets/images/modalProfile.png" class="userProfile " alt="userProfile">
                                                 </div>
-                                            </div>
-                                            <div class="modalProfile d-flex align-items-center justify-content-center p-5">
-                                                <img src="./assets/images/modalProfile.png" class="userProfile " alt="userProfile">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </th>
-                    </tr>
+                            </th>
+                        </tr>
+                    </cfloop>
                 </tbody>
             </table>
         </div>
     </div>
-
+</cfif>
 </cfoutput>

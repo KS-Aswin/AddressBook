@@ -1,4 +1,4 @@
-<cfset local.forSignin = createObject("component","controllers.signUp").checkLogin()>
+<cfset local.forSignin = createObject("component","controllers.saveDetails").checkLogin()>
 <cfoutput>
     <div class="mainBody d-flex flex-column align-items-center justify-content-center mb-5">
         <h3 class="pb-5 w3-panel w3-green" id="loginMsg"></h3>

@@ -9,4 +9,5 @@
     variables.strStreet = StructKeyExists(form, "strStreet")?form.strStreet:'';
     variables.intPhoneNumber = StructKeyExists(form, "intPhoneNumber")?form.intPhoneNumber:'';
     variables.strEmailId = StructKeyExists(form, "strEmailId")?form.strEmailId:'';
+    variables.intPinCode = StructKeyExists(form, "intPinCode")?form.intPinCode:'';
 </cfscript>
