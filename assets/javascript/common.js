@@ -12,7 +12,7 @@ $(document).ready(function () {
             return false;
         }
         $.ajax({
-            url: './controllers/signUp.cfc?method=doLogin',
+            url: './controllers/saveDetails.cfc?method=doLogin',
             type: 'post',
             data:  {
                 userName: userName,
@@ -41,7 +41,7 @@ $(document).ready(function () {
         $("#signUpMsg").html('');
         if (validation()) {
             $.ajax({
-                url: './controllers/signUp.cfc?method=saveSignUp',
+                url: './controllers/saveDetails.cfc?method=saveSignUp',
                 type: 'post',
                 data: {
                     fullName: fullName,
@@ -73,30 +73,39 @@ $(document).ready(function () {
         var strLastName = $('#strLastName').val().trim();
         var strGender = $('#strGender').val().trim();
         var strDate = $('#strDate').val().trim();
-        var strUploadFile = $('#strUploadFile').val().trim();
+        //var strUploadFile = $('#strUploadFile').val().trim();
         var strAddress = $('#strAddress').val().trim();
         var strStreet = $('#strStreet').val().trim();
         var intPhoneNumber = $('#intPhoneNumber').val().trim();
         var strEmailId = $('#strEmailId').val().trim();
+        var intPinCode = $('#intPinCode').val().trim();
+        $("#addMsg").html('');
         if (contactValidation()) {
             $.ajax({
-                url: './controllers/signUp.cfc?method=saveSignUp',
+                url: './controllers/saveDetails.cfc?method=contactDetails',
                 type: 'post',
                 data: {
-                    fullName: fullName,
-                    email: email,
-                    userName: userName,
-                    password: password,
+                    strTitle: strTitle,
+                    strFirstName: strFirstName,
+                    strLastName: strLastName,
+                    strGender: strGender,
+                    strDate: strDate,
+                    //strUploadFile: strUploadFile,
+                    strAddress: strAddress,
+                    strStreet: strStreet,
+                    intPhoneNumber: intPhoneNumber,
+                    strEmailId: strEmailId,
+                    intPinCode: intPinCode
                 },
                 dataType: "json",
                 success: function (response) {
                     if (response.success) {
-                        $("#signUpMsg").html(response.msg).css('color','green');
+                        $("#addMsg").html(response.msg).css('color','green');
                         setTimeout(function() {
-                            window.location.href="?action=login";
+                            window.location.href="?action=list";
                         },1000);
                     } else {
-                        $("#signUpMsg").html(response.msg).css('color','red');
+                        $("#addMsg").html(response.msg).css('color','red');
                     }
                 },
                 error: function (xhr, status, error) {
@@ -145,7 +154,6 @@ function validation() {
     }
     if(confirmPassword != password){
         errorMsg+="Password and Confirm Password does not match!";
-        alert(errorMsg);
     }
     if (errorMsg !=='') {
         $("#signUpMsg").html(errorMsg).css('color','red');
@@ -159,11 +167,12 @@ function contactValidation() {
     var strLastName = $('#strLastName').val().trim();
     var strGender = $('#strGender').val().trim();
     var strDate = $('#strDate').val().trim();
-    var strUploadFile = $('#strUploadFile').val().trim();
+    //var strUploadFile = $('#strUploadFile').val().trim();
     var strAddress = $('#strAddress').val().trim();
     var strStreet = $('#strStreet').val().trim();
     var intPhoneNumber = $('#intPhoneNumber').val().trim();
     var strEmailId = $('#strEmailId').val().trim();
+    var intPinCode = $('#intPinCode').val().trim();
     var specialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
     var alphabets = /[A-z]/g;
     var number = /[0-9]/g;
@@ -173,42 +182,49 @@ function contactValidation() {
     var specialCharLastName = specialChar.test(strLastName);
     var numberLastName = number.test(strLastName);
     var alphabetDate = alphabets.test(strDate);
-    var specialCharPhone = specialChar.test(intPhoneNumber);
-    var alphabetPhone = alphabets.test(intPhoneNumber);
-
+    var specialCharPincode = specialChar.test(intPinCode);
+    var alphabetPincode = alphabets.test(intPinCode);
     var errorMsg = "";
-    $(errorMsg).text("");
-    if (strTitle == "" || strFirstName == "" || strLastName == "" || strGender == "" || strDate == "" || strUploadFile == "" || strAddress == "" || strStreet == "" || intPhoneNumber == "" || strEmailId == "") {
+    $("#addMsg").text(""); 
+    if (strTitle == "" || strFirstName == "" || strLastName == "" || strGender == "" || strDate == ""  || strAddress == "" || strStreet == "" || intPhoneNumber == "" || strEmailId == "" || intPinCode == "" ) {
         errorMsg += "Please enter values in all fields!"; 
-    }else  if((specialCharFirstName) || (numberFirstName)){
-        errorMsg+="Firstname must contain String values only!"; 
-    } else if((specialCharLastName) || (numberLastName)){
-        errorMsg+="Lastname must contain String values only!"; 
-    } else  if((alphabetDate)){
-        errorMsg+="Date must not contain String values!"; 
-    }else if(strAddress!=''){
-        var  alphabets= alphabets.test(strAddress);
-        if(!(alphabets)){
+    }else {
+        if((specialCharFirstName) || (numberFirstName)){
+            errorMsg+="Firstname must contain String values only!"; 
+        } 
+        if((specialCharLastName) || (numberLastName)){
+            errorMsg+="Lastname must contain String values only!"; 
+        } 
+        if((alphabetDate)){
+            errorMsg+="Date must not contain String values!"; 
+        }
+        if(!isNaN(strAddress)){
             errorMsg+="Address should contain String values!";
-        }        
-    }else if(strStreet!=''){
-        var  alphabets= alphabets.test(strStreet);
-        if(!(alphabets)){
+        }
+        if(!isNaN(strStreet)){
             errorMsg+="Street should contain String values!";
-        }        
-    } else if((specialCharPhone) || (alphabetPhone)){
-        errorMsg+="Phone Number must contain Integer values only!"; 
-    }else if (!strEmailId.match(emailRegex)){
-        errorMsg+="Enter a valid email address!";
+        }
+        if(isNaN(intPhoneNumber) && isNaN(intPinCode)){
+            errorMsg+="Phone Number and Pincode must contain Integer values only!"; 
+        }else if(isNaN(intPhoneNumber)){
+            errorMsg+="Phone Number must contain Integer values only!";
+        }else if(isNaN(intPinCode)){
+            errorMsg+="Pincode must contain Integer values only!"; 
+        }else{
+            if(intPhoneNumber.length != 10){
+                errorMsg+="Phone Number must contain 10 digits!"; 
+            }else if(intPinCode.length != 6){
+                errorMsg+="Pincode must contain 6 digits!"; 
+            }
+        }
+        if (!strEmailId.match(emailRegex)){
+            errorMsg+="Enter a valid email address!";
+        } 
     } 
 
     if (errorMsg !=='') {
-        alert(errorMsg);
-        return;
         $("#addMsg").html(errorMsg).css('color','red');
         return false;
     }
-    alert("success");
-    return;
     return true;
 }

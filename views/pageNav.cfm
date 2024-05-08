@@ -6,7 +6,7 @@
     <div class="d-flex gap-3 align-items-center">
         <div class="d-flex align-items-center profileText gap-1">
             <img src="./assets/images/logout.png" class="profile" alt="logout">
-            <a href="./controllers/signUp.cfc?method=doLogOut" title="go to login page" class="mb-0 log">Logout</a>
+            <a href="./controllers/saveDetails.cfc?method=doLogOut" title="go to login page" class="mb-0 log">Logout</a>
         </div>
     </div>
 </div>
