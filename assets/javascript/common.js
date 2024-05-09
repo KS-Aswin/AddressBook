@@ -115,6 +115,39 @@ $(document).ready(function () {
         }
         return false;
     });
+    $('#print').click(function() {
+        var css = '@page { size: landscape; }',
+            head = document.head || document.getElementsByTagName('head')[0],
+            style = document.createElement('style');
+            style.type = 'text/css';
+            style.media = 'print';
+            if (style.styleSheet){
+                style.styleSheet.cssText = css;
+            } else {
+                style.appendChild(document.createTextNode(css));
+        }
+        head.appendChild(style);
+        window.print();
+    });  
+    $('.deleteBtn').click(function() {
+        var intContactId =$(this).attr("data-id"); 
+        if(confirm("Do you want to delete this Contact?")){
+            $.ajax({
+                url: './models/saveDetails.cfc?method=deleteContactDetails',
+                type: 'post',
+                data:  {intContactId: intContactId},
+                dataType:"json",
+                success: function(response) {
+                    if(response.success){
+                        window.location.href="?action=list";
+                    } 
+                }, 
+            });
+        }
+        else{
+            return false;
+        }
+    });
 });
 function validation() {
     var fullName = $('#strFullname').val().trim();

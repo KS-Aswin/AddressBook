@@ -23,6 +23,7 @@ component
 		session.login=false;
         session.strfullName="";
         session.intUid="";
+        session.contactId="";
 	}
 
 	function onRequestStart( String scriptName ){
