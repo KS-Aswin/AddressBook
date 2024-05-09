@@ -4,7 +4,6 @@ component{
         local.error='';
         if(trim(len(userName)) EQ 0 || trim(len(password)) EQ 0){
             local.error='Please fill all fields';
-            writeOutput(local.error)abort;
         }
         if(len(local.error) EQ 0){
             local.password=Hash(arguments.password,"MD5");
@@ -41,15 +40,17 @@ component{
     remote any function contactDetails(strTitle,strFirstName,strLastName,strGender,strDate,strAddress,strStreet,intPhoneNumber,strEmailId,intPinCode) returnFormat="JSON"{
         local.objContact = createObject("component","models.saveDetails");
         local.checkContactDetails = local.objContact.checkContactExists(strEmailId = strEmailId);
-        if(local.checkContactDetails.success){     
+        if(local.checkContactDetails.recordCount){   
+            session.contactId=local.checkContactDetails.contactId;
+            return {"success":false,"msg":"Contact with same email id already existing"};
+        }else{  
             local.saveContactDetails = local.objContact.saveContact(strTitle = strTitle,strFirstName = strFirstName,strLastName = strLastName,strGender = strGender,strDate = strDate,strAddress = strAddress,strStreet = strStreet,intPhoneNumber = intPhoneNumber,strEmailId = strEmailId,intPinCode = intPinCode );
-            if(local.saveContactDetails.success){
+            if(local.saveContactDetails.recordCount){
+                session.contactId=local.saveContactDetails.contactId;
                 return {"success":true,"msg":"New Contact added Successfully"};  
             }else{
                 return {"success":false,"msg":"Something went wrong!"};
             }
-        }else{
-            return {"success":false,"msg":"Contact with same email id already existing"};
         }
     }  
     public void function checkLogin(){
