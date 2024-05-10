@@ -12,14 +12,19 @@
     </cffunction>
     <cffunction  name="saveSignUp" access="remote"  returnformat="json">
         <cfargument name = "fullName" required="true" returnType="string">
+        <cfargument name = "img" required="true" returnType="string">
         <cfargument name = "email" required="true" returnType="string">
         <cfargument name = "userName" required="true" returnType="string">
         <cfargument name = "password" required="true" returnType="string">
+        <cfset local.path = ExpandPath("../assets/images/")>
+        <cffile action="upload" destination="#local.path#" nameConflict="MakeUnique">
+        <cfset local.image = cffile.clientFile>
         <cftry>
             <cfquery name="newSignUp" datasource="DESKTOP-89AF345">
-                insert into users (userName, password, email, fullName)
+                insert into users (userName,img, password, email, fullName)
                 values(
                     <cfqueryparam value="#arguments.userName#" cfsqltype="cf_sql_varchar">,
+                    <cfqueryparam value="#local.image#" cfsqltype="cf_sql_varchar">,
                     <cfqueryparam value="#arguments.password#" cfsqltype="cf_sql_varchar">,
                     <cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar">,
                     <cfqueryparam value="#arguments.fullName#" cfsqltype="cf_sql_varchar">
@@ -93,16 +98,24 @@
         </cfquery>
         <cfreturn tableName>
     </cffunction>
-    <cffunction name="getContactDetails" access="remote" returntype="query">
-        <cfargument name="intContactId" type="numeric" required='true'>
+   
+    <cffunction name="getContactDetails" access="remote" returnFormat="json">
+        <cfargument  name="intContactId" required="true">
+        <cfquery name="forDisplay" datasource="DESKTOP-89AF345">
+            select concat(title,'.',firstName,' ',lastName) as name,gender,dob,concat(address,', ',street) as address,pincode,email,phone  
+            from contact
+            where contactId=<cfqueryparam value="#arguments.intContactId#" cfsqltype="cf_sql_integer">
+        </cfquery>
+        <cfreturn {"success":true,"name":forDisplay.name,"gender":forDisplay.gender,"dob":forDisplay.dob,"address":forDisplay.address,"pincode":forDisplay.pincode,"email":forDisplay.email,"phone":forDisplay.phone}>
+    </cffunction>
+    <cffunction name="getEditContactDetails" access="remote" returnFormat="json">
+        <cfargument  name="intContactId" required="true">
         <cfquery name="forDisplay" datasource="DESKTOP-89AF345">
             select contactId,title, firstName, lastName, gender,dob,address,street,email,phone,userId,pincode
-            from contact
-            <cfif structKeyExists(arguments,"intContactId")>
-                where contactId = <cfqueryparam value="#arguments.intContactId#" cfsqltype="cf_sql_integer">
-            </cfif>
+            from contact 
+            where contactId=<cfqueryparam value="#arguments.intContactId#" cfsqltype="cf_sql_integer">
         </cfquery>
-        <cfreturn forDisplay>
+        <cfreturn {"success":true,"title":forDisplay.title,"firstName":forDisplay.firstName,"lastName":forDisplay.lastName,"gender":forDisplay.gender,"dob":forDisplay.dob,"address":forDisplay.address,"street":forDisplay.street,"pincode":forDisplay.pincode,"email":forDisplay.email,"phone":forDisplay.phone}>
     </cffunction>
     <cffunction name="deleteContactDetails" access='remote' returnFormat="json">
         <cfargument name="intContactId" type="numeric" required='true'>
