@@ -11,6 +11,9 @@ body{
 .log{
     color:#ffffff;
 }
+.downloadIcon{
+    cursor: pointer;
+}
 .book{
     width: 30px;
     height: 30px;

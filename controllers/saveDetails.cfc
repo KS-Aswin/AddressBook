@@ -22,12 +22,12 @@ component{
             return {"success":false,"msg":"#local.error#"};
         }
     } 
-    remote any function saveSignUp(fullName,email,userName,password) returnFormat="JSON"{
+    remote any function saveSignUp(fullName,img,email,userName,password) returnFormat="JSON"{
         local.objUser = createObject("component","models.saveDetails");
         local.checkUserDetails = local.objUser.checkUserExists(userName = userName);
         if(local.checkUserDetails.success){     
             local.password = Hash(password,"MD5");
-            local.saveUserDetails = local.objUser.saveSignUp(fullName = fullName,email = email,userName = userName,password = local.password);
+            local.saveUserDetails = local.objUser.saveSignUp(fullName = fullName,img = img,email = email,userName = userName,password = local.password);
             if(local.saveUserDetails.success){
                 return {"success":true,"msg":"New User added Successfully"};  
             }else{
@@ -63,4 +63,22 @@ component{
         session.login=false;
         cflocation(url="../?action=login");
     }
+
+    remote any function generatePDFFromTable(tableHTML) returnFormat="JSON" {
+        if (len(trim(tableHTML)) neq 0) {
+            local.saveDirectory = expandPath("../assets/downloadedFiles/"); 
+            if (!directoryExists(local.saveDirectory)) {
+                directoryCreate(local.saveDirectory);
+            }
+            local.pdfFileName = "tableOutput.pdf";
+            local.pdfFilePath = local.saveDirectory & local.pdfFileName;
+            cfdocument(format="pdf", name=local.pdfFilePath) {
+                writeOutput(tableHTML);
+            }
+            return { "success": true, "pdfPath": "pdfFiles/#pdfFileName#" };
+        } else {
+            return { "success": false, "msg": "Table HTML content is empty." };
+        }
+    }
+    
 }  
