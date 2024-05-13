@@ -17,5 +17,15 @@
             include "/views/pageNav.cfm";
             include "/views/listPage.cfm";  
         break;
+        case "pdfFile":
+            include "/views/header.cfm";
+            include "/views/pdfFile.cfm";
+        break;
+        case 'xlFile':
+            include '/views/header.cfm';
+            include "/views/navbar.cfm";
+            include '/views/xlFile.cfm';
+            include "/views/list.cfm";
+        break;
     }
 </cfscript>

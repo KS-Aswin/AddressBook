@@ -20,10 +20,10 @@ component
 	}
 
 	function onSessionStart(){
-		session.login=false;
-        session.strfullName="";
-        session.intUid="";
-        session.contactId="";
+		session.login = false;
+        session.strfullName = "";
+		session.userImg = "";
+        session.intUid = "";
 	}
 
 	function onRequestStart( String scriptName ){

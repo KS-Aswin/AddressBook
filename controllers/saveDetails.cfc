@@ -11,6 +11,7 @@ component{
             if (local.checkUser.recordCount) {
                 session.login = true;
                 session.strfullName=local.checkUser.fullName;
+                session.userImg=local.checkUser.img;
                 session.intUid=local.checkUser.id;
                 return { "success": true };
             } 
@@ -37,19 +38,17 @@ component{
             return {"success":false,"msg":"Username already existing"};
         }
     }
-    remote any function contactDetails(strTitle,strFirstName,strLastName,strGender,strDate,strAddress,strStreet,intPhoneNumber,strEmailId,intPinCode) returnFormat="JSON"{
+    remote any function contactDetails(intContactId,strTitle,strFirstName,strLastName,strGender,strDate,filePhoto,strAddress,strStreet,intPhoneNumber,strEmailId,intPinCode) returnFormat="JSON"{
         local.objContact = createObject("component","models.saveDetails");
-        local.checkContactDetails = local.objContact.checkContactExists(strEmailId = strEmailId);
+        local.checkContactDetails = local.objContact.checkContactExists(strEmailId = strEmailId,intContactId = intContactId);
         if(local.checkContactDetails.recordCount){   
-            session.contactId=local.checkContactDetails.contactId;
-            return {"success":false,"msg":"Contact with same email id already existing"};
+            return {"result":"exist"};
         }else{  
-            local.saveContactDetails = local.objContact.saveContact(strTitle = strTitle,strFirstName = strFirstName,strLastName = strLastName,strGender = strGender,strDate = strDate,strAddress = strAddress,strStreet = strStreet,intPhoneNumber = intPhoneNumber,strEmailId = strEmailId,intPinCode = intPinCode );
-            if(local.saveContactDetails.recordCount){
-                session.contactId=local.saveContactDetails.contactId;
-                return {"success":true,"msg":"New Contact added Successfully"};  
+            local.saveContactDetails = local.objContact.saveContact(intContactId = intContactId, strTitle = strTitle,strFirstName = strFirstName,strLastName = strLastName,strGender = strGender,strDate = strDate,filePhoto = filePhoto,strAddress = strAddress,strStreet = strStreet,intPhoneNumber = intPhoneNumber,strEmailId = strEmailId,intPinCode = intPinCode );
+            if(local.saveContactDetails.success == "edited"){
+                return {"result":"edited"};  
             }else{
-                return {"success":false,"msg":"Something went wrong!"};
+                return {"result":"added"};
             }
         }
     }  
