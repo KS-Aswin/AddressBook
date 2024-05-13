@@ -5,7 +5,7 @@
         <cfquery name="checkLogin" datasource="DESKTOP-89AF345">
             select id,userName,password,email,fullName,img 
             from users
-            where userName=<cfqueryparam value="#arguments.userName#" cfsqltype="cf_sql_varchar">
+            where email=<cfqueryparam value="#arguments.userName#" cfsqltype="cf_sql_varchar">
             and password=<cfqueryparam value="#arguments.password#" cfsqltype="cf_sql_varchar">
         </cfquery>
         <cfreturn checkLogin>

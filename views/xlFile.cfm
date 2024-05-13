@@ -1,6 +1,6 @@
 <cfquery name="contactList">
     SELECT 
-        CONCAT(firstName, lastName) AS Name, email, phone
+        CONCAT(firstName, lastName) AS Name, email, phone,gender,dob,CONCAT(address, street) AS Address,pincode
     FROM contact
     where userId=<cfqueryparam value = "#session.intUid#" CFSQLType ='cf_sql_integer'>
 </cfquery>

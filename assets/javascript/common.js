@@ -4,8 +4,12 @@ $(document).ready(function () {
         var errorMsg = "";
         var userName = $('#strUserName').val().trim(); 
         var password = $('#strPassword').val().trim();
-        if (userName == ''|| password =='' ){ 
+        if (userName == ''&& password =='' ){ 
             errorMsg += "Please enter values in all fields!";
+        }else if(userName == ''){
+            errorMsg += "Please enter username!";
+        }else if(password == ''){
+            errorMsg += "Please enter Password!";
         }
         if (errorMsg !=='') {
             $("#loginMsg").html(errorMsg).css('color','red');
@@ -179,7 +183,7 @@ $(document).ready(function () {
                         $('#strFirstName').prop("value",response.firstName);
                         $('#strLastName').prop("value",response.lastName);
                         $('#strGender').prop("value",response.gender);
-                        $('.userProfile').attr('src','./assets/UploadImages/'+response.photo);
+                        $('#strUploadFile').attr('src','./assets/UploadImages/'+response.photo);
                         var date =new Date(response.dob);
                         var strDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
                         $('#strDate').prop("value",strDate);
