@@ -12,7 +12,7 @@
                         <p class="login">LOGIN</p>
                         <input class="loginInput m-2 mb-4 col-12 pe-5 ps-4 py-2" id="strUserName" type="text" name="strUserName" id="strUserName" placeholder="Username">
                         <input class="loginInput m-2 my-4 col-12 pe-5 ps-4 py-2" id="strPassword" type="password"  name="strPassword" id="strPassword" placeholder="Password">
-                        <button class="loginBtn" id="logInBtn">LOGIN</button>
+                        <button type="button" class="loginBtn" id="logInBtn">LOGIN</button>
                         <p class="signin">Or Sign In Using</p>
                         <div class="mb-2">
                             <img src="./assets/images/fb.png" class="signInImg" alt="fb">

@@ -94,6 +94,9 @@ a{
     width: 85%;
     border-radius: 8px;
 }
+.downloadContainer  a{
+    cursor: pointer !important;
+}
 .profileUser{
     background-color: #ffffff;
     border-radius: 8px;
@@ -204,4 +207,9 @@ th{
 .userProfile{
     width: 100px;
     height: 100px;
+}
+.pdfImg{
+    height: 25px !important;
+    width: 25px !important;
+    cursor: pointer;
 }

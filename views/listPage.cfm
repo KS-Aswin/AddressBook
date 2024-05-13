@@ -69,7 +69,7 @@
                                             <div class="d-flex gap-3">
                                                 <div class="d-flex flex-column ">                                            
                                                     <label class="fs-7" for="strUploadFile">Upload Photo*</label>
-                                                    <input type="file" id="strUploadFile" name="strUploadFile" value="">
+                                                    <input type="file" id="strUploadFile" src="" name="strUploadFile" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -221,7 +221,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="modalProfile d-flex align-items-center justify-content-center p-5">
-                                                                <img src="./assets/images/modalProfile.png" class="userProfile " alt="userProfile">
+                                                                <img src="./assets/images/modalProfile.png" class="contactProfile " alt="userProfile">
                                                             </div>
                                                         </div>
                                                     </div>
