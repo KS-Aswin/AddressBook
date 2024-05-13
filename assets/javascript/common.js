@@ -34,23 +34,24 @@ $(document).ready(function () {
     })
     $('#signUpBtn').click(function() {
         var fullName = $('#strFullname').val().trim();
-        var img = $('#imgFile').val().trim();
+        var img = $('#imgFile')[0].files[0];
         var email = $('#strEmail').val().trim();
         var userName = $('#strUsername').val().trim();
         var password = $('#strPassword').val().trim();
-        var confirmPassword = $('#strConfirmPassword').val().trim();
+        var formData = new FormData();
+        formData.append('fullName', fullName);
+        formData.append('img', img);
+        formData.append('email', email);
+        formData.append('userName', userName);
+        formData.append('password', password);
         $("#signUpMsg").html('');
         if (validation()) {
             $.ajax({
                 url: './controllers/saveDetails.cfc?method=saveSignUp',
                 type: 'post',
-                data: {
-                    fullName: fullName,
-                    img: img,
-                    email: email,
-                    userName: userName,
-                    password: password,
-                },
+                data: formData,
+                contentType: false, 
+                processData: false,
                 dataType: "json",
                 success: function (response) {
                     if (response.success) {
@@ -70,44 +71,53 @@ $(document).ready(function () {
         return false;
     });
     $('#formSubmit').click(function() {
+        var intContactId = $('#intContactId').val().trim();
         var strTitle = $('#strTitle').val().trim();
         var strFirstName = $('#strFirstName').val().trim();
         var strLastName = $('#strLastName').val().trim();
         var strGender = $('#strGender').val().trim();
         var strDate = $('#strDate').val().trim();
-        //var strUploadFile = $('#strUploadFile').val().trim();
+        var filePhoto = $('#strUploadFile')[0].files[0];
         var strAddress = $('#strAddress').val().trim();
         var strStreet = $('#strStreet').val().trim();
         var intPhoneNumber = $('#intPhoneNumber').val().trim();
         var strEmailId = $('#strEmailId').val().trim();
         var intPinCode = $('#intPinCode').val().trim();
+        var formData = new FormData();
+        formData.append('intContactId', intContactId);
+        formData.append('strTitle', strTitle);
+        formData.append('strFirstName', strFirstName);
+        formData.append('strLastName', strLastName);
+        formData.append('strGender', strGender);
+        formData.append('strDate', strDate);
+        formData.append('filePhoto', filePhoto); 
+        formData.append('strAddress', strAddress);
+        formData.append('strStreet', strStreet);
+        formData.append('intPhoneNumber', intPhoneNumber);
+        formData.append('strEmailId', strEmailId);
+        formData.append('intPinCode', intPinCode)
         $("#addMsg").html('');
         if (contactValidation()) {
             $.ajax({
                 url: './controllers/saveDetails.cfc?method=contactDetails',
                 type: 'post',
-                data: {
-                    strTitle: strTitle,
-                    strFirstName: strFirstName,
-                    strLastName: strLastName,
-                    strGender: strGender,
-                    strDate: strDate,
-                    //strUploadFile: strUploadFile,
-                    strAddress: strAddress,
-                    strStreet: strStreet,
-                    intPhoneNumber: intPhoneNumber,
-                    strEmailId: strEmailId,
-                    intPinCode: intPinCode
-                },
+                data: formData,
+                contentType: false, 
+                processData: false,
                 dataType: "json",
                 success: function (response) {
-                    if (response.success) {
-                        $("#addMsg").html(response.msg).css('color','green');
+                    if (response.result == "edited") {
+                        $("#addMsg").html("Contact Edited Successfully").css('color','green');
                         setTimeout(function() {
                             window.location.href="?action=list";
                         },1000);
-                    } else {
-                        $("#addMsg").html(response.msg).css('color','red');
+                    } else if (response.result == "added"){
+                        $("#addMsg").html("New Contact Added Successfully").css('color','green');
+                        setTimeout(function() {
+                            window.location.href="?action=list";
+                        },1000);
+                    }else{
+                        $("#addMsg").html("Contact with same Email ID already Existing").css('color','red');
                     }
                 },
                 error: function (xhr, status, error) {
@@ -131,11 +141,14 @@ $(document).ready(function () {
                 if(response.success){
                     $('#name').html(response.name);
                     $('#gender').html(response.gender);
-                    $('#dob').html(response.dob);
+                    var date =new Date(response.dob);
+                    var strDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+                    $('#dob').html(strDate);
                     $('#address').html(response.address);
                     $('#pincode').html(response.pincode);
                     $('#email').html(response.email);
                     $('#phone').html(response.phone);
+                    $('.userProfile').html(response.photo);
                 }
                 
             },
@@ -161,11 +174,15 @@ $(document).ready(function () {
                 dataType: "json",
                 success: function(response) {
                     if(response.success){
+                        $('#intContactId').prop('value',intContactId);
                         $('#strTitle').prop("value", response.title); 
                         $('#strFirstName').prop("value",response.firstName);
                         $('#strLastName').prop("value",response.lastName);
                         $('#strGender').prop("value",response.gender);
-                        $('#strDate').prop("value",response.dob);
+                        $('.userProfile').attr('src','./assets/UploadImages/'+response.photo);
+                        var date =new Date(response.dob);
+                        var strDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+                        $('#strDate').prop("value",strDate);
                         $('#strAddress').prop("value",response.address);
                         $('#strStreet').prop("value",response.street);
                         $('#intPhoneNumber').prop("value",response.phone);
@@ -173,6 +190,7 @@ $(document).ready(function () {
                         $('#intPinCode').prop("value",response.pincode);
                         $('#heading').html("EDIT CONTACT");
                         $('#formSubmit').html("EDIT");
+
 
                     }
                 },
@@ -203,19 +221,11 @@ $(document).ready(function () {
         }
     });
 
-    $('#print').click(function() {
-        var css = '@page { size: landscape; }',
-            head = document.head || document.getElementsByTagName('head')[0],
-            style = document.createElement('style');
-            style.type = 'text/css';
-            style.media = 'print';
-            if (style.styleSheet){
-                style.styleSheet.cssText = css;
-            } else {
-                style.appendChild(document.createTextNode(css));
-        }
-        head.appendChild(style);
+    $('#print').on('click',function(){
+        var printArea = $('#pdfContent').html();
+        $('body').html(printArea);
         window.print();
+        window.location.href="?action=list";
     });
 
     $('#pdf').click(function(){
@@ -282,7 +292,7 @@ function contactValidation() {
     var strLastName = $('#strLastName').val().trim();
     var strGender = $('#strGender').val().trim();
     var strDate = $('#strDate').val().trim();
-    //var strUploadFile = $('#strUploadFile').val().trim();
+    var filePhoto = $('#strUploadFile').val().trim();
     var strAddress = $('#strAddress').val().trim();
     var strStreet = $('#strStreet').val().trim();
     var intPhoneNumber = $('#intPhoneNumber').val().trim();
@@ -301,7 +311,7 @@ function contactValidation() {
     var alphabetPincode = alphabets.test(intPinCode);
     var errorMsg = "";
     $("#addMsg").text(""); 
-    if (strTitle == "" || strFirstName == "" || strLastName == "" || strGender == "" || strDate == ""  || strAddress == "" || strStreet == "" || intPhoneNumber == "" || strEmailId == "" || intPinCode == "" ) {
+    if (strTitle == "" || strFirstName == "" || strLastName == "" || strGender == "" || strDate == "" || filePhoto == ""  || strAddress == "" || strStreet == "" || intPhoneNumber == "" || strEmailId == "" || intPinCode == "" ) {
         errorMsg += "Please enter values in all fields!"; 
     }else {
         if((specialCharFirstName) || (numberFirstName)){

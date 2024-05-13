@@ -2,14 +2,14 @@
     <cfif session.login>
         <div class="download d-flex align-items-center justify-content-center mb-4">
             <div class="downloadContainer d-flex align-items-center justify-content-end py-3 gap-4 pe-5">
-                <img src="./assets/images/pdf.png" class="downloadIcon" id="pdf" alt="pdf">
-                <img src="./assets/images/xl.png" class="downloadIcon" id="xl" alt="xlsheet">
+                <a href='?action=pdfFile'><img src="./assets/images/pdf.png" class="downloadIcon" id="pdf" alt="pdf"></a>
+                 <a href='?action=xlFile'><img src="./assets/images/xl.png" class="downloadIcon" id="xl" alt="xlsheet"></a>
                 <img src="./assets/images/print.png" class="downloadIcon pe-5" id="print" alt="print">
             </div>
         </div>
         <div class="d-flex gap-2 align-items-start justify-content-center mb-4 ">
             <div class="profileUser d-flex flex-column align-items-center justify-content-center p-4 gap-2 me-3">
-                <img src="./assets/images/userProfile.png" class="userProfile " alt="userProfile">
+                <img src="./assets/UploadImages/#session.userImg#" class="userProfile " alt="userProfile">
                 <h4 class="userName mb-0 ">#session.strfullName#</h4>
                 <button type="button" id="createContactButton" class="createContact m-0" data-bs-toggle="modal" data-bs-target="##myModal">CREATE CONTACT</button>
                 <div class="modal bd-example-modal-lg fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="myModal">
@@ -30,6 +30,7 @@
                                         <div class="formData d-flex flex-column gap-4">
                                             <div class="d-flex gap-3">
                                                 <div class="d-flex flex-column">
+                                                <input type="hidden" name="intContactId" id="intContactId" value="0">
                                                     <label for="strTitle">Title*</label>
                                                     <div class="dropdown d-flex justify-content-start">
                                                         <select id="strTitle" value="" name ="strTitle" class="form-select form-select-sm">
@@ -116,9 +117,9 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex displayProfiles" id="pdfContent">
-                <div class="w-100">
-                    <table class="table table-hover" >
+            <div class="d-flex displayProfiles" >
+                <div class="w-100" id="pdfContent">
+                    <table class="table" >
                         <thead>
                             <tr>
                                 <th>
@@ -150,7 +151,7 @@
                                 <cfset variables.contactId = contact.getcontactId()>
                                 <cfif session.intUid eq contact.getuserId()>
                                     <tr class="tableRow" id="">
-                                        <th>Image</th>
+                                        <th><img src="./assets/UploadImages/#contact.getphoto()#" alt="Profile" class='userProfilePic'></th>
                                         <th>#contact.getfirstName()# #contact.getlastName()#</th>
                                         <th>#contact.getemail()#</th>
                                         <th>#contact.getphone()#</th>
