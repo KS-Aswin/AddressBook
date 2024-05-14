@@ -84,7 +84,8 @@ a{
 }
 #signUpMsg,#loginMsg{
     height: 20px;
-    font-size: 18px;
+    font-size: 16px;
+    font-weight: 700;
     color: #337AB7;
 }
 
@@ -197,12 +198,14 @@ label{
     width: 40px;
     height: 40px;
 }
-tr{
-    border-bottom: 1px solid #c7c6c6;
+tr,thead{
+    border-bottom: 1px solid #c7c6c6 !important;
 }
-
+tr:last-child{
+    border: none !important;
+}
 th{
-    border: none;
+    border: none; 
 }
 .userProfile{
     width: 100px;
@@ -211,5 +214,10 @@ th{
 .pdfImg{
     height: 25px !important;
     width: 25px !important;
-    cursor: pointer;
+}
+.errorTag{
+    height:15px;
+    font-size: 14px;
+    color: red; 
+    font-weight: 700;
 }

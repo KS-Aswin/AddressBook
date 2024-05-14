@@ -1,9 +1,29 @@
-<cfquery name="contactList">
-    SELECT 
-        CONCAT(firstName, lastName) AS Name, email, phone,gender,dob,CONCAT(address, street) AS Address,pincode
-    FROM contact
-    where userId=<cfqueryparam value = "#session.intUid#" CFSQLType ='cf_sql_integer'>
-</cfquery>
-<cfspreadsheet action="write" filename="#ExpandPath("./assets/downloadedFiles/xlList.xlsx")#" overwrite="true" query='contactList'>
-<cfheader name="Content-Disposition" value="attachment; filename=contactList.xlsx">
-<cfcontent type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" file="#ExpandPath('./assets/downloadedFiles/contactList.xlsx')#">
+<cfoutput>
+    <cfset contacts = EntityLoad("ormContactFunction")>
+    <cfset excelQuery = queryNew("Fullname,Email,Phone,Gender,DOB,Address,Pincode,Photo","varchar,varchar,varchar,varchar,date,varchar,integer,varchar")> 
+    <cfloop array="#contacts#" index="contact">
+        <cfif session.intUid Eq contact.getuserId()>
+            <cfset local.fullName = contact.gettitle() & "." &contact.getfirstName() & " " & contact.getlastName()>
+            <cfset local.email = contact.getemail()>
+            <cfset local.phone = contact.getphone()>
+            <cfset local.gender = contact.getgender()>
+            <cfset local.dob = contact.getdob()>
+            <cfset local.address = contact.getaddress() & ", " & contact.getstreet()>
+            <cfset local.pincode = contact.getpincode()>
+            <cfset local.photo = contact.getphoto()>
+            <cfset queryAddRow(excelQuery, 1)>
+            <cfset querySetCell(excelQuery, "Fullname", local.fullName)>
+            <cfset querySetCell(excelQuery, "Email", local.email)>
+            <cfset querySetCell(excelQuery, "Phone", local.phone)>
+            <cfset querySetCell(excelQuery, "Gender", local.gender)>
+            <cfset querySetCell(excelQuery, "DOB", local.dob)>
+            <cfset querySetCell(excelQuery, "Address", local.address)>
+            <cfset querySetCell(excelQuery, "Pincode", local.pincode)>
+            <cfset querySetCell(excelQuery, "Photo", local.photo)>
+        </cfif>
+    </cfloop>
+    <cfset excelPath = ExpandPath("./contactDetail.xlsx")>
+    <cfspreadsheet action="write" filename="#excelPath#" query="excelQuery" sheetname="contacts">
+    <cfheader name="Content-Disposition" value="attachment; filename=contactDetail.xlsx">
+    <cfcontent type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" file="#excelPath#" deleteFile="true">
+</cfoutput>

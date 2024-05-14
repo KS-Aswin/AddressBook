@@ -25,10 +25,7 @@ $(document).ready(function () {
             dataType:"json",
             success: function(response) {
                 if (response.success){
-                    $("#loginMsg").text('Login Successfull').css("color", "green");
-                    setTimeout(function() {
-                        window.location.href="?action=list";
-                    },1000);
+                    window.location.href="?action=list";
                 } else {
                     $("#loginMsg").text('Invalid user name or password!').css("color", "red");
                 }
@@ -111,17 +108,13 @@ $(document).ready(function () {
                 dataType: "json",
                 success: function (response) {
                     if (response.result == "edited") {
-                        $("#addMsg").html("Contact Edited Successfully").css('color','green');
-                        setTimeout(function() {
-                            window.location.href="?action=list";
-                        },1000);
+                        window.location.href="?action=list";
                     } else if (response.result == "added"){
-                        $("#addMsg").html("New Contact Added Successfully").css('color','green');
-                        setTimeout(function() {
-                            window.location.href="?action=list";
-                        },1000);
-                    }else{
+                        window.location.href="?action=list";
+                    }else if (response.result == "exist"){
                         $("#addMsg").html("Contact with same Email ID already Existing").css('color','red');
+                    }else if (response.result == "email"){
+                        $("#addMsg").html("The user cannot create hisown Contact").css('color','red');
                     }
                 },
                 error: function (xhr, status, error) {
@@ -152,7 +145,7 @@ $(document).ready(function () {
                     $('#pincode').html(response.pincode);
                     $('#email').html(response.email);
                     $('#phone').html(response.phone);
-                    $('.userProfile').html(response.photo);
+                    $('.modalImg').attr('src','./assets/UploadImages/'+response.photo);
                 }
                 
             },
@@ -192,8 +185,9 @@ $(document).ready(function () {
                         $('#intPhoneNumber').prop("value",response.phone);
                         $('#strEmailId').prop("value",response.email);
                         $('#intPinCode').prop("value",response.pincode);
+                        $('.modalImg').attr('src','./assets/UploadImages/'+response.photo);
                         $('#heading').html("EDIT CONTACT");
-                        $('#formSubmit').html("EDIT");
+                        $('#formSubmit').html("SAVE");
 
 
                     }
@@ -263,27 +257,29 @@ function validation() {
     $("#signUpMsg").text(""); 
     if (fullName == "" || img=="" || email == "" || userName == "" || password == "") {
         errorMsg += "Please enter values in all fields!";
-    } 
-    if((specialCharName) || (numberName)){
-        errorMsg+="Fullname must contain String values only!"; 
-    }  
-    if (!email.match(emailRegex)){
-        errorMsg+="Enter a valid email address!";
-    }  
-    if ((specialCharUser) || (numberUser)){
-        errorMsg+="Username must contain String values only!"; 
+    } else {
+        if((specialCharName) || (numberName)){
+            errorMsg+="Fullname must contain String values only!"; 
+        }  
+        if (!email.match(emailRegex)){
+            errorMsg+="Enter a valid email address!";
+        }  
+        if ((specialCharUser) || (numberUser)){
+            errorMsg+="Username must contain String values only!"; 
+        }
+        if(password!=''){
+            var specialChar = specialChar.test(password);
+            var  alphabets= alphabets.test(password);
+            var number = number.test(password);
+            if(!((specialChar) && (alphabets) && (number))){
+                errorMsg+="Password should contain all type values!";
+            }        
+        }
+        if(confirmPassword != password){
+            errorMsg+="Password and Confirm Password does not match!";
+        }
     }
-    if(password!=''){
-        var specialChar = specialChar.test(password);
-        var  alphabets= alphabets.test(password);
-        var number = number.test(password);
-        if(!((specialChar) && (alphabets) && (number))){
-            errorMsg+="Password should contain all type values!";
-        }        
-    }
-    if(confirmPassword != password){
-        errorMsg+="Password and Confirm Password does not match!";
-    }
+    
     if (errorMsg !=='') {
         $("#signUpMsg").html(errorMsg).css('color','red');
         return false;
