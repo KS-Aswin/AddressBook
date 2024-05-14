@@ -25,7 +25,7 @@ component{
     } 
     remote any function saveSignUp(fullName,img,email,userName,password) returnFormat="JSON"{
         local.objUser = createObject("component","models.saveDetails");
-        local.checkUserDetails = local.objUser.checkUserExists(userName = userName);
+        local.checkUserDetails = local.objUser.checkUserExists(email = email);
         if(local.checkUserDetails.success){     
             local.password = Hash(password,"MD5");
             local.saveUserDetails = local.objUser.saveSignUp(fullName = fullName,img = img,email = email,userName = userName,password = local.password);
@@ -35,21 +35,26 @@ component{
                 return {"success":false,"msg":"Something went wrong!"};
             }
         }else{
-            return {"success":false,"msg":"Username already existing"};
+            return {"success":false,"msg":"User with same Email Id already existing"};
         }
     }
     remote any function contactDetails(intContactId,strTitle,strFirstName,strLastName,strGender,strDate,filePhoto,strAddress,strStreet,intPhoneNumber,strEmailId,intPinCode) returnFormat="JSON"{
         local.objContact = createObject("component","models.saveDetails");
         local.checkContactDetails = local.objContact.checkContactExists(strEmailId = strEmailId,intContactId = intContactId);
-        if(local.checkContactDetails.recordCount){   
+        if(local.checkContactDetails.recordCount){  
             return {"result":"exist"};
-        }else{  
-            local.saveContactDetails = local.objContact.saveContact(intContactId = intContactId, strTitle = strTitle,strFirstName = strFirstName,strLastName = strLastName,strGender = strGender,strDate = strDate,filePhoto = filePhoto,strAddress = strAddress,strStreet = strStreet,intPhoneNumber = intPhoneNumber,strEmailId = strEmailId,intPinCode = intPinCode );
-            if(local.saveContactDetails.success == "edited"){
-                return {"result":"edited"};  
+        }else{ 
+            local.checkUserEmail = local.objContact.checkContactEmail(strEmailId = strEmailId);  
+            if(local.checkUserEmail.recordCount){
+                return {"result":"email"};
             }else{
-                return {"result":"added"};
-            }
+                local.saveContactDetails = local.objContact.saveContact(intContactId = intContactId, strTitle = strTitle,strFirstName = strFirstName,strLastName = strLastName,strGender = strGender,strDate = strDate,filePhoto = filePhoto,strAddress = strAddress,strStreet = strStreet,intPhoneNumber = intPhoneNumber,strEmailId = strEmailId,intPinCode = intPinCode );
+                if(local.saveContactDetails.success == "edited"){
+                    return {"result":"edited"};  
+                }else{
+                    return {"result":"added"};
+                }
+            }    
         }
     }  
     public void function checkLogin(){

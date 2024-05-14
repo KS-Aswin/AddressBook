@@ -2,7 +2,7 @@
     <cfhtmltopdf>
         <div class="d-flex displayProfiles" id="pdfContent">
             <div class="w-100">
-                <table class="table table-hover" >
+                <table class="table" >
                     <thead>
                         <tr>
                             <th>
@@ -38,7 +38,7 @@
                         <cfset variables.contactId = contact.getcontactId()>
                         <cfif session.intUid eq contact.getuserId()>
                             <tr class="tableRow" id="">
-                            <th><img src="./assets/UploadImages/#contact.getphoto()#" class="pdfImg" alt="userProfile"></th>
+                            <th class="pdfImg"><img src="./assets/UploadImages/#contact.getphoto()#"  alt="userProfile" width='30' height='30'></th>
                                 <th>#contact.getfirstName()# #contact.getlastName()#</th>
                                 <th>#contact.getemail()#</th>
                                 <th>#contact.getphone()#</th>

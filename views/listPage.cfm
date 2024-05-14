@@ -10,7 +10,7 @@
         <div class="d-flex gap-2 align-items-start justify-content-center mb-4 ">
             <div class="profileUser d-flex flex-column align-items-center justify-content-center p-4 gap-2 me-3">
                 <img src="./assets/UploadImages/#session.userImg#" class="userProfile " alt="userProfile">
-                <h4 class="userName mb-0 ">#session.strfullName#</h4>
+                <h4 class="userName mb-0 "><b>#session.strfullName#</b></h4>
                 <button type="button" id="createContactButton" class="createContact m-0" data-bs-toggle="modal" data-bs-target="##myModal">CREATE CONTACT</button>
                 <div class="modal bd-example-modal-lg fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="myModal">
                     <div class="modal-dialog modal-lg p-1">
@@ -110,7 +110,7 @@
                                     </form>
                                 </div>
                                 <div class="modalProfile mt-3 d-flex align-items-start justify-content-center mt-5 p-5">
-                                    <img src="./assets/images/modalProfile.png" class="userProfile mt-5" alt="userProfile">
+                                    <img src="./assets/images/modalProfile.png" class="modalImg mt-5" alt="userProfile">
                                 </div>
                             </div>
                         </div>
@@ -119,7 +119,7 @@
             </div>
             <div class="d-flex displayProfiles" >
                 <div class="w-100" id="pdfContent">
-                    <table class="table" >
+                    <table class="table mb-0">
                         <thead>
                             <tr>
                                 <th>
@@ -221,7 +221,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="modalProfile d-flex align-items-center justify-content-center p-5">
-                                                                <img src="./assets/images/modalProfile.png" class="contactProfile " alt="userProfile">
+                                                                <img src="./assets/images/modalProfile.png" class="modalImg " alt="userProfile">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -229,7 +229,7 @@
                                             </div>
                                         </th>
                                     </tr>
-                                    <cfelse>
+                                <cfelse>
                                     <cfcontinue>
                                 </cfif>
                             </cfloop>

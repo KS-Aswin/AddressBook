@@ -51,7 +51,7 @@
         <cfargument name = "strEmailId" required="true" returnType="string">
         <cfargument name = "intPhoneNumber" required="true" returnType="string">
         <cfargument name = "intPinCode" required="true" returnType="string">
-       
+
         <cfset local.path = ExpandPath("../assets/UploadImages/")>
         <cffile action="upload" destination="#local.path#" nameConflict="MakeUnique" filefield="filePhoto">
         <cfset local.profile = cffile.serverFile>
@@ -96,28 +96,39 @@
         </cfif>
     </cffunction>
     <cffunction  name = "checkUserExists" access="remote"  returnformat="json">
-        <cfargument name = "userName" required="true" returnType="string">
-        <cfquery name = "tableName" datasource="DESKTOP-89AF345">
+        <cfargument name = "email" required="true" returnType="string">
+        <cfquery name = "userExist" datasource="DESKTOP-89AF345">
             select userName
             from users
-            where userName = <cfqueryparam value="#arguments.userName#" cfsqltype="cf_sql_varchar">
+            where email = <cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar">
         </cfquery>
-        <cfif tableName.recordCount>
+        <cfif userExist.recordCount>
             <cfreturn {"success":false}>
         <cfelse>
             <cfreturn {"success":true}>
         </cfif>
     </cffunction>
+    <cffunction  name = "checkContactEmail" access="remote"  returntype="query">
+        <cfargument name = "strEmailId" required="true" returnType="string">
+        <cfquery name = "contactEmail" datasource="DESKTOP-89AF345">
+            select email
+            from users
+            where email = <cfqueryparam value="#arguments.strEmailId#" cfsqltype="cf_sql_varchar">
+            AND id = <cfqueryparam value="#session.intUid#" cfsqltype="cf_sql_integer">
+        </cfquery>
+        <cfreturn contactEmail>
+    </cffunction>
     <cffunction  name = "checkContactExists" access="remote"  returntype="query">
         <cfargument  name="intContactId" required="true">
         <cfargument name = "strEmailId" required="true" returnType="string">
-        <cfquery name = "tableName" datasource="DESKTOP-89AF345">
+        <cfquery name = "contactExist" datasource="DESKTOP-89AF345">
             select email,contactId
             from contact
             where email = <cfqueryparam value="#arguments.strEmailId#" cfsqltype="cf_sql_varchar">
-            AND contactId!=<cfqueryparam value="#arguments.intContactId#" cfsqltype="cf_sql_integer">
+            AND contactId! = <cfqueryparam value="#arguments.intContactId#" cfsqltype="cf_sql_integer">
+            AND userId = <cfqueryparam value="#session.intUid#" cfsqltype="cf_sql_integer">
         </cfquery>
-        <cfreturn tableName>
+        <cfreturn contactExist>
     </cffunction>
    
     <cffunction name="getContactDetails" access="remote" returnFormat="json">
