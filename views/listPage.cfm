@@ -12,6 +12,32 @@
                 <img src="./assets/UploadImages/#session.userImg#" class="userProfile " alt="userProfile">
                 <h4 class="userName mb-0 "><b>#session.strfullName#</b></h4>
                 <button type="button" id="createContactButton" class="createContact m-0" data-bs-toggle="modal" data-bs-target="##myModal">CREATE CONTACT</button>
+                <button type="button" id="createExcelContact" class="createExcelContact m-0" data-bs-toggle="modal" data-bs-target="##excelModal">CREATE ACCOUNT USING EXCEL</button>
+                <div class="modal bd-example-modal-lg fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="excelModal">
+                    <div class="modal-dialog modal-lg p-1">
+                        <form action="" method="post" id="myFormExcel" enctype="multipart/form-data">
+                            <div class="modal-content d-flex flex-column p-5">
+                                <div class="d-flex align-items-center justify-content-center addMsgStyle p-2">
+                                    <h6 class="mb-0" id="excelMsg"><b></b></h6>
+                                </div>
+                                <div class="personalContact">
+                                    <h4 class="mb-0">Upload Excel File</h4>
+                                </div>
+                                <div class="d-flex flex-column mt-3 gap-1">
+                                    <div class="d-flex flex-column ">                                            
+                                        <label class="fs-7" for="strUploadExleFile">Upload Excel*</label>
+                                        <input type="file" id="strUploadExleFile" src="" name="strUploadExleFile" value="" accept=".xlsx,.xls">
+                                    </div>
+                                    <div class="d-flex mt-3 align-items-center justify-content-start">
+                                        <button type="button" class="createContact closeBtn  m-0" id="formExcelSubmit">SUBMIT</button>
+                                        <button type="button" class="closeBtn  m-0 ms-1" data-bs-dismiss="modal">CLOSE</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
                 <div class="modal bd-example-modal-lg fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="myModal">
                     <div class="modal-dialog modal-lg p-1">
                         <div class="modal-content d-flex ps-3 formBorder modalFullBody">
@@ -69,7 +95,7 @@
                                             <div class="d-flex gap-3">
                                                 <div class="d-flex flex-column ">                                            
                                                     <label class="fs-7" for="strUploadFile">Upload Photo*</label>
-                                                    <input type="file" id="strUploadFile" src="" name="strUploadFile" value="">
+                                                    <input type="file" id="strUploadFile" src="" name="strUploadFile" value="" accept=".png,.jpg,.jpeg,.webp,image/png">
                                                 </div>
                                             </div>
                                         </div>
