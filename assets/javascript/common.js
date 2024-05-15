@@ -176,7 +176,7 @@ $(document).ready(function () {
                         $('#strFirstName').prop("value",response.firstName);
                         $('#strLastName').prop("value",response.lastName);
                         $('#strGender').prop("value",response.gender);
-                        $('#strUploadFile').attr('src','./assets/UploadImages/'+response.photo);
+                        $('#strUploadFile').attr('value','./assets/UploadImages/'+response.photo)[0].files[0];
                         var date =new Date(response.dob);
                         var strDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
                         $('#strDate').prop("value",strDate);
@@ -235,6 +235,43 @@ $(document).ready(function () {
                 alert('PDF generation failed: ' + response.msg);
             }
         }, 'json');
+    });
+
+    $('#formExcelSubmit').click(function(){
+        var excelContact = $('#strUploadExleFile').val().trim();
+        var errorMsg = "";
+        $("#excelMsg").text(""); 
+        if(excelContact == ""){
+            errorMsg += "error";
+        }
+        if(errorMsg != ''){
+            $("#excelMsg").html("Choose a Valid Excell file!").css("color", "red");
+        }
+        else{
+            var excelFile = $('#strUploadExleFile')[0].files[0];
+            var formData = new FormData();
+            formData.append('excelFile', excelFile);
+            $.ajax({
+                url: './controllers/saveDetails.cfc?method=excelDetails',
+                type: 'post',
+                data: formData,
+                contentType: false, 
+                processData: false,
+                dataType: "json",
+                success: function (response) {
+                     if (response.result == "added") {
+                         window.location.href="?action=list";
+                     }else if (response.result == "exist"){
+                         $("#excelMsg").html("Contact with same Email ID already Existing").css('color','red');
+                     }
+                },
+                error: function (xhr, status, error) {
+                    alert("An error occurred: " + error);
+                }
+            });
+        } 
+        return false;
+        
     });
           
 });
