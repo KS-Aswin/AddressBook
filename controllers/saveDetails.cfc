@@ -38,6 +38,30 @@ component{
             return {"success":false,"msg":"User with same Email Id already existing"};
         }
     }
+    remote any function doLoginSOS(email,fullName) returnFormat="JSON" {
+        local.objUser = createObject("component","models.saveDetails");
+        local.checkUser=local.objUser.doLoginSOS(email=email);
+        if (local.checkUser.recordCount) {
+            session.login = true;
+            session.strfullName=local.checkUser.fullName;
+            session.userImg=local.checkUser.img;
+            session.intUid=local.checkUser.id;
+            return { "success": true };
+        } 
+        else {
+            local.saveSOS=local.objUser.saveSOS(email=email,fullName=fullName);
+            if(local.saveSOS.success){
+                local.checkUser=local.objUser.doLoginSOS(email=email);
+                if (local.checkUser.recordCount) {
+                    session.login = true;
+                    session.strfullName=local.checkUser.fullName;
+                    session.userImg=local.checkUser.img;
+                    session.intUid=local.checkUser.id;
+                }
+                return {"success":true};  
+            }
+        }
+    } 
     remote any function contactDetails(intContactId,strTitle,strFirstName,strLastName,strGender,strDate,filePhoto,strAddress,strStreet,intPhoneNumber,strEmailId,intPinCode) returnFormat="JSON"{
         local.objContact = createObject("component","models.saveDetails");
         local.checkContactDetails = local.objContact.checkContactExists(strEmailId = strEmailId,intContactId = intContactId);

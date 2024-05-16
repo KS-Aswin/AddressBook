@@ -9,8 +9,8 @@
         </div>
         <div class="d-flex gap-2 align-items-start justify-content-center mb-4 ">
             <div class="profileUser d-flex flex-column align-items-center justify-content-center p-4 gap-2 me-3">
-                <img src="./assets/UploadImages/#session.userImg#" class="userProfile " alt="userProfile">
-                <h4 class="userName mb-0 "><b>#session.strfullName#</b></h4>
+                <img src="./assets/UploadImages/#session.userImg#" id="userIdImg" class="userProfile " alt="userProfile">
+                <h4 class="userName mb-0" id="nameSOS"><b>#session.strfullName#</b></h4>
                 <button type="button" id="createContactButton" class="createContact m-0" data-bs-toggle="modal" data-bs-target="##myModal">CREATE CONTACT</button>
                 <button type="button" id="createExcelContact" class="createExcelContact m-0" data-bs-toggle="modal" data-bs-target="##excelModal">CREATE ACCOUNT USING EXCEL</button>
                 <div class="modal bd-example-modal-lg fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="excelModal">

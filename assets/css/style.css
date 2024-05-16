@@ -235,3 +235,10 @@ th{
     font-weight: 700;
     height: 15px;
 }
+.modalImg{
+    width: 150px;
+    height: 150px;
+}
+#googleLogin{
+    cursor: pointer;
+}

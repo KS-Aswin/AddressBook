@@ -16,7 +16,7 @@
                         <p class="signin">Or Sign In Using</p>
                         <div class="mb-2">
                             <img src="./assets/images/fb.png" class="signInImg" alt="fb">
-                            <img src="./assets/images/google.png" class="signInImgGoogle" alt="google">
+                            <img src="./assets/images/google.png" class="signInImgGoogle" id="googleLogin" alt="google">
                         </div>
                         <p class="mb-1">Don't have an account?<a href="?action=register" title="go to signup page"> Register Here</a></p>
                     </div>
