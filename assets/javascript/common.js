@@ -273,8 +273,86 @@ $(document).ready(function () {
         return false;
         
     });
+    
+    $('#googleLogin').on('click', function() {
+        signIn();
+    });
+    $(document).ready(function() {
+            let params = {};
+            let regex = /([^&=]+)=([^&]*)/g, m;
+    
+            while ((m = regex.exec(location.href)) !== null) {
+                params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+            }
+    
+            if (Object.keys(params).length > 0) {
+                localStorage.setItem('authInfo', JSON.stringify(params));
+                window.history.pushState({}, document.title, "/AddressBook/?action=list");
+            }
+    
+            let info = JSON.parse(localStorage.getItem('authInfo'));
+            
+            if (info)
+            {
+                $.ajax({
+                    url: "https://www.googleapis.com/oauth2/v3/userinfo",
+                    headers: {
+                        "Authorization": `Bearer ${info['access_token']}`
+                    },
+                    success: function(data) {
+                        var email = data.email;
+                        var fullName = data.name;
+                        var img = data.picture;
+                        console.log(data.name);
+                        $.ajax({
+                            url: './controllers/saveDetails.cfc?method=doLoginSOS',
+                            type: 'post',
+                            data:  {email: email,fullName: fullName},
+                            dataType:"json",
+                            success: function (response) {
+                                 if (response.success) {
+                                     window.location.href="?action=list";
+                                 }
+                            },
+                            error: function (xhr, status, error) {
+                                alert("An error occurred: " + error);
+                            }
+                        });
+                        $('#userIdImg').attr('src', data.picture);
+                    }
+                });
+            }
+        
+    });
           
 });
+function signIn() {
+    let oauth2Endpoint = "https://accounts.google.com/o/oauth2/v2/auth";
+
+    let $form = $('<form>')
+        .attr('method', 'GET')
+        .attr('action', oauth2Endpoint);
+
+    let params = {
+        "client_id": "726795246693-mtgnhpgrdlbiahn20r5s4umg8seqvqq0.apps.googleusercontent.com",
+        "redirect_uri": "http://127.0.0.1:8500/AddressBook/?action=list",
+        "response_type": "token",
+        "scope": "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
+        "include_granted_scopes": "true",
+        "state": 'pass-through-value'
+    };
+
+    $.each(params, function(name, value) {
+        $('<input>')
+            .attr('type', 'hidden')
+            .attr('name', name)
+            .attr('value', value)
+            .appendTo($form);
+    });
+
+    $form.appendTo('body').submit();
+}
+
 function validation() {
     var fullName = $('#strFullname').val().trim();
     var img = $('#imgFile').val().trim();

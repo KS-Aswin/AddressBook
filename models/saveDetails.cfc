@@ -236,4 +236,25 @@
         </cfquery>
         <cfreturn {"success":true}>
     </cffunction>
+    <cffunction name="doLoginSOS" access="remote" returnType="query">
+        <cfargument name="email" required="true" type="string">
+        <cfquery name="checkLogin" datasource="DESKTOP-89AF345">
+            select id,userName,password,email,fullName,img 
+            from users
+            where email=<cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar">
+        </cfquery>
+        <cfreturn checkLogin>
+    </cffunction>
+    <cffunction  name="saveSOS" access="remote"  returnformat="json">
+        <cfargument name = "email" required="true" returnType="string">
+        <cfargument name = "fullName" required="true" returnType="string">
+        <cfquery name="newSignUp" datasource="DESKTOP-89AF345">
+            insert into users (fullName,email)
+            values(
+                <cfqueryparam value="#arguments.fullName#" cfsqltype="cf_sql_varchar">,
+                <cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar">
+            ) 
+        </cfquery>
+        <cfreturn {"success":true}>
+    </cffunction>
 </cfcomponent>
