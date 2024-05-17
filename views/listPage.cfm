@@ -9,10 +9,11 @@
         </div>
         <div class="d-flex gap-2 align-items-start justify-content-center mb-4 ">
             <div class="profileUser d-flex flex-column align-items-center justify-content-center p-4 gap-2 me-3">
-                <img src="./assets/UploadImages/#session.userImg#" id="userIdImg" class="userProfile " alt="userProfile">
+                <img src="#variables.img#" alt="userProfile" class="userProfile">
+                
                 <h4 class="userName mb-0" id="nameSOS"><b>#session.strfullName#</b></h4>
-                <button type="button" id="createContactButton" class="createContact m-0" data-bs-toggle="modal" data-bs-target="##myModal">CREATE CONTACT</button>
-                <button type="button" id="createExcelContact" class="createExcelContact m-0" data-bs-toggle="modal" data-bs-target="##excelModal">CREATE ACCOUNT USING EXCEL</button>
+                <button type="button" id="createContactButton" class="createContact m-0 " data-bs-toggle="modal" data-bs-target="##myModal">CREATE CONTACT</button>
+                <button type="button" class="createExcelContact m-0  " data-bs-toggle="modal" data-bs-target="##excelModal">CREATE ACCOUNT USING EXCEL</button>
                 <div class="modal bd-example-modal-lg fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="excelModal">
                     <div class="modal-dialog modal-lg p-1">
                         <form action="" method="post" id="myFormExcel" enctype="multipart/form-data">
@@ -129,8 +130,8 @@
                                             </div>
                                         </div>
                                         <div class="d-flex mt-3 align-items-center justify-content-start gap-5">
-                                            <button type="button" class="createContact closeBtn m-0 me-4" id="formSubmit">SUBMIT</button>
-                                            <button type="button" class="createContact closeBtn m-0 ms-5" data-bs-dismiss="modal">CLOSE</button>
+                                            <button type="button" class="createContact closeBtn m-0 mt-2 me-4" id="formSubmit">SUBMIT</button>
+                                            <button type="button" class="createContact closeBtn m-0 mt-2 ms-5" data-bs-dismiss="modal">CLOSE</button>
                                         </div>
                                     
                                     </form>
@@ -243,7 +244,7 @@
                                                                     <p class="mb-0" id="phone"></p>
                                                                 </div>
                                                                 <div class="d-flex align-items-center justify-content-center">
-                                                                    <button type="button" class="createContact closeBtn m-0" data-bs-dismiss="modal">CLOSE</button>
+                                                                    <button type="button" class="createContact closeBtn m-0 mt-2" data-bs-dismiss="modal">CLOSE</button>
                                                                 </div>
                                                             </div>
                                                             <div class="modalProfile d-flex align-items-center justify-content-center p-5">

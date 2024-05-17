@@ -23,6 +23,8 @@ component
 		session.login = false;
         session.strfullName = "";
 		session.userImg = "";
+		session.ssoImg = "";
+		session.sso = false;
         session.intUid = "";
 	}
 
