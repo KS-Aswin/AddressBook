@@ -10,6 +10,7 @@ component{
             local.checkUser=local.objUser.doLogin(userName=userName,password=password);
             if (local.checkUser.recordCount) {
                 session.login = true;
+                session.sso = false;
                 session.strfullName=local.checkUser.fullName;
                 session.userImg=local.checkUser.img;
                 session.intUid=local.checkUser.id;
@@ -38,24 +39,26 @@ component{
             return {"success":false,"msg":"User with same Email Id already existing"};
         }
     }
-    remote any function doLoginSOS(email,fullName) returnFormat="JSON" {
+    remote any function doLoginSOS(email,fullName,img) returnFormat="JSON" {
         local.objUser = createObject("component","models.saveDetails");
         local.checkUser=local.objUser.doLoginSOS(email=email);
         if (local.checkUser.recordCount) {
             session.login = true;
+            session.sso = true;
             session.strfullName=local.checkUser.fullName;
-            session.userImg=local.checkUser.img;
+            session.ssoImg = local.checkUser.img;
             session.intUid=local.checkUser.id;
             return { "success": true };
         } 
         else {
-            local.saveSOS=local.objUser.saveSOS(email=email,fullName=fullName);
+            local.saveSOS=local.objUser.saveSOS(email=email,fullName=fullName,img=img);
             if(local.saveSOS.success){
                 local.checkUser=local.objUser.doLoginSOS(email=email);
-                if (local.checkUser.recordCount) {
+                if (local.checkUser.success) {
                     session.login = true;
+                    session.sso = true;
                     session.strfullName=local.checkUser.fullName;
-                    session.userImg=local.checkUser.img;
+                    session.ssoImg = local.checkUser.img;
                     session.intUid=local.checkUser.id;
                 }
                 return {"success":true};  
@@ -89,6 +92,9 @@ component{
 
     remote any function doLogOut(){
         session.login=false;
+        session.userImg = "";
+		session.ssoImg = "";
+        session.sso = false;
         cflocation(url="../?action=login");
     }
 

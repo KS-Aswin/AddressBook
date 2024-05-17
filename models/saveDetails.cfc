@@ -248,11 +248,13 @@
     <cffunction  name="saveSOS" access="remote"  returnformat="json">
         <cfargument name = "email" required="true" returnType="string">
         <cfargument name = "fullName" required="true" returnType="string">
+        <cfargument name = "img" required="true" returnType="string">
         <cfquery name="newSignUp" datasource="DESKTOP-89AF345">
-            insert into users (fullName,email)
+            insert into users (fullName,email,img)
             values(
                 <cfqueryparam value="#arguments.fullName#" cfsqltype="cf_sql_varchar">,
-                <cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar">
+                <cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar">,
+                <cfqueryparam value="#arguments.img#" cfsqltype="cf_sql_varchar">
             ) 
         </cfquery>
         <cfreturn {"success":true}>
