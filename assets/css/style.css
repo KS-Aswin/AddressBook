@@ -95,10 +95,13 @@ a:hover{
     text-decoration: none;
 }
 #signUpMsg,#loginMsg{
-    height: 20px;
+    height: 40px;
     font-size: 16px;
     font-weight: 700;
     color: #337AB7;
+}
+#signUpMsg{
+    height: 80px;
 }
 
 /*List*/
@@ -152,7 +155,7 @@ a:hover{
 .displayProfiles{
     width: 70%;
     background-color: #ffffff;
-    min-height: 280px !important;
+    min-height: 276px !important;
     border-radius: 10px !important;
 }
 .table{
@@ -215,7 +218,7 @@ label{
     border: none;
 }
 .closeBtn{
-    padding: 5px 40px;
+    padding: 0px 40px;
 }
 .viewContactDetails{
     font-size: 14px;
@@ -224,8 +227,10 @@ label{
 }
 #addMsg{
     font-size: 14px;
-    height: 10px;
-    margin: 10px 0px;
+    height: 80px;
+}
+.addMsgStyle{
+    height: 80px;
 }
 .modalFullBody{
     background-color: #DAEEF7;
@@ -245,7 +250,7 @@ tr:last-child{
 }
 th{
     border: none; 
-    border-radius: 10px !important;
+    line-height: 40px;
 }
 .userProfile{
     width: 100px;
@@ -277,4 +282,17 @@ th{
 }
 #pdfContent{
     border-radius: 10px !important;
+}
+.tableBtn{
+    padding: 0px 15px!important;
+}
+.excelBtn{
+    padding: 5px 20px !important;
+}
+.excelSubmit{
+    background: #337AB7;
+    color: #ffffff;
+}
+.excelSubmit:hover{
+    background: #165994;
 }

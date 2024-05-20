@@ -1,7 +1,7 @@
 <cfset local.forSignin = createObject("component","controllers.saveDetails").checkLogin()>
 <cfoutput>
     <div class="mainBody d-flex flex-column align-items-center justify-content-center mb-5">
-        <h3 class="pb-5 w3-panel w3-green" id="loginMsg"></h3>
+        <h3 class="p-2 w3-panel w3-green mb-0" id="loginMsg"></h3>
         <div class="bodyContainer d-flex">
             <div class="leftBody d-flex align-items-center justify-content-center">
                 <img src="./assets/images/bodyBook.png" class="bodyBook mx-5" alt="book">

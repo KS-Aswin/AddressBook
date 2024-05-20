@@ -27,5 +27,10 @@
             include '/views/xlFile.cfm';
             include "/views/list.cfm";
         break;
+        default :
+            include "/views/header.cfm";
+            include "/views/navbar.cfm";
+            include "/views/logInPage.cfm"; 
+        break;
     }
 </cfscript>
