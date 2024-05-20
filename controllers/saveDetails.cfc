@@ -25,18 +25,33 @@ component{
         }
     } 
     remote any function saveSignUp(fullName,img,email,userName,password) returnFormat="JSON"{
-        local.objUser = createObject("component","models.saveDetails");
-        local.checkUserDetails = local.objUser.checkUserExists(email = email);
-        if(local.checkUserDetails.success){     
-            local.password = Hash(password,"MD5");
-            local.saveUserDetails = local.objUser.saveSignUp(fullName = fullName,img = img,email = email,userName = userName,password = local.password);
-            if(local.saveUserDetails.success){
-                return {"success":true,"msg":"New User added Successfully"};  
+
+        local.errorMsg = ''; 
+        if(len(trim(fullName)) EQ 0 OR len(trim(img)) EQ 0 OR len(trim(email)) EQ 0 OR len(trim(userName)) EQ 0 OR password EQ 0){
+            local.errorMsg &= "Please enter values in all fields"&"<br>";
+        }
+        if(REFind('\d', fullName)){
+            local.errorMsg &= "Fullname must contain string value only"&"<br>";
+        }
+        if (isNumeric(userName)){
+            local.error &="User Name must contain String values"&"<br>";
+        } 
+        if(local.errorMsg EQ ''){
+            local.objUser = createObject("component","models.saveDetails");
+            local.checkUserDetails = local.objUser.checkUserExists(email = email);
+            if(local.checkUserDetails.success){     
+                local.password = Hash(password,"MD5");
+                local.saveUserDetails = local.objUser.saveSignUp(fullName = fullName,img = img,email = email,userName = userName,password = local.password);
+                if(local.saveUserDetails.success){
+                    return {"success":true,"msg":"New User added Successfully"};  
+                }else{
+                    return {"success":false,"msg":"Something went wrong!"};
+                }
             }else{
-                return {"success":false,"msg":"Something went wrong!"};
+                return {"success":false,"msg":"User with same Email Id already existing"};
             }
         }else{
-            return {"success":false,"msg":"User with same Email Id already existing"};
+            return {"success":false,"msg":"#local.errorMsg#"}
         }
     }
     remote any function doLoginSOS(email,fullName,img) returnFormat="JSON" {
@@ -83,6 +98,16 @@ component{
                 }
             }    
         }
+    } 
+
+    remote any function excelDetails(excelFile) returnFormat="JSON"{
+        local.objExcel = createObject("component","models.saveDetails");
+        local.checkExcelDetails = local.objExcel.checkExcelContactExists(excelFile = excelFile);
+        if(local.checkExcelDetails.success == "added"){  
+            return {"result":"added"};
+        }else if(local.checkExcelDetails.success == "exist"){
+            return {"result":"exist"};
+        }
     }  
     public void function checkLogin(){
         if(session.login){
@@ -113,16 +138,6 @@ component{
         } else {
             return { "success": false, "msg": "Table HTML content is empty." };
         }
-    }
-
-    remote any function excelDetails(excelFile) returnFormat="JSON"{
-        local.objExcel = createObject("component","models.saveDetails");
-        local.checkExcelDetails = local.objExcel.checkExcelContactExists(excelFile = excelFile);
-        if(local.checkExcelDetails.success == "added"){  
-            return {"result":"added"};
-        }else if(local.checkExcelDetails.success == "exist"){
-            return {"result":"exist"};
-        }
-    }  
+    } 
     
 }  

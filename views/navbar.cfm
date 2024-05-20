@@ -1,4 +1,4 @@
-<div class="navbar d-flex px-5 mb-5 align-items-center justify-content-between">
+<div class="navbar d-flex px-5  align-items-center justify-content-between">
         <div class="d-flex align-items-center justify-content-between gap-2">
             <img src="./assets/images/bodyBook.png" class="book" alt="book">
             <p class="bookTitle mb-0">ADDRESS BOOK</p>

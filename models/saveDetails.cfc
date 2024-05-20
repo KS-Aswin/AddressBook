@@ -186,23 +186,33 @@
                 <cfif excelInsert.recordCount>
                     <cfcontinue>
                 <cfelse>
-                    <cfquery name="newExcelContact" datasource="DESKTOP-89AF345">
-                        insert into contact (title, firstName, lastName, gender,dob,photo,address,street,email,phone,userId,pincode)
-                        values(
-                            <cfqueryparam value="#local.title#" cfsqltype="cf_sql_varchar">,
-                            <cfqueryparam value="#local.firstName#" cfsqltype="cf_sql_varchar">,
-                            <cfqueryparam value="#local.lastName#" cfsqltype="cf_sql_varchar">,
-                            <cfqueryparam value="#local.gender#" cfsqltype="cf_sql_varchar">,
-                            <cfqueryparam value="#local.dob#" cfsqltype="cf_sql_date">,
-                            <cfqueryparam value="#local.photo#" cfsqltype="cf_sql_varchar">,
-                            <cfqueryparam value="#local.address#" cfsqltype="cf_sql_varchar">,
-                            <cfqueryparam value="#local.street#" cfsqltype="cf_sql_varchar">,
-                            <cfqueryparam value="#local.email#" cfsqltype="cf_sql_varchar">,
-                            <cfqueryparam value="#local.phone#" cfsqltype="cf_sql_varchar">,
-                            <cfqueryparam value="#session.intUid#" cfsqltype="cf_sql_integer">,
-                            <cfqueryparam value="#local.pincode#" cfsqltype="cf_sql_integer">
-                        ) 
+                    <cfquery name = "contactEmail" datasource="DESKTOP-89AF345">
+                        select email
+                        from users
+                        where email = <cfqueryparam value="#local.email#" cfsqltype="cf_sql_varchar">
+                        and id = <cfqueryparam value="#session.intUid#" cfsqltype="cf_sql_integer">
                     </cfquery>
+                    <cfif contactEmail.recordCount>
+                        <cfcontinue>
+                    <cfelse>
+                        <cfquery name="newExcelContact" datasource="DESKTOP-89AF345">
+                            insert into contact (title, firstName, lastName, gender,dob,photo,address,street,email,phone,userId,pincode)
+                            values(
+                                <cfqueryparam value="#local.title#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#local.firstName#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#local.lastName#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#local.gender#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#local.dob#" cfsqltype="cf_sql_date">,
+                                <cfqueryparam value="#local.photo#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#local.address#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#local.street#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#local.email#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#local.phone#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#session.intUid#" cfsqltype="cf_sql_integer">,
+                                <cfqueryparam value="#local.pincode#" cfsqltype="cf_sql_varchar">
+                            ) 
+                        </cfquery>
+                    </cfif>
                 </cfif> 
             </cfloop>         
         </cfif>

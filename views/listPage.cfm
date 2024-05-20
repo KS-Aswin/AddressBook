@@ -30,8 +30,8 @@
                                         <input type="file" id="strUploadExleFile" src="" name="strUploadExleFile" value="" accept=".xlsx,.xls">
                                     </div>
                                     <div class="d-flex mt-3 align-items-center justify-content-start">
-                                        <button type="button" class="createContact closeBtn  m-0" id="formExcelSubmit">SUBMIT</button>
-                                        <button type="button" class="closeBtn  m-0 ms-1" data-bs-dismiss="modal">CLOSE</button>
+                                        <button type="button" class=" excelBtn closeBtn excelSubmit m-0" id="formExcelSubmit">SUBMIT</button>
+                                        <button type="button" class="closeBtn excelBtn  ms-1" data-bs-dismiss="modal">CLOSE</button>
                                     </div>
                                 </div>
                             </div>
@@ -44,9 +44,6 @@
                         <div class="modal-content d-flex ps-3 formBorder modalFullBody">
                             <div class="d-flex justify-content-between gap-3 ">
                                 <div class="ps-5 py-5 d-flex flex-column justify-content-between formSide gap-3">
-                                    <div class="d-flex align-items-center justify-content-center addMsgStyle p-2">
-                                        <h5 class="mb-0" id="addMsg"><b></b></h5>
-                                    </div>
                                     <div class="createAccount d-flex align-items-center justify-content-center p-2">
                                         <h4 class="mb-0" id="heading"><b>CREATE ACCOUNT</b></h4>
                                     </div>
@@ -58,7 +55,7 @@
                                             <div class="d-flex gap-3">
                                                 <div class="d-flex flex-column">
                                                 <input type="hidden" name="intContactId" id="intContactId" value="0">
-                                                    <label for="strTitle">Title*</label>
+                                                    <label for="strTitle" id="formTitle">Title*</label>
                                                     <div class="dropdown d-flex justify-content-start">
                                                         <select id="strTitle" value="" name ="strTitle" class="form-select form-select-sm">
                                                             <option selected value=""></option>
@@ -68,17 +65,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="nameInput d-flex flex-column">                                            
-                                                    <label for="strFirstName">First Name*</label>
+                                                    <label for="strFirstName" id="formFirstname">First Name*</label>
                                                     <input type="text" id="strFirstName" name="strFirstName" value="" placeholder="Your First Name" >
                                                 </div>
                                                 <div class="nameInput d-flex flex-column">                                            
-                                                    <label for="strLastName">Last Name*</label>
+                                                    <label for="strLastName" id="formLastname">Last Name*</label>
                                                     <input type="text" id="strLastName" name="strLastName" value="" placeholder="Your Last Name">
                                                 </div>
                                             </div>
                                             <div class="d-flex gap-3">
                                                 <div class="d-flex flex-column">
-                                                    <label for="strGender">Gender*</label>
+                                                    <label for="strGender" id="formGender">Gender*</label>
                                                     <div class="dropdown d-flex justify-content-start">
                                                         <select id="strGender" name = "strGender" value="" class="form-select form-select-sm">
                                                             <option selected value=""></option>
@@ -89,13 +86,13 @@
                                                     </div>
                                                 </div>
                                                 <div class="d-flex flex-column">                                            
-                                                    <label for="strDate">Date Of Birth*</label>
+                                                    <label for="strDate" id="formDate">Date Of Birth*</label>
                                                     <input type="date" id="strDate" name="strDate" value="">
                                                 </div>
                                             </div>
                                             <div class="d-flex gap-3">
                                                 <div class="d-flex flex-column ">                                            
-                                                    <label class="fs-7" for="strUploadFile">Upload Photo*</label>
+                                                    <label class="fs-7" for="strUploadFile" id="formPhoto">Upload Photo*</label>
                                                     <input type="file" id="strUploadFile" src="" name="strUploadFile" value="" accept=".png,.jpg,.jpeg,.webp,image/png">
                                                 </div>
                                             </div>
@@ -105,36 +102,39 @@
                                         </div>
                                         <div class="d-flex mt-3 gap-3">
                                             <div class="addressInput d-flex flex-column">
-                                                <label for="strAddress">Address*</label>
+                                                <label for="strAddress" id="formAddress">Address*</label>
                                                 <input type="text" id="strAddress" name="strAddress" value="">
                                             </div>
                                             <div class="addressInput d-flex flex-column">
-                                                <label for="strStreet">Street*</label>
+                                                <label for="strStreet" id="formStreet">Street*</label>
                                                 <input type="text" id="strStreet" name="strStreet" value="">
                                             </div>
                                         </div>
                                         <div class="d-flex mt-3 gap-3">
                                             <div class="addressInput d-flex flex-column">
-                                                <label for="intPhoneNumber">Phone Number*</label>
+                                                <label for="intPhoneNumber" id="formPhone">Phone Number*</label>
                                                 <input type="text" id="intPhoneNumber" name="intPhoneNumber" value="">
                                             </div>
                                             <div class="addressInput d-flex flex-column">
-                                                <label for="strEmailId">Email*</label>
+                                                <label for="strEmailId" id="formEmail">Email*</label>
                                                 <input type="text" id="strEmailId" name="strEmailId" value="">
                                             </div>
                                         </div>
                                         <div class="d-flex mt-3 gap-3">
                                             <div class="addressInput d-flex flex-column">
-                                                <label for="intPinCode">Pincode*</label>
+                                                <label for="intPinCode" id="formPincode">Pincode*</label>
                                                 <input type="text" id="intPinCode" name="intPinCode" value="">
                                             </div>
                                         </div>
                                         <div class="d-flex mt-3 align-items-center justify-content-start gap-5">
-                                            <button type="button" class="createContact closeBtn m-0 mt-2 me-4" id="formSubmit">SUBMIT</button>
-                                            <button type="button" class="createContact closeBtn m-0 mt-2 ms-5" data-bs-dismiss="modal">CLOSE</button>
+                                            <button type="button" class="createContact closeBtn py-2 m-0 mt-2 me-4" id="formSubmit">SUBMIT</button>
+                                            <button type="button" class="createContact closeBtn py-2 m-0 mt-2 ms-5" data-bs-dismiss="modal">CLOSE</button>
                                         </div>
                                     
                                     </form>
+                                     <div class="d-flex align-items-center justify-content-center addMsgStyle p-2">
+                                        <h5 class="mb-0" id="addMsg"><b></b></h5>
+                                    </div>
                                 </div>
                                 <div class="modalProfile mt-3 d-flex align-items-start justify-content-center mt-5 p-5">
                                     <img src="./assets/images/modalProfile.png" class="modalImg mt-5" alt="userProfile">
@@ -153,7 +153,7 @@
                                     <h5><b class="tableHeading"></b></h5>
                                 </th>
                                 <th>
-                                    <h5><b class="tableHeading">NAME</b></h5>
+                                    <h5><b class="tableHeading ">NAME</b></h5>
                                 </th>
                                 <th>
                                     <h5><b class="tableHeading">EMAIL ID</b></h5>
@@ -182,15 +182,15 @@
                                         <th>#contact.getfirstName()# #contact.getlastName()#</th>
                                         <th>#contact.getemail()#</th>
                                         <th>#contact.getphone()#</th>
-                                        <th><button type="button" class="listBtn editBtn m-0"  data-id="#variables.contactId#" data-bs-toggle="modal" data-bs-target="##myModal">EDIT</button></th>
-                                        <th><button type="button" class="listBtn deleteBtn m-0" data-id="#variables.contactId#">DELETE</button></th>
+                                        <th><button type="button" class="listBtn tableBtn editBtn m-0"  data-id="#variables.contactId#" data-bs-toggle="modal" data-bs-target="##myModal">EDIT</button></th>
+                                        <th><button type="button" class="listBtn tableBtn deleteBtn m-0" data-id="#variables.contactId#">DELETE</button></th>
                                         <th>
-                                            <button type="button" class="listBtn viewBtn m-0" data-id="#variables.contactId#" data-bs-toggle="modal" data-bs-target="##viewAccount">VIEW</button>
+                                            <button type="button" class="listBtn tableBtn viewBtn m-0" data-id="#variables.contactId#" data-bs-toggle="modal" data-bs-target="##viewAccount">VIEW</button>
                                             <div class="modal bd-example-modal-lg fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="viewAccount">
                                                 <div class="modal-dialog modal-lg p-1">
                                                     <div class="modal-content d-flex ps-3 formBorder">
                                                         <div class="d-flex justify-content-between gap-3">
-                                                            <div class="ps-5 py-5 d-flex flex-column justify-content-between formSide gap-3">
+                                                            <div class="ps-5 py-5 pb-4 d-flex flex-column justify-content-start formSide gap-1">
                                                                 <div class="createAccount d-flex align-items-center justify-content-center mb-4 p-2">
                                                                     <h4 class="mb-0"><b>CONTACT DETAILS</b></h4>
                                                                 </div>

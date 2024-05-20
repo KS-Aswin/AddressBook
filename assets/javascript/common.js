@@ -7,7 +7,7 @@ $(document).ready(function () {
         if (userName == '' && password == '') {
             errorMsg += "Please enter values in all fields!";
         } else if (userName == '') {
-            errorMsg += "Please enter username!";
+            errorMsg += "Please enter Username!";
         } else if (password == '') {
             errorMsg += "Please enter Password!";
         }
@@ -56,10 +56,7 @@ $(document).ready(function () {
                 dataType: "json",
                 success: function (response) {
                     if (response.success) {
-                        $("#signUpMsg").html(response.msg).css('color', 'green');
-                        setTimeout(function () {
-                            window.location.href = "?action=login";
-                        }, 1000);
+                        window.location.href = "?action=login";
                     } else {
                         $("#signUpMsg").html(response.msg).css('color', 'red');
                     }
@@ -289,7 +286,7 @@ $(document).ready(function () {
 
         if (Object.keys(params).length > 0) {
             localStorage.setItem('authInfo', JSON.stringify(params));
-            window.history.pushState({}, document.title, "/AddressBook/?action=list");
+            window.history.pushState({}, document.title, "/AddressBook/");
         }
 
         let info = JSON.parse(localStorage.getItem('authInfo'));
@@ -378,13 +375,13 @@ function validation() {
         errorMsg += "Please enter values in all fields!";
     } else {
         if ((specialCharName) || (numberName)) {
-            errorMsg += "Fullname must contain String values only!";
+            errorMsg += "Fullname must contain String values only!" + "<br>";
         }
         if (!email.match(emailRegex)) {
-            errorMsg += "Enter a valid email address!";
+            errorMsg += "Enter a valid email address!" + "<br>";
         }
         if ((specialCharUser) || (numberUser)) {
-            errorMsg += "Username must contain String values only!";
+            errorMsg += "Username must contain String values only!" + "<br>";
         }
         if (password != '') {
             var specialChar = specialChar.test(password);
@@ -427,43 +424,81 @@ function contactValidation() {
     var specialCharLastName = specialChar.test(strLastName);
     var numberLastName = number.test(strLastName);
     var alphabetDate = alphabets.test(strDate);
-    var specialCharPincode = specialChar.test(intPinCode);
-    var alphabetPincode = alphabets.test(intPinCode);
     var errorMsg = "";
     $("#addMsg").text("");
     if (strTitle == "" || strFirstName == "" || strLastName == "" || strGender == "" || strDate == "" || filePhoto == "" || strAddress == "" || strStreet == "" || intPhoneNumber == "" || strEmailId == "" || intPinCode == "") {
-        errorMsg += "Please enter values in all fields!";
+        errorMsg += "Please enter values in all fields!" + "<br>";
     } else {
-        if ((specialCharFirstName) || (numberFirstName)) {
-            errorMsg += "Firstname must contain String values only!";
+        if(strFirstName.length >= 2){
+            if ((specialCharFirstName) || (numberFirstName)) {
+                errorMsg += "Firstname must contain String values only!" + "<br>";
+                $("#formFirstname").css("color", "red");
+            }else{
+                $("#formFirstname").css("color", "#337AB7");
+            }
+        }else if (strFirstName.length <=1){
+            errorMsg += "Firstname must contain atleast two characters!" + "<br>";
+            $("#formFirstname").css("color", "red");
+        }else{
+            $("#formFirstname").css("color", "#337AB7");
         }
+
         if ((specialCharLastName) || (numberLastName)) {
-            errorMsg += "Lastname must contain String values only!";
+            errorMsg += "Lastname must contain String values only!" + "<br>";
+            $("#formLastname").css("color", "red");
+        }else{
+            $("#formLastname").css("color", "#337AB7");
         }
+        
         if ((alphabetDate)) {
-            errorMsg += "Date must not contain String values!";
+            errorMsg += "Date must not contain String values!" + "<br>";
+            $("#formDate").css("color", "red");
+        }else{
+            $("#formDate").css("color", "#337AB7");
         }
         if (!isNaN(strAddress)) {
-            errorMsg += "Address should contain String values!";
+            errorMsg += "Address should contain String values!" + "<br>";
+            $("#formAddress").css("color", "red");
+        }else{
+            $("#formAddress").css("color", "#337AB7");
         }
         if (!isNaN(strStreet)) {
-            errorMsg += "Street should contain String values!";
+            errorMsg += "Street should contain String values!" + "<br>";
+            $("#formStreet").css("color", "red");
+        }else{
+            $("#formStreet").css("color", "#337AB7");
         }
         if (isNaN(intPhoneNumber) && isNaN(intPinCode)) {
-            errorMsg += "Phone Number and Pincode must contain Integer values only!";
+            errorMsg += "Phone Number and Pincode must contain Integer values only!" + "<br>";
+            $("#formPhone").css("color", "red");
+            $("#formPincode").css("color", "red");
         } else if (isNaN(intPhoneNumber)) {
-            errorMsg += "Phone Number must contain Integer values only!";
+            errorMsg += "Phone Number must contain Integer values only!" + "<br>";
+            $("#formPhone").css("color", "red");
+            $("#formPincode").css("color", "#337AB7");
         } else if (isNaN(intPinCode)) {
-            errorMsg += "Pincode must contain Integer values only!";
+            errorMsg += "Pincode must contain Integer values only!" + "<br>";
+            $("#formPincode").css("color", "red");
+            $("#formPhone").css("color", "#337AB7");
         } else {
+            $("#formPincode").css("color", "337AB7");
+            $("#formPhone").css("color", "#337AB7");
             if (intPhoneNumber.length != 10) {
-                errorMsg += "Phone Number must contain 10 digits!";
+                errorMsg += "Phone Number must contain 10 digits!" + "<br>";
+                $("#formPhone").css("color", "red");
             } else if (intPinCode.length != 6) {
-                errorMsg += "Pincode must contain 6 digits!";
+                errorMsg += "Pincode must contain 6 digits!" + "<br>";
+                $("#formPincode").css("color", "#red");
+            }else {
+                $("#formPincode").css("color", "337AB7");
+                $("#formPhone").css("color", "#337AB7");
             }
         }
         if (!strEmailId.match(emailRegex)) {
-            errorMsg += "Enter a valid email address!";
+            errorMsg += "Enter a valid email address!" + "<br>";
+            $("#formEmail").css("color", "red");
+        }else{
+            $("#formEmail").css("color", "#337AB7");
         }
     }
 
