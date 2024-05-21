@@ -272,58 +272,60 @@ $(document).ready(function () {
         return false;
 
     });
+    
+});
 
+
+$(document).ready(function () {
     $('#googleLogin').on('click', function () {
         signIn();
     });
-    $(document).ready(function () {
-        let params = {};
-        let regex = /([^&=]+)=([^&]*)/g,m;
+    let params = {};
+    let regex = /([^&=]+)=([^&]*)/g,m;
 
-        while ((m = regex.exec(location.href)) !== null) {
-            params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
-        }
+    while ((m = regex.exec(location.href)) !== null) {
+        params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+    }
 
-        if (Object.keys(params).length > 0) {
-            localStorage.setItem('authInfo', JSON.stringify(params));
-            window.history.pushState({}, document.title, "/AddressBook/");
-        }
+    if (Object.keys(params).length > 0) {
+        localStorage.setItem('authInfo', JSON.stringify(params));
+        window.history.pushState({}, document.title, "/AddressBook/");
+    }
 
-        let info = JSON.parse(localStorage.getItem('authInfo'));
+    let info = JSON.parse(localStorage.getItem('authInfo'));
 
-        if (info) {
-            $.ajax({
-                url: "https://www.googleapis.com/oauth2/v3/userinfo",
-                headers: {
-                    "Authorization": `Bearer ${info['access_token']}`
-                },
-                success: function (data) {
-                    var email = data.email;
-                    var fullName = data.name;
-                    var img = data.picture;
-                    $.ajax({
-                        url: './controllers/saveDetails.cfc?method=doLoginSOS',
-                        type: 'post',
-                        data: {
-                            email: email,
-                            fullName: fullName,
-                            img: img
-                        },
-                        dataType: "json",
-                        success: function (response) {
-                            if (response.success) {
-                                window.location.href = "?action=list";
-                            }
-                        },
-                        error: function (xhr, status, error) {
-                            alert("An error occurred: " + error);
+    if (info) {
+        $.ajax({
+            url: "https://www.googleapis.com/oauth2/v3/userinfo",
+            headers: {
+                "Authorization": `Bearer ${info['access_token']}`
+            },
+            success: function (data) {
+                var email = data.email;
+                var fullName = data.name;
+                var img = data.picture;
+                $.ajax({
+                    url: './controllers/saveDetails.cfc?method=doLoginSOS',
+                    type: 'post',
+                    data: {
+                        email: email,
+                        fullName: fullName,
+                        img: img
+                    },
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.success) {
+                            window.location.href = "?action=list";
                         }
-                    });
-                }
-            });
-        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("An error occurred: " + error);
+                    }
+                });
+            }
+        });
+    }
 
-    });
 
 });
 
