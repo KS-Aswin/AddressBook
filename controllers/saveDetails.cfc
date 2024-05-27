@@ -68,13 +68,13 @@ component{
         else {
             local.saveSOS=local.objUser.saveSOS(email=email,fullName=fullName,img=img);
             if(local.saveSOS.success){
-                local.checkUser=local.objUser.doLoginSOS(email=email);
-                if (local.checkUser.success) {
+                local.checkUserSave=local.objUser.doLoginSOS(email=email);
+                if (local.checkUserSave.recordCount) {
                     session.login = true;
                     session.sso = true;
-                    session.strfullName=local.checkUser.fullName;
-                    session.ssoImg = local.checkUser.img;
-                    session.intUid=local.checkUser.id;
+                    session.strfullName=local.checkUserSave.fullName;
+                    session.ssoImg = local.checkUserSave.img;
+                    session.intUid=local.checkUserSave.id;
                 }
                 return {"success":true};  
             }
