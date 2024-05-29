@@ -1,67 +1,83 @@
-*{
+* {
     margin: 0;
     padding: 0;
 }
-body{
+
+body {
     background-color: #D8E5F1;
 }
-.navbar{
+
+.navbar {
     background-color: #337AB7;
 }
-.log{
-    color:#ffffff;
+
+.log {
+    color: #ffffff;
 }
-.downloadIcon{
+
+.downloadIcon {
     cursor: pointer;
 }
-.book{
+
+.book {
     width: 30px;
     height: 30px;
 }
-.profile{
+
+.profile {
     width: 15px;
     height: 15px;
 }
-.profileText{
+
+.profileText {
     color: #ffffff;
     font-size: 14px;
 }
-.bookTitle{
+
+.bookTitle {
     font-size: 24px;
     color: #ffffff;
     font-weight: 600;
 }
 
-.bodyContainer{
+.bodyContainer {
     border-radius: 10px;
 }
-.bodyBook{
+
+.bodyBook {
     width: 90px;
-    height: 100px;   
+    height: 100px;
 }
-.leftBody{   
-    padding:20px;
+
+.leftBody {
+    padding: 20px;
     background-color: #337AB7;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
 }
-.rightBody{
+
+.rightBody {
     background-color: #ffffff;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
 }
-.loginInput,.signupInput{
-    font-size:14px;
+
+.loginInput,
+.signupInput {
+    font-size: 14px;
     width: 400px;
     outline: none;
     border: none;
     border-bottom: 1px solid #8f8c8c;
 }
-.login,.signup{
+
+.login,
+.signup {
     font-size: 30px;
     color: #337AB7;
 }
-button{
+
+button {
     border: 1px solid #337AB7;
     padding: 5px 35%;
     margin: 20px;
@@ -70,59 +86,72 @@ button{
     color: #337AB7;
     font-weight: 600;
 }
-button:hover{
+
+button:hover {
     color: #ffffff;
     background: #337AB7;
     border: 1px solid #337AB7;
 }
-.signin{
-    font-size:16px;
+
+.signin {
+    font-size: 16px;
     color: #8f8c8c;
 }
-.signInImgGoogle{
+
+.signInImgGoogle {
     width: 40px;
     height: 40px;
 }
-a{
+
+a {
     color: #337AB7;
     text-decoration: none;
 }
-a:hover{
+
+a:hover {
     text-decoration: underline;
 }
-.regHere:hover{
+
+.regHere:hover {
     color: tomato;
     text-decoration: none;
 }
-#signUpMsg,#loginMsg{
+
+#signUpMsg,
+#loginMsg {
     height: 40px;
     font-size: 16px;
     font-weight: 700;
     color: #337AB7;
 }
-#signUpMsg{
+
+#signUpMsg {
     height: 80px;
 }
 
 /*List*/
-.downloadContainer{
+.downloadContainer {
     background-color: #ffffff;
     width: 92%;
     border-radius: 8px;
 }
-.downloadContainer  a{
+
+.downloadContainer a {
     cursor: pointer !important;
 }
-.profileUser{
+
+.profileUser {
     background-color: #ffffff;
     border-radius: 8px;
 }
-.userName{
+
+.userName {
     color: #337AB7;
     line-height: 1;
     height: 30px;
 }
-.createContact{
+
+.createContact {
     padding: 8px;
     font-size: 14px !important;
     background: #337AB7;
@@ -131,10 +160,12 @@ a:hover{
     font-weight: 600;
     border: 1px solid #337AB7;
 }
-.createContact:hover{
+
+.createContact:hover {
     background: #165994;
 }
-.createExcelContact{
+
+.createExcelContact {
     padding: 8px;
     font-size: 14px !important;
     background: transparent;
@@ -143,38 +174,46 @@ a:hover{
     font-weight: 600;
     border: 1px solid #2860AB;
 }
-.createExcelContact:hover{
+
+.createExcelContact:hover {
     color: #ffffff;
     background: #337AB7;
     border: 1px solid #337AB7;
 }
-.tableHeading{
+
+.tableHeading {
     color: #337AB7;
     font-size: 16px;
 }
-.displayProfiles{
+
+.displayProfiles {
     width: 70%;
     background-color: #ffffff;
     min-height: 276px !important;
     border-radius: 10px !important;
 }
-.table{
+
+.table {
     border-radius: 10px !important;
 }
-.formSide{
+
+.formSide {
     width: 70%;
     background-color: #ffffff;
 }
-.modalProfile{
+
+.modalProfile {
     background-color: #DAEEF7;
     width: 30% !important;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
 }
-#strRole{
+
+#strRole {
     width: 100px;
 }
-.nameInput > input{
+
+.nameInput>input {
     padding: 5px;
     font-size: 14px;
     width: 121px;
@@ -184,7 +223,8 @@ a:hover{
     border-top: 1px solid #8f8c8c;
     border-bottom: 1px solid #8f8c8c;
 }
-.addressInput > input{
+
+.addressInput>input {
     width: 172px;
     height: 30px;
     border: none;
@@ -192,107 +232,137 @@ a:hover{
     border-top: 1px solid #8f8c8c;
     border-bottom: 1px solid #8f8c8c;
 }
-.createAccount{
+
+.createAccount {
     color: #2860AB;
     width: 80%;
     background-color: #DAEEF7;
 }
-.personalContact,.contactHead{
+
+.personalContact,
+.contactHead {
     border-bottom: 2px solid #2860AB;
     width: 75%;
 }
-.personalContact,label,.contactHead{
+
+.personalContact,
+label,
+.contactHead {
     color: #337AB7;
 }
-label{
+
+label {
     font-weight: 700;
     font-size: 14px;
 }
-.listBtn{
+
+.listBtn {
     padding: 5px 20px !important;
     font-size: 14px !important;
 }
-.listBtn:hover{
+
+.listBtn:hover {
     color: #ffffff;
     background: #337AB7;
     border: none;
 }
-.closeBtn{
+
+.closeBtn {
     padding: 0px 40px;
 }
-.viewContactDetails{
+
+.viewContactDetails {
     font-size: 14px;
     color: #337AB7;
     width: 70%;
 }
-#addMsg{
+
+#addMsg {
     font-size: 14px;
     height: 80px;
 }
-.addMsgStyle{
+
+.addMsgStyle {
     height: 80px;
 }
-.modalFullBody{
+
+.modalFullBody {
     background-color: #DAEEF7;
 }
-.userProfilePic{
+
+.userProfilePic {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    
+
 }
-tr,thead{
+
+tr,
+thead {
     border-radius: 10px !important;
     border-bottom: 1px solid #c7c6c6 !important;
 }
-tr:last-child{
+
+tr:last-child {
     border-radius: 10px !important;
 }
-th{
-    border: none; 
+
+th {
+    border: none;
     line-height: 40px;
 }
-.userProfile{
+
+.userProfile {
     width: 100px;
     height: 100px;
     border-radius: 50%;
 }
-.pdfImg{
+
+.pdfImg {
     height: 25px !important;
     width: 25px !important;
 }
-.errorTag{
-    height:15px;
+
+.errorTag {
+    height: 15px;
     font-size: 14px;
-    color: red; 
+    color: red;
     font-weight: 700;
 }
-#excelMsg{
+
+#excelMsg {
     font-size: 14px;
     font-weight: 700;
     height: 15px;
 }
-.modalImg{
+
+.modalImg {
     width: 150px;
     height: 150px;
     border-radius: 50%;
 }
-#googleLogin{
+
+#googleLogin {
     cursor: pointer;
 }
-#pdfContent{
+
+#pdfContent {
     border-radius: 10px !important;
 }
-.tableBtn{
-    padding: 0px 15px!important;
+
+.tableBtn {
+    padding: 0px 15px !important;
 }
-.excelBtn{
+
+.excelBtn {
     padding: 5px 20px !important;
 }
-.excelSubmit{
+
+.excelSubmit {
     background: #337AB7;
     color: #ffffff;
 }
-.excelSubmit:hover{
+
+.excelSubmit:hover {
     background: #165994;
 }

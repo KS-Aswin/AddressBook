@@ -10,17 +10,16 @@
         </cfquery>
         <cfreturn checkLogin>
     </cffunction>
+
     <cffunction  name="saveSignUp" access="remote"  returnformat="json">
         <cfargument name = "fullName" required="true" returnType="string">
         <cfargument name = "img" required="true" returnType="string">
         <cfargument name = "email" required="true" returnType="string">
         <cfargument name = "userName" required="true" returnType="string">
         <cfargument name = "password" required="true" returnType="string">
-
         <cfset local.path = ExpandPath("../assets/UploadImages/")>
         <cffile action="upload" destination="#local.path#" nameConflict="MakeUnique" filefield="img">
         <cfset local.profile = cffile.serverFile>
-
         <cftry>
             <cfquery name="newSignUp" datasource="DESKTOP-89AF345">
                 insert into users (userName,img, password, email, fullName)
@@ -38,6 +37,7 @@
             </cfcatch>
         </cftry>
     </cffunction>
+
     <cffunction  name="saveContact" access="remote"  returnformat="json">
         <cfargument name = "intContactId" required='true' type="numeric">
         <cfargument name = "strTitle" required="true" returnType="string">
@@ -51,11 +51,9 @@
         <cfargument name = "strEmailId" required="true" returnType="string">
         <cfargument name = "intPhoneNumber" required="true" returnType="string">
         <cfargument name = "intPinCode" required="true" returnType="string">
-
         <cfset local.path = ExpandPath("../assets/UploadImages/")>
         <cffile action="upload" destination="#local.path#" nameConflict="MakeUnique" filefield="filePhoto">
         <cfset local.profile = cffile.serverFile>
-
         <cfif arguments.intContactId GT 0>
             <cfquery name="updatePage">
                 update contact 
@@ -95,6 +93,7 @@
             <cfreturn {"success":"added"}>
         </cfif>
     </cffunction>
+
     <cffunction  name = "checkUserExists" access="remote"  returnformat="json">
         <cfargument name = "email" required="true" returnType="string">
         <cfquery name = "userExist" datasource="DESKTOP-89AF345">
@@ -108,6 +107,7 @@
             <cfreturn {"success":true}>
         </cfif>
     </cffunction>
+
     <cffunction  name = "checkContactEmail" access="remote"  returntype="query">
         <cfargument name = "strEmailId" required="true" returnType="string">
         <cfquery name = "contactEmail" datasource="DESKTOP-89AF345">
@@ -118,6 +118,7 @@
         </cfquery>
         <cfreturn contactEmail>
     </cffunction>
+
     <cffunction  name = "checkContactExists" access="remote"  returntype="query">
         <cfargument  name="intContactId" required="true">
         <cfargument name = "strEmailId" required="true" returnType="string">
@@ -156,12 +157,10 @@
                 <cfset arrayAppend(local.dbColumnNames, qryColumnNames.column_name)>
             </cfif>
         </cfloop>
-
         <cfset local.excelColumnNames=ArrayToList(local.excelColumnNames)>
         <cfset local.dbColumnNames=ArrayToList(local.dbColumnNames)>
         <cfset local.allHeader = Listappend(trim(local.excelColumnNames),trim(local.dbColumnNames))>
         <cfset local.ListRemoveDuplicate=(ListRemoveDuplicates(local.allHeader,",",true))>
-
         <cfif (ListLen(local.dbColumnNames) EQ ListLen(local.ListRemoveDuplicate)) AND (ListLen(local.dbColumnNames) EQ ListLen(trim(local.excelColumnNames)))>
             <cfspreadsheet action="read" src="#local.FilePath#" query="spreadsheetData" headerrow='1' rows='2-50'>
             <cfloop query="#spreadsheetData#">
@@ -217,7 +216,6 @@
             </cfloop>         
         </cfif>
         <cfreturn {"success":"added"}> 
-        
     </cffunction>
    
     <cffunction name="getContactDetails" access="remote" returnFormat="json">
@@ -229,6 +227,7 @@
         </cfquery>
         <cfreturn {"success":true,"name":forDisplay.name,"gender":forDisplay.gender,"dob":forDisplay.dob,"address":forDisplay.address,"pincode":forDisplay.pincode,"email":forDisplay.email,"phone":forDisplay.phone,"photo":forDisplay.photo}>
     </cffunction>
+
     <cffunction name="getEditContactDetails" access="remote" returnFormat="json">
         <cfargument  name="intContactId" required="true">
         <cfquery name="forDisplay" datasource="DESKTOP-89AF345">
@@ -238,6 +237,7 @@
         </cfquery>
         <cfreturn {"success":true,"title":forDisplay.title,"firstName":forDisplay.firstName,"lastName":forDisplay.lastName,"gender":forDisplay.gender,"dob":forDisplay.dob,"photo":forDisplay.photo,"address":forDisplay.address,"street":forDisplay.street,"pincode":forDisplay.pincode,"email":forDisplay.email,"phone":forDisplay.phone}>
     </cffunction>
+
     <cffunction name="deleteContactDetails" access='remote' returnFormat="json">
         <cfargument name="intContactId" type="numeric" required='true'>
         <cfquery name="deleteContactDetails">
@@ -246,6 +246,7 @@
         </cfquery>
         <cfreturn {"success":true}>
     </cffunction>
+
     <cffunction name="doLoginSOS" access="remote" returnType="query">
         <cfargument name="email" required="true" type="string">
         <cfquery name="checkLogin" datasource="DESKTOP-89AF345">
@@ -255,6 +256,7 @@
         </cfquery>
         <cfreturn checkLogin>
     </cffunction>
+    
     <cffunction  name="saveSOS" access="remote"  returnformat="json">
         <cfargument name = "email" required="true" returnType="string">
         <cfargument name = "fullName" required="true" returnType="string">

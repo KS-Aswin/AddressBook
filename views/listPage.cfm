@@ -10,7 +10,6 @@
         <div class="d-flex gap-2 align-items-start justify-content-center mb-4 ">
             <div class="profileUser d-flex flex-column align-items-center justify-content-center p-4 gap-2 me-3">
                 <img src="#variables.img#" alt="userProfile" class="userProfile">
-                
                 <h4 class="userName mb-0" id="nameSOS"><b>#session.strfullName#</b></h4>
                 <button type="button" id="createContactButton" class="createContact m-0 " data-bs-toggle="modal" data-bs-target="##myModal">CREATE CONTACT</button>
                 <button type="button" class="createExcelContact m-0  " data-bs-toggle="modal" data-bs-target="##excelModal">CREATE ACCOUNT USING EXCEL</button>
@@ -38,7 +37,6 @@
                         </form>
                     </div>
                 </div>
-                
                 <div class="modal bd-example-modal-lg fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="myModal">
                     <div class="modal-dialog modal-lg p-1">
                         <div class="modal-content d-flex ps-3 formBorder modalFullBody">
