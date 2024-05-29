@@ -272,7 +272,7 @@ $(document).ready(function () {
         return false;
 
     });
-    
+
 });
 
 
@@ -281,7 +281,8 @@ $(document).ready(function () {
         signIn();
     });
     let params = {};
-    let regex = /([^&=]+)=([^&]*)/g,m;
+    let regex = /([^&=]+)=([^&]*)/g,
+        m;
 
     while ((m = regex.exec(location.href)) !== null) {
         params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
@@ -431,43 +432,43 @@ function contactValidation() {
     if (strTitle == "" || strFirstName == "" || strLastName == "" || strGender == "" || strDate == "" || filePhoto == "" || strAddress == "" || strStreet == "" || intPhoneNumber == "" || strEmailId == "" || intPinCode == "") {
         errorMsg += "Please enter values in all fields!" + "<br>";
     } else {
-        if(strFirstName.length >= 2){
+        if (strFirstName.length >= 2) {
             if ((specialCharFirstName) || (numberFirstName)) {
                 errorMsg += "Firstname must contain String values only!" + "<br>";
                 $("#formFirstname").css("color", "red");
-            }else{
+            } else {
                 $("#formFirstname").css("color", "#337AB7");
             }
-        }else if (strFirstName.length <=1){
+        } else if (strFirstName.length <= 1) {
             errorMsg += "Firstname must contain atleast two characters!" + "<br>";
             $("#formFirstname").css("color", "red");
-        }else{
+        } else {
             $("#formFirstname").css("color", "#337AB7");
         }
 
         if ((specialCharLastName) || (numberLastName)) {
             errorMsg += "Lastname must contain String values only!" + "<br>";
             $("#formLastname").css("color", "red");
-        }else{
+        } else {
             $("#formLastname").css("color", "#337AB7");
         }
-        
+
         if ((alphabetDate)) {
             errorMsg += "Date must not contain String values!" + "<br>";
             $("#formDate").css("color", "red");
-        }else{
+        } else {
             $("#formDate").css("color", "#337AB7");
         }
         if (!isNaN(strAddress)) {
             errorMsg += "Address should contain String values!" + "<br>";
             $("#formAddress").css("color", "red");
-        }else{
+        } else {
             $("#formAddress").css("color", "#337AB7");
         }
         if (!isNaN(strStreet)) {
             errorMsg += "Street should contain String values!" + "<br>";
             $("#formStreet").css("color", "red");
-        }else{
+        } else {
             $("#formStreet").css("color", "#337AB7");
         }
         if (isNaN(intPhoneNumber) && isNaN(intPinCode)) {
@@ -491,7 +492,7 @@ function contactValidation() {
             } else if (intPinCode.length != 6) {
                 errorMsg += "Pincode must contain 6 digits!" + "<br>";
                 $("#formPincode").css("color", "#red");
-            }else {
+            } else {
                 $("#formPincode").css("color", "337AB7");
                 $("#formPhone").css("color", "#337AB7");
             }
@@ -499,7 +500,7 @@ function contactValidation() {
         if (!strEmailId.match(emailRegex)) {
             errorMsg += "Enter a valid email address!" + "<br>";
             $("#formEmail").css("color", "red");
-        }else{
+        } else {
             $("#formEmail").css("color", "#337AB7");
         }
     }

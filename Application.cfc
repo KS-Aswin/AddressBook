@@ -13,7 +13,6 @@ component
 	this.mappings[ "/layouts" ] = (this.baseDirectory & "layouts/");
 	this.ormEnabled = true;
 	this.datasource = "DESKTOP-89AF345";
-	
 
 	function onApplicationStart(){
 		return( true );

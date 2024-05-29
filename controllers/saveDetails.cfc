@@ -24,8 +24,8 @@ component{
             return {"success":false,"msg":"#local.error#"};
         }
     } 
-    remote any function saveSignUp(fullName,img,email,userName,password) returnFormat="JSON"{
 
+    remote any function saveSignUp(fullName,img,email,userName,password) returnFormat="JSON"{
         local.errorMsg = ''; 
         if(len(trim(fullName)) EQ 0 OR len(trim(img)) EQ 0 OR len(trim(email)) EQ 0 OR len(trim(userName)) EQ 0 OR password EQ 0){
             local.errorMsg &= "Please enter values in all fields"&"<br>";
@@ -54,6 +54,7 @@ component{
             return {"success":false,"msg":"#local.errorMsg#"}
         }
     }
+
     remote any function doLoginSOS(email,fullName,img) returnFormat="JSON" {
         local.objUser = createObject("component","models.saveDetails");
         local.checkUser=local.objUser.doLoginSOS(email=email);
@@ -80,6 +81,7 @@ component{
             }
         }
     } 
+
     remote any function contactDetails(intContactId,strTitle,strFirstName,strLastName,strGender,strDate,filePhoto,strAddress,strStreet,intPhoneNumber,strEmailId,intPinCode) returnFormat="JSON"{
         local.objContact = createObject("component","models.saveDetails");
         local.checkContactDetails = local.objContact.checkContactExists(strEmailId = strEmailId,intContactId = intContactId);
@@ -108,7 +110,8 @@ component{
         }else if(local.checkExcelDetails.success == "exist"){
             return {"result":"exist"};
         }
-    }  
+    } 
+
     public void function checkLogin(){
         if(session.login){
            cflocation(url="./?action=list");
@@ -138,6 +141,5 @@ component{
         } else {
             return { "success": false, "msg": "Table HTML content is empty." };
         }
-    } 
-    
+    }   
 }  
