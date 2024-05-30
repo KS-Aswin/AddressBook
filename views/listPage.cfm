@@ -193,53 +193,53 @@
                                                                     <h4 class="mb-0"><b>CONTACT DETAILS</b></h4>
                                                                 </div>
                                                                 <div class="viewContactDetails d-flex align-items-center ">
-                                                                    <div class="d-flex justify-content-between w-50">
+                                                                    <div class="d-flex justify-content-between col-6">
                                                                         <p class="mb-0">Name</p>
                                                                         <p class="mb-0 me-3">:</p>
                                                                     </div>
-                                                                    <p class="mb-0" id="name"></p>
+                                                                    <p class="mb-0 col-10" id="name"></p>
                                                                 </div>
                                                                 <div class="viewContactDetails d-flex align-items-center ">
-                                                                    <div class="d-flex justify-content-between w-50">
+                                                                    <div class="d-flex justify-content-between col-6">
                                                                         <p class="mb-0">Gender</p>
                                                                         <p class="mb-0 me-3">:</p>
                                                                     </div>
-                                                                    <p class="mb-0" id="gender"></p>
+                                                                    <p class="mb-0 col-10" id="gender"></p>
                                                                 </div>
                                                                 <div class="viewContactDetails d-flex align-items-center ">
-                                                                    <div class="d-flex justify-content-between w-50">
+                                                                    <div class="d-flex justify-content-between col-6">
                                                                         <p class="mb-0">Date of Birth</p>
                                                                         <p class="mb-0 me-3">:</p>
                                                                     </div>
-                                                                    <p class="mb-0" id="dob"></p>
+                                                                    <p class="mb-0 col-10" id="dob"></p>
                                                                 </div>
                                                                 <div class="viewContactDetails d-flex align-items-center ">
-                                                                    <div class="d-flex justify-content-between w-50">
+                                                                    <div class="d-flex justify-content-between col-6">
                                                                         <p class="mb-0">Address</p>
                                                                         <p class="mb-0 me-3">:</p>
                                                                     </div>
-                                                                    <p class="mb-0" id="address"></p>
+                                                                    <p class="mb-0 col-10" id="address"></p>
                                                                 </div>
                                                                 <div class="viewContactDetails d-flex align-items-center ">
-                                                                    <div class="d-flex justify-content-between w-50">
+                                                                    <div class="d-flex justify-content-between col-6">
                                                                         <p class="mb-0">Pincode</p>
                                                                         <p class="mb-0 me-3">:</p>
                                                                     </div>
-                                                                    <p class="mb-0" id="pincode"></p>
+                                                                    <p class="mb-0 col-10" id="pincode"></p>
                                                                 </div>
                                                                 <div class="viewContactDetails d-flex align-items-center ">
-                                                                    <div class="d-flex justify-content-between w-50">
+                                                                    <div class="d-flex justify-content-between col-6">
                                                                         <p class="mb-0">Email Id</p>
                                                                         <p class="mb-0 me-3">:</p>
                                                                     </div>
-                                                                    <p class="mb-0" id="email"></p>
+                                                                    <p class="mb-0 col-10" id="email"></p>
                                                                 </div>
                                                                 <div class="viewContactDetails d-flex align-items-center ">
-                                                                    <div class="d-flex justify-content-between w-50">
+                                                                    <div class="d-flex justify-content-between col-6">
                                                                         <p class="mb-0">Phone</p>
                                                                         <p class="mb-0 me-3">:</p>
                                                                     </div>
-                                                                    <p class="mb-0" id="phone"></p>
+                                                                    <p class="mb-0 col-10" id="phone"></p>
                                                                 </div>
                                                                 <div class="d-flex align-items-center justify-content-center">
                                                                     <button type="button" class="createContact closeBtn m-0 mt-2" data-bs-dismiss="modal">CLOSE</button>
