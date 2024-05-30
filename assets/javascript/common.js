@@ -56,13 +56,14 @@ $(document).ready(function () {
                 dataType: "json",
                 success: function (response) {
                     if (response.success) {
+                        alert("New User added Successfully");
                         window.location.href = "?action=login";
                     } else {
                         $("#signUpMsg").html(response.msg).css('color', 'red');
                     }
                 },
                 error: function (xhr, status, error) {
-                    alert("An error occurred: " + error);
+                    console.log("An error occurred: " + error);
                 }
             });
         }
@@ -76,8 +77,8 @@ $(document).ready(function () {
         var strGender = $('#strGender').val().trim();
         var strDate = $('#strDate').val().trim();
         var filePhoto = $('#strUploadFile')[0].files[0];
-        var strAddress = $('#strAddress').val().trim();
-        var strStreet = $('#strStreet').val().trim();
+        var strAddress = DOMPurify.sanitize($('#strAddress').val().trim());
+        var strStreet = DOMPurify.sanitize($('#strStreet').val().trim());
         var intPhoneNumber = $('#intPhoneNumber').val().trim();
         var strEmailId = $('#strEmailId').val().trim();
         var intPinCode = $('#intPinCode').val().trim();
@@ -115,7 +116,7 @@ $(document).ready(function () {
                     }
                 },
                 error: function (xhr, status, error) {
-                    alert("An error occurred: " + error);
+                    console.log("An error occurred: " + error);
                 }
             });
         }
@@ -232,7 +233,7 @@ $(document).ready(function () {
             if (response.success) {
                 window.location.href = response.pdfPath;
             } else {
-                alert('PDF generation failed: ' + response.msg);
+                console.log('PDF generation failed: ' + response.msg);
             }
         }, 'json');
     });
@@ -265,7 +266,7 @@ $(document).ready(function () {
                     }
                 },
                 error: function (xhr, status, error) {
-                    alert("An error occurred: " + error);
+                    console.log("An error occurred: " + error);
                 }
             });
         }
@@ -320,7 +321,7 @@ $(document).ready(function () {
                         }
                     },
                     error: function (xhr, status, error) {
-                        alert("An error occurred: " + error);
+                        console.log("An error occurred: " + error);
                     }
                 });
             }
@@ -367,7 +368,7 @@ function validation() {
     var specialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
     var alphabets = /[A-z]/g;
     var number = /[0-9]/g;
-    var emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    var emailRegex = /^\w+([\.+-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     var specialCharName = specialChar.test(fullName);
     var numberName = number.test(fullName);
     var specialCharUser = specialChar.test(userName);
@@ -413,26 +414,28 @@ function contactValidation() {
     var strGender = $('#strGender').val().trim();
     var strDate = $('#strDate').val().trim();
     var filePhoto = $('#strUploadFile').val().trim();
-    var strAddress = $('#strAddress').val().trim();
-    var strStreet = $('#strStreet').val().trim();
+    var strAddress = DOMPurify.sanitize($('#strAddress').val().trim());
+    var strStreet = DOMPurify.sanitize($('#strStreet').val().trim());
     var intPhoneNumber = $('#intPhoneNumber').val().trim();
     var strEmailId = $('#strEmailId').val().trim();
     var intPinCode = $('#intPinCode').val().trim();
     var specialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
     var alphabets = /[A-z]/g;
     var number = /[0-9]/g;
-    var emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    var emailRegex = /^\w+([\.+-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     var specialCharFirstName = specialChar.test(strFirstName);
     var numberFirstName = number.test(strFirstName);
     var specialCharLastName = specialChar.test(strLastName);
     var numberLastName = number.test(strLastName);
     var alphabetDate = alphabets.test(strDate);
+    var regexWithCountryCode = /^\+91\d{10}$/;
+    var regexWithoutCountryCode = /^\d{10}$/;
     var errorMsg = "";
     $("#addMsg").text("");
     if (strTitle == "" || strFirstName == "" || strLastName == "" || strGender == "" || strDate == "" || filePhoto == "" || strAddress == "" || strStreet == "" || intPhoneNumber == "" || strEmailId == "" || intPinCode == "") {
         errorMsg += "Please enter values in all fields!" + "<br>";
     } else {
-        if (strFirstName.length >= 2) {
+        if (strFirstName.length >= 2 && strFirstName.length <= 50) {
             if ((specialCharFirstName) || (numberFirstName)) {
                 errorMsg += "Firstname must contain String values only!" + "<br>";
                 $("#formFirstname").css("color", "red");
@@ -442,12 +445,24 @@ function contactValidation() {
         } else if (strFirstName.length <= 1) {
             errorMsg += "Firstname must contain atleast two characters!" + "<br>";
             $("#formFirstname").css("color", "red");
+        }else if (strFirstName.length >= 51) {
+            errorMsg += "Firstname must contain lessthan 50 characters!" + "<br>";
+            $("#formFirstname").css("color", "red");
         } else {
             $("#formFirstname").css("color", "#337AB7");
         }
-
-        if ((specialCharLastName) || (numberLastName)) {
-            errorMsg += "Lastname must contain String values only!" + "<br>";
+        if (strLastName.length >= 1 && strLastName.length <= 50) {
+            if ((specialCharLastName) || (numberLastName)) {
+                errorMsg += "Lastname must contain String values only!" + "<br>";
+                $("#formLastname").css("color", "red");
+            } else {
+                $("#formLastname").css("color", "#337AB7");
+            }
+        }else if (strLastName.length < 1) {
+            errorMsg += "Lastname must contain atleast two characters!" + "<br>";
+            $("#formLastname").css("color", "red");
+        }else if (strLastName.length >= 51) {
+            errorMsg += "Lastname must contain lessthan 50 characters!" + "<br>";
             $("#formLastname").css("color", "red");
         } else {
             $("#formLastname").css("color", "#337AB7");
@@ -471,25 +486,18 @@ function contactValidation() {
         } else {
             $("#formStreet").css("color", "#337AB7");
         }
-        if (isNaN(intPhoneNumber) && isNaN(intPinCode)) {
-            errorMsg += "Phone Number and Pincode must contain Integer values only!" + "<br>";
+        if (!regexWithCountryCode.test(intPhoneNumber) && !regexWithoutCountryCode.test(intPhoneNumber)) {
+            errorMsg += 'Phone number should start with +91 and contain 13 digits, or be a 10-digit number.' + "<br>";
             $("#formPhone").css("color", "red");
-            $("#formPincode").css("color", "red");
-        } else if (isNaN(intPhoneNumber)) {
-            errorMsg += "Phone Number must contain Integer values only!" + "<br>";
-            $("#formPhone").css("color", "red");
-            $("#formPincode").css("color", "#337AB7");
-        } else if (isNaN(intPinCode)) {
+        } else {
+            $("#formPhone").css("color", "#337AB7");
+        }
+        if (isNaN(intPinCode)) {
             errorMsg += "Pincode must contain Integer values only!" + "<br>";
             $("#formPincode").css("color", "red");
-            $("#formPhone").css("color", "#337AB7");
-        } else {
+        }else {
             $("#formPincode").css("color", "337AB7");
-            $("#formPhone").css("color", "#337AB7");
-            if (intPhoneNumber.length != 10) {
-                errorMsg += "Phone Number must contain 10 digits!" + "<br>";
-                $("#formPhone").css("color", "red");
-            } else if (intPinCode.length != 6) {
+            if (intPinCode.length != 6) {
                 errorMsg += "Pincode must contain 6 digits!" + "<br>";
                 $("#formPincode").css("color", "#red");
             } else {
