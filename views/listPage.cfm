@@ -83,9 +83,9 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="d-flex flex-column">                                            
+                                                <div class="nameInput d-flex flex-column">                                            
                                                     <label for="strDate" id="formDate">Date Of Birth*</label>
-                                                    <input type="date" id="strDate" name="strDate" value="">
+                                                    <input type="text" id="strDate" name="strDate" value="">
                                                 </div>
                                             </div>
                                             <div class="d-flex gap-3">
@@ -128,9 +128,8 @@
                                             <button type="button" class="createContact closeBtn py-2 m-0 mt-2 me-4" id="formSubmit">SUBMIT</button>
                                             <button type="button" class="createContact closeBtn py-2 m-0 mt-2 ms-5" data-bs-dismiss="modal">CLOSE</button>
                                         </div>
-                                    
                                     </form>
-                                     <div class="d-flex align-items-center justify-content-center addMsgStyle p-2">
+                                     <div class="d-flex align-items-center justify-content-center addMsFgStyle p-2">
                                         <h5 class="mb-0" id="addMsg"><b></b></h5>
                                     </div>
                                 </div>
