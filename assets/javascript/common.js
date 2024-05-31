@@ -145,7 +145,6 @@ $(document).ready(function () {
                     $('#phone').html(response.phone);
                     $('.modalImg').attr('src', './assets/UploadImages/' + response.photo);
                 }
-
             },
             error: function (xhr, textStatus, error) {
                 console.error("Error:", error);
@@ -154,7 +153,7 @@ $(document).ready(function () {
     });
     $("#createContactButton").click(function () {
         $("#myFormValues")[0].reset();
-        $('#heading').html("CREATE CONTACT");
+        $('#heading').html("CREATE CONTACT").css("font-weight",700);
         $('#formSubmit').html("CREATE");
     });
     $('.editBtn').click(function () {
@@ -420,14 +419,12 @@ function contactValidation() {
     var strEmailId = $('#strEmailId').val().trim();
     var intPinCode = $('#intPinCode').val().trim();
     var specialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
-    var alphabets = /[A-z]/g;
     var number = /[0-9]/g;
     var emailRegex = /^\w+([\.+-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     var specialCharFirstName = specialChar.test(strFirstName);
     var numberFirstName = number.test(strFirstName);
     var specialCharLastName = specialChar.test(strLastName);
     var numberLastName = number.test(strLastName);
-    var alphabetDate = alphabets.test(strDate);
     var regexWithCountryCode = /^\+91\d{10}$/;
     var regexWithoutCountryCode = /^\d{10}$/;
     var errorMsg = "";
@@ -466,13 +463,6 @@ function contactValidation() {
             $("#formLastname").css("color", "red");
         } else {
             $("#formLastname").css("color", "#337AB7");
-        }
-
-        if ((alphabetDate)) {
-            errorMsg += "Date must not contain String values!" + "<br>";
-            $("#formDate").css("color", "red");
-        } else {
-            $("#formDate").css("color", "#337AB7");
         }
         if (!isNaN(strAddress)) {
             errorMsg += "Address should contain String values!" + "<br>";
@@ -519,3 +509,12 @@ function contactValidation() {
     }
     return true;
 }
+$(document).ready(function(){
+    $("#strDate").datepicker({
+        changeMonth:true,
+        changeYear:true,
+        yearRange:'1920:2024',
+        maxDate:'0y',
+        minDate:'-100y'
+    });
+});
