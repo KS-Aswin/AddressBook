@@ -290,7 +290,7 @@ $(document).ready(function () {
 
     if (Object.keys(params).length > 0) {
         localStorage.setItem('authInfo', JSON.stringify(params));
-        window.history.pushState({}, document.title, "/AddressBook/");
+        window.history.pushState({}, document.title, "");
     }
 
     let info = JSON.parse(localStorage.getItem('authInfo'));

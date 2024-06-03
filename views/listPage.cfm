@@ -262,6 +262,8 @@
                 </div>
             </div>
         </div>
+    <cfelse>
+        <cflocation  url="?action=login">
     </cfif>
     </body>
     </html>
