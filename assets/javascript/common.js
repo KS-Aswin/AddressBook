@@ -339,7 +339,7 @@ function signIn() {
 
     let params = {
         "client_id": "726795246693-mtgnhpgrdlbiahn20r5s4umg8seqvqq0.apps.googleusercontent.com",
-        "redirect_uri": "http://127.0.0.1:8500/AddressBook/?action=list",
+        "redirect_uri": "https://redirectmeto.com/http://addressbook.local/?action=list",
         "response_type": "token",
         "scope": "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
         "include_granted_scopes": "true",

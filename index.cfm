@@ -21,6 +21,9 @@
             include "/views/header.cfm";
             include "/views/pdfFile.cfm";
         break;
+        case "error":
+            include "/views/errorPage.cfm";
+        break;
         case 'xlFile':
             include '/views/header.cfm';
             include "/views/navbar.cfm";
