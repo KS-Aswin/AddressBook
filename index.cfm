@@ -31,9 +31,7 @@
             include "/views/list.cfm";
         break;
         default :
-            include "/views/header.cfm";
-            include "/views/navbar.cfm";
-            include "/views/logInPage.cfm"; 
+            include "/views/errorPage.cfm";
         break;
     }
 </cfscript>
