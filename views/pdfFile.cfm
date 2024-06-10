@@ -1,4 +1,5 @@
 <cfoutput>
+<cfinclude  template="./header.cfm">
     <cfhtmltopdf>
         <div class="d-flex displayProfiles" id="pdfContent">
             <div class="col-12">
@@ -38,7 +39,7 @@
                         <cfset variables.contactId = contact.getcontactId()>
                         <cfif session.intUid eq contact.getuserId()>
                             <tr class="tableRow" id="">
-                            <th class="pdfImg col-12 w-12 d-flex"><img src="./assets/UploadImages/#contact.getphoto()#"  alt="userProfile" width='30' height='30'></th>
+                            <th class="pdfImg col-12 w-12 d-flex"><img src="../assets/UploadImages/#contact.getphoto()#"  alt="userProfile" width='30' height='30'></th>
                                 <th>#contact.getfirstName()# #contact.getlastName()#</th>
                                 <th>#contact.getemail()#</th>
                                 <th>#contact.getphone()#</th>

@@ -1,9 +1,11 @@
 <cfoutput>
+<cfinclude  template="./header.cfm">
+<cfinclude  template="./navbar.cfm">
     <div class="mainBody  d-flex flex-column align-items-center justify-content-center mb-5">
     <h3 class="w3-panel w3-green" id="signUpMsg"></h3>
         <div class="bodyContainer d-flex">
             <div class="leftBody d-flex align-items-center justify-content-center">
-                <img src="./assets/images/bodyBook.png" class="bodyBook mx-5" alt="book">
+                <img src="../assets/images/bodyBook.png" class="bodyBook mx-5" alt="book">
             </div>
             <div class="rightBody d-flex flex-column py-2 px-4">
                 <form class ="signUpForm" id="formTarget" action ="" method ="post"  enctype="multipart/form-data">  
