@@ -114,7 +114,7 @@ component{
 
     public void function checkLogin(){
         if(session.login){
-           cflocation(url="./?action=list");
+           cflocation(url="./views/listPage.cfm");
         }
     }
 
@@ -123,7 +123,7 @@ component{
         session.userImg = "";
 		session.ssoImg = "";
         session.sso = false;
-        cflocation(url="../?action=login");
+        cflocation(url="../index.cfm");
     }
 
     remote any function generatePDFFromTable(tableHTML) returnFormat="JSON" {

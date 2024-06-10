@@ -1,10 +1,13 @@
 <cfoutput>
+<cfinclude  template="../controllers/listPageAction.cfm">
+<cfinclude  template="./header.cfm">
+<cfinclude  template="./pageNav.cfm">
     <cfif session.login>
         <div class="download d-flex align-items-center justify-content-center mb-4">
             <div class="downloadContainer d-flex align-items-center justify-content-end py-3 gap-4 pe-5">
-                <a href='?action=pdfFile'><img src="./assets/images/pdf.png" class="downloadIcon" id="pdf" alt="pdf"></a>
-                 <a href='?action=xlFile'><img src="./assets/images/xl.png" class="downloadIcon" id="xl" alt="xlsheet"></a>
-                <img src="./assets/images/print.png" class="downloadIcon pe-5" id="print" alt="print">
+                <a href='pdfFile.cfm'><img src="../assets/images/pdf.png" class="downloadIcon" id="pdf" alt="pdf"></a>
+                 <a href='xlFile.cfm'><img src="../assets/images/xl.png" class="downloadIcon" id="xl" alt="xlsheet"></a>
+                <img src="../assets/images/print.png" class="downloadIcon pe-5" id="print" alt="print">
             </div>
         </div>
         <div class="d-flex gap-2 align-items-start justify-content-center mb-4 ">
@@ -134,7 +137,7 @@
                                     </div>
                                 </div>
                                 <div class="modalProfile mt-3 d-flex align-items-start justify-content-center mt-5 p-5">
-                                    <img src="./assets/images/modalProfile.png" class="modalImg mt-5" alt="userProfile">
+                                    <img src="../assets/images/modalProfile.png" class="modalImg mt-5" alt="userProfile">
                                 </div>
                             </div>
                         </div>
@@ -175,7 +178,7 @@
                                 <cfset variables.contactId = contact.getcontactId()>
                                 <cfif session.intUid eq contact.getuserId()>
                                     <tr class="tableRow" id="">
-                                        <th><img src="./assets/UploadImages/#contact.getphoto()#" alt="Profile" class='userProfilePic'></th>
+                                        <th><img src="../assets/UploadImages/#contact.getphoto()#" alt="Profile" class='userProfilePic'></th>
                                         <th>#contact.getfirstName()# #contact.getlastName()#</th>
                                         <th>#contact.getemail()#</th>
                                         <th>#contact.getphone()#</th>
@@ -245,7 +248,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="modalProfile d-flex align-items-center justify-content-center p-5">
-                                                                <img src="./assets/images/modalProfile.png" class="modalImg " alt="userProfile">
+                                                                <img src="../assets/images/modalProfile.png" class="modalImg " alt="userProfile">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -263,7 +266,7 @@
             </div>
         </div>
     <cfelse>
-        <cflocation  url="?action=login">
+        <cflocation  url="../index.cfm">
     </cfif>
     </body>
     </html>

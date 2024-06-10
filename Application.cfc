@@ -44,10 +44,6 @@ component
 		return( true );
 	}
 
-	function onRequest( String scriptName ){
-	 	include "./index.cfm";		
-	}
-
 	function onError( Any error, String eventName ){
 		writeDump( error );
 		abort;
