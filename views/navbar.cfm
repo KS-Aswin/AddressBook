@@ -10,7 +10,7 @@
             </div>
             <div class="d-flex align-items-center profileText gap-1">
                 <img src="../assets/images/login.png" class="profile" alt="login">
-                <a href="index.cfm" title="got to login page" class="mb-0 log">Login</a>
+                <a href="..index.cfm" title="got to login page" class="mb-0 log">Login</a>
             </div>
         </div>
     </div>
