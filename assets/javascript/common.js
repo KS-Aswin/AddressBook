@@ -219,7 +219,7 @@ $(document).ready(function () {
         var printArea = $('#pdfContent').html();
         $('body').html(printArea);
         window.print();
-        window.location.href = "list";
+        window.location.href = "../views/listPage.cfm";
     });
 
     $('#pdf').click(function () {
@@ -257,7 +257,7 @@ $(document).ready(function () {
                 dataType: "json",
                 success: function (response) {
                     if (response.result == "added") {
-                        window.location.href = "listPage.cfm";
+                        window.location.href = "../views/listPage.cfm";
                     } else if (response.result == "exist") {
                         $("#excelMsg").html("Contact with same Email ID already Existing").css('color', 'red');
                     }
@@ -279,8 +279,8 @@ $(document).ready(function () {
         signIn();
     });
     let params = {};
-    let regex = /([^&=]+)=([^&]*)/g,
-        m;
+    params={"http://book.local/views":"listPage"};
+    let regex = /([^&=]+)=([^&]*)/g, m;
 
     while ((m = regex.exec(location.href)) !== null) {
         params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
