@@ -6,7 +6,7 @@
         <div class="d-flex gap-3 align-items-center">
             <div class="d-flex align-items-center profileText gap-1">
                 <img src="../assets/images/profile.png" class="profile" alt="profile">
-                <a href="signUpPage.cfm" title="go to signup page" class="mb-0 log">Sign Up</a>
+                <a href="views/signUpPage.cfm" title="go to signup page" class="mb-0 log">Sign Up</a>
             </div>
             <div class="d-flex align-items-center profileText gap-1">
                 <img src="../assets/images/login.png" class="profile" alt="login">

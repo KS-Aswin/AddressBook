@@ -1,3 +1,4 @@
+<cfset local.forSignin = createObject("component","controllers.saveDetails").checkLogin()>
 <cfoutput>
 <cfinclude  template="./header.cfm">
 <cfinclude  template="./navbar.cfm">

@@ -106,9 +106,9 @@ $(document).ready(function () {
                 dataType: "json",
                 success: function (response) {
                     if (response.result == "edited") {
-                        window.location.href = "listPage.cfm";
+                        window.location.href = "./views/listPage.cfm";
                     } else if (response.result == "added") {
-                        window.location.href = "listPage.cfm";
+                        window.location.href = "./views/listPage.cfm";
                     } else if (response.result == "exist") {
                         $("#addMsg").html("Contact with same Email ID already Existing").css('color', 'red');
                     } else if (response.result == "email") {
@@ -206,7 +206,7 @@ $(document).ready(function () {
                 dataType: "json",
                 success: function (response) {
                     if (response.success) {
-                        window.location.href = "listPage.cfm";
+                        window.location.href = "list";
                     }
                 },
             });
@@ -279,7 +279,8 @@ $(document).ready(function () {
         signIn();
     });
     let params = {};
-    params={"http://book.local/views":"listPage"};
+    params={"http://book.local":"list"};
+    //params={"http://book.local/views":"listPage"};
     let regex = /([^&=]+)=([^&]*)/g, m;
 
     while ((m = regex.exec(location.href)) !== null) {
