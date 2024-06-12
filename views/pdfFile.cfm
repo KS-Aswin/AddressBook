@@ -1,5 +1,6 @@
 <cfoutput>
 <cfinclude  template="./header.cfm">
+    <cfif session.login>
     <cfhtmltopdf>
         <div class="d-flex displayProfiles" id="pdfContent">
             <div class="col-12">
@@ -56,4 +57,7 @@
             </table>
         </div>
     </cfhtmltopdf>
+    <cfelse>
+        <cflocation  url="../index.cfm">
+    </cfif>
 </cfoutput>

@@ -27,7 +27,7 @@
         <div class="d-flex gap-3 align-items-center">
             <div class="d-flex align-items-center profileText gap-1">
                 <img src="./assets/images/profile.png" class="profile" alt="profile">
-                <a href="./views/signUpPage.cfm" title="go to signup page" class="mb-0 log">Sign Up</a>
+                <a href="views/signUpPage.cfm" title="go to signup page" class="mb-0 log">Sign Up</a>
             </div>
             <div class="d-flex align-items-center profileText gap-1">
                 <img src="./assets/images/login.png" class="profile" alt="login">
@@ -53,7 +53,7 @@
                             <img src="./assets/images/fb.png" class="signInImg" alt="fb">
                             <img src="./assets/images/google.png" class="signInImgGoogle" id="googleLogin" alt="google">
                         </div>
-                        <p class="mb-1">Don't have an account?<a href="../views/signUpPage.cfm" class="regHere" title="go to signup page"> Register Here</a></p>
+                        <p class="mb-1">Don't have an account?<a href="views/signUpPage.cfm" class="regHere" title="go to signup page"> Register Here</a></p>
                     </div>
                 </form>
             </div>

@@ -105,6 +105,10 @@ button:hover {
     height: 40px;
 }
 
+.signInImg {
+    cursor: pointer;
+}
+
 a {
     color: #337AB7;
     text-decoration: none;
