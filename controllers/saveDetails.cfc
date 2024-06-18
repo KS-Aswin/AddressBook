@@ -82,7 +82,7 @@ component{
         }
     } 
 
-    remote any function contactDetails(intContactId,strTitle,strFirstName,strLastName,strGender,strDate,filePhoto,strAddress,strStreet,intPhoneNumber,strEmailId,intPinCode) returnFormat="JSON"{
+    remote any function contactDetails(intContactId,strTitle,strFirstName,strLastName,strGender,strDate,filePhoto,strAddress,strStreet,intPhoneNumber,strEmailId,intPinCode,hobbies) returnFormat="JSON"{
         local.objContact = createObject("component","models.saveDetails");
         local.checkContactDetails = local.objContact.checkContactExists(strEmailId = strEmailId,intContactId = intContactId);
         if(local.checkContactDetails.recordCount){  
@@ -92,7 +92,7 @@ component{
             if(local.checkUserEmail.recordCount){
                 return {"result":"email"};
             }else{
-                local.saveContactDetails = local.objContact.saveContact(intContactId = intContactId, strTitle = strTitle,strFirstName = strFirstName,strLastName = strLastName,strGender = strGender,strDate = strDate,filePhoto = filePhoto,strAddress = strAddress,strStreet = strStreet,intPhoneNumber = intPhoneNumber,strEmailId = strEmailId,intPinCode = intPinCode );
+                local.saveContactDetails = local.objContact.saveContact(intContactId = intContactId, strTitle = strTitle,strFirstName = strFirstName,strLastName = strLastName,strGender = strGender,strDate = strDate,filePhoto = filePhoto,strAddress = strAddress,strStreet = strStreet,intPhoneNumber = intPhoneNumber,strEmailId = strEmailId,intPinCode = intPinCode ,hobbies = hobbies);
                 if(local.saveContactDetails.success == "edited"){
                     return {"result":"edited"};  
                 }else{

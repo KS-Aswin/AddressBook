@@ -31,7 +31,9 @@
                             <th>
                                 <h5><b class="tableHeading col-2">PINCODE</b></h5>
                             </th>
-                            
+                            <th>
+                                <h5><b class="tableHeading col-2">HOBBIES</b></h5>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,7 +49,8 @@
                                 <th>#contact.getgender()#</th>
                                 <th>#contact.getdob()#</th>
                                 <th>#contact.getaddress()#, #contact.getstreet()#</th>
-                                <th>#contact.getpincode()#</th>    
+                                <th>#contact.getpincode()#</th>   
+                                <th>#contact.gethobbies()#</th>  
                             </tr>
                         <cfelse>
                             <cfcontinue>

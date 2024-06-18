@@ -40,17 +40,18 @@
 
     <cffunction  name="saveContact" access="remote"  returnformat="json">
         <cfargument name = "intContactId" required='true' type="numeric">
-        <cfargument name = "strTitle" required="true" returnType="string">
-        <cfargument name = "strFirstName" required="true" returnType="string">
-        <cfargument name = "strLastName" required="true" returnType="string">
-        <cfargument name = "strGender" required="true" returnType="string">
-        <cfargument name = "strDate" required="true" returnType="string">
+        <cfargument name = "strTitle" required="true" type="string">
+        <cfargument name = "strFirstName" required="true" type="string">
+        <cfargument name = "strLastName" required="true" type="string">
+        <cfargument name = "strGender" required="true" type="string">
+        <cfargument name = "strDate" required="true" type="string">
         <cfargument name = "filePhoto" required="true" type="any">
-        <cfargument name = "strAddress" required="true" returnType="string">
-        <cfargument name = "strStreet" required="true" returnType="string">
-        <cfargument name = "strEmailId" required="true" returnType="string">
-        <cfargument name = "intPhoneNumber" required="true" returnType="string">
-        <cfargument name = "intPinCode" required="true" returnType="string">
+        <cfargument name = "strAddress" required="true" type="string">
+        <cfargument name = "strStreet" required="true" type="string">
+        <cfargument name = "strEmailId" required="true" type="string">
+        <cfargument name = "intPhoneNumber" required="true" type="string">
+        <cfargument name = "intPinCode" required="true" type="string">
+        <cfargument name = "hobbies" required="true" type="string">
         <cfset local.path = ExpandPath("../assets/UploadImages/")>
         <cffile action="upload" destination="#local.path#" nameConflict="MakeUnique" filefield="filePhoto">
         <cfset local.profile = cffile.serverFile>
@@ -68,13 +69,14 @@
                 email=<cfqueryparam value="#arguments.strEmailId#" cfsqltype="cf_sql_varchar">,
                 userId=<cfqueryparam value="#session.intUid#" cfsqltype="cf_sql_integer">,
                 pincode=<cfqueryparam value="#arguments.intPinCode#" cfsqltype="cf_sql_integer">,
-                phone=<cfqueryparam value="#arguments.intPhoneNumber#" cfsqltype="cf_sql_varchar">
+                phone=<cfqueryparam value="#arguments.intPhoneNumber#" cfsqltype="cf_sql_varchar">,
+                hobbies=<cfqueryparam value="#arguments.hobbies#" cfsqltype="cf_sql_varchar">
                 where contactId=<cfqueryparam value="#arguments.intContactId#" cfsqltype="cf_sql_integer">
             </cfquery>
             <cfreturn {"success":"edited"}>
         <cfelse>
             <cfquery name="newContact" datasource="DESKTOP-89AF345">
-                insert into contact (title, firstName, lastName, gender,dob,photo,address,street,email,phone,userId,pincode)
+                insert into contact (title, firstName, lastName, gender,dob,photo,address,street,email,phone,userId,pincode,hobbies)
                 values(
                     <cfqueryparam value="#arguments.strTitle#" cfsqltype="cf_sql_varchar">,
                     <cfqueryparam value="#arguments.strFirstName#" cfsqltype="cf_sql_varchar">,
@@ -87,7 +89,8 @@
                     <cfqueryparam value="#arguments.strEmailId#" cfsqltype="cf_sql_varchar">,
                     <cfqueryparam value="#arguments.intPhoneNumber#" cfsqltype="cf_sql_varchar">,
                     <cfqueryparam value="#session.intUid#" cfsqltype="cf_sql_integer">,
-                    <cfqueryparam value="#arguments.intPinCode#" cfsqltype="cf_sql_integer">
+                    <cfqueryparam value="#arguments.intPinCode#" cfsqltype="cf_sql_integer">,
+                    <cfqueryparam value="#arguments.hobbies#" cfsqltype="cf_sql_varchar">
                 ) 
             </cfquery>
             <cfreturn {"success":"added"}>
@@ -176,6 +179,7 @@
                 <cfset local.phone = spreadsheetData.Phone> 
                 <cfset local.userId = session.intUid> 
                 <cfset local.pincode = spreadsheetData.Pincode>
+                <cfset local.hobbies = spreadsheetData.Hobbies>
                 <cfquery name="excelInsert">
                     select email
                     from contact
@@ -195,7 +199,7 @@
                         <cfcontinue>
                     <cfelse>
                         <cfquery name="newExcelContact" datasource="DESKTOP-89AF345">
-                            insert into contact (title, firstName, lastName, gender,dob,photo,address,street,email,phone,userId,pincode)
+                            insert into contact (title, firstName, lastName, gender,dob,photo,address,street,email,phone,userId,pincode,hobbies)
                             values(
                                 <cfqueryparam value="#local.title#" cfsqltype="cf_sql_varchar">,
                                 <cfqueryparam value="#local.firstName#" cfsqltype="cf_sql_varchar">,
@@ -208,7 +212,8 @@
                                 <cfqueryparam value="#local.email#" cfsqltype="cf_sql_varchar">,
                                 <cfqueryparam value="#local.phone#" cfsqltype="cf_sql_varchar">,
                                 <cfqueryparam value="#session.intUid#" cfsqltype="cf_sql_integer">,
-                                <cfqueryparam value="#local.pincode#" cfsqltype="cf_sql_varchar">
+                                <cfqueryparam value="#local.pincode#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#local.hobbies#" cfsqltype="cf_sql_varchar">
                             ) 
                         </cfquery>
                     </cfif>
@@ -221,21 +226,21 @@
     <cffunction name="getContactDetails" access="remote" returnFormat="json">
         <cfargument  name="intContactId" required="true">
         <cfquery name="forDisplay" datasource="DESKTOP-89AF345">
-            select concat(title,'.',firstName,' ',lastName) as name,gender,dob,concat(address,', ',street) as address,pincode,email,phone ,photo 
+            select concat(title,'.',firstName,' ',lastName) as name,gender,dob,concat(address,', ',street) as address,pincode,email,phone ,photo,hobbies 
             from contact
             where contactId=<cfqueryparam value="#arguments.intContactId#" cfsqltype="cf_sql_integer">
         </cfquery>
-        <cfreturn {"success":true,"name":forDisplay.name,"gender":forDisplay.gender,"dob":forDisplay.dob,"address":forDisplay.address,"pincode":forDisplay.pincode,"email":forDisplay.email,"phone":forDisplay.phone,"photo":forDisplay.photo}>
+        <cfreturn {"success":true,"name":forDisplay.name,"gender":forDisplay.gender,"dob":forDisplay.dob,"address":forDisplay.address,"pincode":forDisplay.pincode,"email":forDisplay.email,"phone":forDisplay.phone,"photo":forDisplay.photo,"hobbies":forDisplay.hobbies}>
     </cffunction>
 
     <cffunction name="getEditContactDetails" access="remote" returnFormat="json">
         <cfargument  name="intContactId" required="true">
         <cfquery name="forDisplay" datasource="DESKTOP-89AF345">
-            select contactId,title, firstName, lastName, gender,dob,photo,address,street,email,phone,userId,pincode
+            select contactId,title, firstName, lastName, gender,dob,photo,address,street,email,phone,userId,pincode,hobbies
             from contact 
             where contactId=<cfqueryparam value="#arguments.intContactId#" cfsqltype="cf_sql_integer">
         </cfquery>
-        <cfreturn {"success":true,"title":forDisplay.title,"firstName":forDisplay.firstName,"lastName":forDisplay.lastName,"gender":forDisplay.gender,"dob":forDisplay.dob,"photo":forDisplay.photo,"address":forDisplay.address,"street":forDisplay.street,"pincode":forDisplay.pincode,"email":forDisplay.email,"phone":forDisplay.phone}>
+        <cfreturn {"success":true,"title":forDisplay.title,"firstName":forDisplay.firstName,"lastName":forDisplay.lastName,"gender":forDisplay.gender,"dob":forDisplay.dob,"photo":forDisplay.photo,"address":forDisplay.address,"street":forDisplay.street,"pincode":forDisplay.pincode,"email":forDisplay.email,"phone":forDisplay.phone,"hobbies":forDisplay.hobbies}>
     </cffunction>
 
     <cffunction name="deleteContactDetails" access='remote' returnFormat="json">
