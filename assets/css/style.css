@@ -284,6 +284,10 @@ label {
     width: 70%;
 }
 
+#hobbies{
+    width: 172px;
+}
+
 #addMsg {
     font-size: 14px;
     height: 80px;
@@ -372,4 +376,52 @@ th {
 
 .excelSubmit:hover {
     background: #165994;
+}
+
+
+.dropdown {
+    position: relative;
+    width: 200px;
+    padding: 5px 10px;
+    font-size: 14px;
+}
+.dropdown .select-box {
+    width: 100%;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+.dropdown ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border-top: 2px solid #ccc;
+    border-top: none;
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    width: calc(100% - 2px);
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 1;
+}
+.dropdown ul li {
+    font-size: 14px;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-top: 2px solid #fff;
+}
+.dropdown ul li:hover {
+    background-color: #165994;
+    color: #fff;
+    border-top: 2px solid #fff;
+}
+.dropdown .select-box.active {
+    border-top: 2px solid #fff;
+}
+.dropdown .selected {
+    background-color: #165994;
+    color: #fff;
+    border-top: 2px solid #fff;
 }
