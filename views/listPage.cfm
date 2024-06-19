@@ -126,61 +126,23 @@
                                                 <label for="intPinCode" id="formPincode">Pincode*</label>
                                                 <input type="text" id="intPinCode" name="intPinCode" value="">
                                             </div>
-                                        </div>
-                                        <div class="d-flex mt-3 gap-3">
                                             <div class="addressInput d-flex flex-column">
                                                 <label for="hobbies" id="formFobbies">Hobbies</label>
-                                                <div class="d-flex gap-2">
-                                                    <div class="d-flex flex-column justify-content-between mt-2">
-                                                        <div class="d-flex gap-2 align-items-center">
-                                                            <input class='checkBox' type="checkbox" id="Film" name="Film" value="Film">
-                                                            <label for="Film">Films</label>
-                                                        </div> 
-                                                        <div class="d-flex gap-2 align-items-center">
-                                                            <input class='checkBox' type="checkbox" id="Drawing" name="Drawing" value="Drawing">
-                                                            <label for="Drawing">Drawing</label>
-                                                        </div> 
-                                                        <div class="d-flex gap-2 align-items-center">
-                                                            <input class='checkBox' type="checkbox" id="Singing" name="Singing" value="Singing">
-                                                            <label for="Singing">Singing</label>
-                                                        </div> 
-                                                        <div class="d-flex gap-2 align-items-center">
-                                                            <input class='checkBox' type="checkbox" id="Reading" name="Reading" value="Reading">
-                                                            <label for="Reading">Reading</label>
-                                                        </div> 
-                                                        <div class="d-flex gap-2 align-items-center">
-                                                            <input class='checkBox' type="checkbox" id="Writing" name="Writing" value="Writing">
-                                                            <label for="Writing">Writing</label>
-                                                        </div>                                  
-                                                    </div>
-                                                    <div class="d-flex flex-column justify-content-between mt-2">
-                                                        <div class="d-flex gap-2 align-items-center">
-                                                            <input class='checkBox' type="checkbox" id="Cricket" name="Cricket" value="Cricket">
-                                                            <label for="Cricket">Cricket</label>
-                                                        </div> 
-                                                        <div class="d-flex gap-2 align-items-center">
-                                                            <input class='checkBox' type="checkbox" id="Football" name="Football" value="Football">
-                                                            <label for="Football">Football</label>
-                                                        </div> 
-                                                        <div class="d-flex gap-2 align-items-center">
-                                                            <input class='checkBox' type="checkbox" id="Travelling" name="Travelling" value="Travelling">
-                                                            <label for="Travelling">Travelling</label>
-                                                        </div> 
-                                                        <div class="d-flex gap-2 align-items-center">
-                                                            <input class='checkBox' type="checkbox" id="Gym" name="Gym" value="Gym">
-                                                            <label for="Gym">Gym</label>
-                                                        </div> 
-                                                        <div class="d-flex gap-2 align-items-center">
-                                                            <input class='checkBox' type="checkbox" id="Cooking" name="Cooking" value="Cooking">
-                                                            <label for="Cooking">Cooking</label>
-                                                        </div>                                  
-                                                    </div>
+                                                <div class="hobbieDropdown" id="hobbies">
+                                                    <div class="select-box">Select Hobbies</div>
+                                                    <select id="optionsList" multiple>
+                                                        <option value="Cricket">Cricket</option>
+                                                        <option value="Football">Football</option>
+                                                        <option value="Singing">Singing</option>
+                                                        <option value="Dancing">Dancing</option>
+                                                        <option value="Drawing">Drawing</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="d-flex mt-3 align-items-start justify-content-start gap-5">
+                                        <div class="d-flex flex-column mt-3 align-items-start justify-content-start gap-2">
                                             <button type="button" class="createContact closeBtn py-2 m-0 mt-2 me-5" id="formSubmit">SUBMIT</button>
-                                            <button type="button" class="createContact closeBtn py-2 m-0 mt-2 " id="formClose" data-bs-dismiss="modal">CLOSE</button>
+                                            <button type="button" class="createContact closeBtn closeBtn2 py-2 m-0 mt-2 " id="formClose" data-bs-dismiss="modal">CLOSE</button>
                                         </div>
                                     </form>
                                      <div class="d-flex align-items-center justify-content-center addMsFgStyle p-2">

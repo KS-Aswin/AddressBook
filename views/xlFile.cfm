@@ -1,7 +1,7 @@
 <cfoutput>
     <cfif session.login>
         <cfset contacts = EntityLoad("ormContactFunction")>
-        <cfset excelQuery = queryNew("Fullname,Email,Phone,Gender,DOB,Address,Pincode,Photo","varchar,varchar,varchar,varchar,date,varchar,integer,varchar")> 
+        <cfset excelQuery = queryNew("Fullname,Email,Phone,Gender,DOB,Address,Pincode,Photo,Hobbies","varchar,varchar,varchar,varchar,date,varchar,integer,varchar,varchar")> 
         <cfloop array="#contacts#" index="contact">
             <cfif session.intUid Eq contact.getuserId()>
                 <cfset local.fullName = contact.gettitle() & "." &contact.getfirstName() & " " & contact.getlastName()>
@@ -12,6 +12,13 @@
                 <cfset local.address = contact.getaddress() & ", " & contact.getstreet()>
                 <cfset local.pincode = contact.getpincode()>
                 <cfset local.photo = contact.getphoto()>
+                <cfset local.hobby = EntityLoad("ormHobbies", { contact = contact})>
+                <cfset local.addHobby=''>
+                <cfif arrayLen(local.hobby)>
+                    <cfloop array="#local.hobby#" index="local.hobby">
+                        <cfset local.addHobby &= local.hobby.gethobby()&','>
+                    </cfloop>
+                </cfif>
                 <cfset queryAddRow(excelQuery, 1)>
                 <cfset querySetCell(excelQuery, "Fullname", local.fullName)>
                 <cfset querySetCell(excelQuery, "Email", local.email)>
@@ -21,6 +28,7 @@
                 <cfset querySetCell(excelQuery, "Address", local.address)>
                 <cfset querySetCell(excelQuery, "Pincode", local.pincode)>
                 <cfset querySetCell(excelQuery, "Photo", local.photo)>
+                <cfset querySetCell(excelQuery,'Hobbies',local.addHobby)>
             </cfif>
         </cfloop>
         <cfset excelPath = ExpandPath("./contactDetail.xlsx")>

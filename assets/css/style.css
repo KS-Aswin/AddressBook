@@ -277,6 +277,9 @@ label {
 .closeBtn {
     padding: 0px 40px;
 }
+.closeBtn2{
+    width: 130.17px !important;
+}
 
 .viewContactDetails {
     font-size: 14px;
@@ -378,50 +381,36 @@ th {
     background: #165994;
 }
 
-
-.dropdown {
+.hobbieDropdown {
     position: relative;
     width: 200px;
-    padding: 5px 10px;
-    font-size: 14px;
 }
-.dropdown .select-box {
+.hobbieDropdown .select-box {
     width: 100%;
-    border: 1px solid #ccc;
+    border: 1px solid #8f8c8c;
     padding: 5px 10px;
-    font-size: 14px;
+    font-size: 13px;
     cursor: pointer;
+    background-color: #fff;
 }
-.dropdown ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    border-top: 2px solid #ccc;
-    border-top: none;
+.hobbieDropdown .select-box.active {
+    border-bottom: none;
+}
+.hobbieDropdown select {
     display: none;
     position: absolute;
     background-color: #fff;
-    width: calc(100% - 2px);
+    width: 100%;
     max-height: 150px;
-    overflow-y: auto;
-    z-index: 1;
+    border-top: 1px solid #8f8c8c;
 }
-.dropdown ul li {
-    font-size: 14px;
+.hobbieDropdown select option {
     padding: 5px 10px;
+    font-size: 12px;
     cursor: pointer;
-    border-top: 2px solid #fff;
+    border-top: 1px solid #fff;
 }
-.dropdown ul li:hover {
-    background-color: #165994;
+.hobbieDropdown .selected {
+    background-color: #337AB7;
     color: #fff;
-    border-top: 2px solid #fff;
-}
-.dropdown .select-box.active {
-    border-top: 2px solid #fff;
-}
-.dropdown .selected {
-    background-color: #165994;
-    color: #fff;
-    border-top: 2px solid #fff;
 }
