@@ -69,6 +69,31 @@ $(document).ready(function () {
         }
         return false;
     });
+
+    function updateSelectBox() {
+        var hobbies = [];
+        $('#optionsList option.selected').each(function() {
+            hobbies.push($(this).text());
+        });
+        if (hobbies.length > 0) {
+            $('.select-box').text(hobbies.join(', '));
+        } else {
+            $('.select-box').text('Select Options');
+        }
+    }
+
+    $('.hobbieDropdown .select-box').click(function() {
+        $(this).toggleClass('active');
+        $('#optionsList').toggle();
+    });
+
+    $('#optionsList').on('click', 'option', function(event) {
+        event.preventDefault();
+        $(this).toggleClass('selected');
+        this.selected = $(this).hasClass('selected');
+        updateSelectBox();
+    });
+
     $('#formSubmit').click(function () {
         var intContactId = $('#intContactId').val().trim();
         var strTitle = $('#strTitle').val().trim();
@@ -82,12 +107,13 @@ $(document).ready(function () {
         var intPhoneNumber = $('#intPhoneNumber').val().trim();
         var strEmailId = $('#strEmailId').val().trim();
         var intPinCode = $('#intPinCode').val().trim();
-        var hobbies =[]; 
-        var selectedHobbies =$('.checkBox');
-        for(var i=0,j=0; selectedHobbies[i]; ++i){
-            if(selectedHobbies[i].checked){
-                hobbies[j++] = selectedHobbies[i].value;
-            }
+        if(intContactId == 0){
+            var hobbies = [];
+            $('#optionsList option.selected').each(function() {
+                hobbies.push($(this).val());
+            });
+        }else{
+            var hobbies = $('.select-box').html().trim();
         }
         var formData = new FormData();
         formData.append('intContactId', intContactId);
@@ -103,7 +129,6 @@ $(document).ready(function () {
         formData.append('strEmailId', strEmailId);
         formData.append('intPinCode', intPinCode);
         formData.append('hobbies',hobbies);
-
         $("#addMsg").html('');
         if (contactValidation()) {
             $.ajax({
@@ -164,7 +189,8 @@ $(document).ready(function () {
 
     $("#createContactButton").click(function () {
         $("#myFormValues")[0].reset();
-        $('#addMsg').html("CREATE");
+        $('#addMsg').html("");
+        $('.select-box').html("Select Options");
         $('#heading').html("CREATE CONTACT").css("font-weight",700);
         $('#formSubmit').html("CREATE");
     });
@@ -207,11 +233,11 @@ $(document).ready(function () {
                         $('#strEmailId').prop("value", response.email);
                         $('#intPinCode').prop("value", response.pincode);
                         $('.modalImg').attr('src', '../assets/UploadImages/' + response.photo);
-                        let array = response.hobbies.split(',');
-                        for(i=0;i<array.length;i++){
-                            $('#'+array[i]).prop('checked',array[i]);
+                        if(response.hobbies ==""){
+                            $('.select-box').html("");
+                        }else{
+                            $('.select-box').html(response.hobbies);
                         }
-                        console.log(array);
                         $('#heading').html("EDIT CONTACT");
                         $('#formSubmit').html("SAVE");
                     }
