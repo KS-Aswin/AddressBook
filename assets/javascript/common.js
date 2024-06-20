@@ -234,7 +234,7 @@ $(document).ready(function () {
                         $('#intPinCode').prop("value", response.pincode);
                         $('.modalImg').attr('src', '../assets/UploadImages/' + response.photo);
                         if(response.hobbies ==""){
-                            $('.select-box').html("");
+                            $('.select-box').html("Select Options");
                         }else{
                             $('.select-box').html(response.hobbies);
                         }
