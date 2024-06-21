@@ -78,7 +78,7 @@ $(document).ready(function () {
         if (hobbies.length > 0) {
             $('.select-box').text(hobbies.join(', '));
         } else {
-            $('.select-box').text('Select Options');
+            $('.select-box').text('');
         }
     }
 
@@ -107,14 +107,10 @@ $(document).ready(function () {
         var intPhoneNumber = $('#intPhoneNumber').val().trim();
         var strEmailId = $('#strEmailId').val().trim();
         var intPinCode = $('#intPinCode').val().trim();
-        if(intContactId == 0){
-            var hobbies = [];
-            $('#optionsList option.selected').each(function() {
-                hobbies.push($(this).val());
-            });
-        }else{
-            var hobbies = $('.select-box').html().trim();
-        }
+        var hobbies = [];
+        $('#optionsList option.selected').each(function() {
+            hobbies.push($(this).val());
+        });
         var formData = new FormData();
         formData.append('intContactId', intContactId);
         formData.append('strTitle', strTitle);
