@@ -45,7 +45,7 @@
         <cfargument name = "strLastName" required="true" type="string">
         <cfargument name = "strGender" required="true" type="string">
         <cfargument name = "strDate" required="true" type="string">
-        <cfargument name = "filePhoto" required="true" type="any">
+        <cfargument name = "filePhoto" required="false" type="any">
         <cfargument name = "strAddress" required="true" type="string">
         <cfargument name = "strStreet" required="true" type="string">
         <cfargument name = "strEmailId" required="true" type="string">
@@ -53,29 +53,31 @@
         <cfargument name = "intPinCode" required="true" type="string">
         <cfargument name = "hobbies" required="true" type="string">
         <cfset local.hobbiesArray=ListToArray(arguments.hobbies,',')>
+
         <cfset local.path = ExpandPath("../assets/UploadImages/")>
         <cffile action="upload" destination="#local.path#" nameConflict="MakeUnique" filefield="filePhoto">
         <cfset local.profile = cffile.serverFile>
-        <cfif arguments.intContactId GT 0> 
-            <cfquery name="updatePage" result="updatePageResult">
-                update contact 
-                set title=<cfqueryparam value="#arguments.strTitle#" cfsqltype="cf_sql_varchar">,
-                firstName=<cfqueryparam value="#arguments.strFirstName#" cfsqltype="cf_sql_varchar">,
-                lastName=<cfqueryparam value="#arguments.strLastName#" cfsqltype="cf_sql_varchar">,
-                gender=<cfqueryparam value="#arguments.strGender#" cfsqltype="cf_sql_varchar">,
-                dob=<cfqueryparam value="#arguments.strDate#" cfsqltype="cf_sql_date">,
-                photo=<cfqueryparam value="#local.profile#" cfsqltype="cf_sql_varchar">,
-                address=<cfqueryparam value="#arguments.strAddress#" cfsqltype="cf_sql_varchar">,
-                street=<cfqueryparam value="#arguments.strStreet#" cfsqltype="cf_sql_varchar">,
-                email=<cfqueryparam value="#arguments.strEmailId#" cfsqltype="cf_sql_varchar">,
-                userId=<cfqueryparam value="#session.intUid#" cfsqltype="cf_sql_integer">,
-                pincode=<cfqueryparam value="#arguments.intPinCode#" cfsqltype="cf_sql_integer">,
-                phone=<cfqueryparam value="#arguments.intPhoneNumber#" cfsqltype="cf_sql_varchar">
-                where contactId=<cfqueryparam value="#arguments.intContactId#" cfsqltype="cf_sql_integer">
+        <cfif arguments.intContactId GT 0>
+            <cfquery name="updateContact" >
+                UPDATE contact 
+                SET 
+                    title = <cfqueryparam value="#arguments.strTitle#" cfsqltype="cf_sql_varchar">,
+                    firstName = <cfqueryparam value="#arguments.strFirstName#" cfsqltype="cf_sql_varchar">,
+                    lastName = <cfqueryparam value="#arguments.strLastName#" cfsqltype="cf_sql_varchar">,
+                    gender = <cfqueryparam value="#arguments.strGender#" cfsqltype="cf_sql_varchar">,
+                    dob = <cfqueryparam value="#arguments.strDate#" cfsqltype="cf_sql_date">,
+                    photo = <cfqueryparam value="#local.profile#" cfsqltype="cf_sql_varchar">,
+                    address = <cfqueryparam value="#arguments.strAddress#" cfsqltype="cf_sql_varchar">,
+                    street = <cfqueryparam value="#arguments.strStreet#" cfsqltype="cf_sql_varchar">,
+                    email = <cfqueryparam value="#arguments.strEmailId#" cfsqltype="cf_sql_varchar">,
+                    userId = <cfqueryparam value="#session.intUid#" cfsqltype="cf_sql_integer">,
+                    pincode = <cfqueryparam value="#arguments.intPinCode#" cfsqltype="cf_sql_integer">,
+                    phone = <cfqueryparam value="#arguments.intPhoneNumber#" cfsqltype="cf_sql_varchar">
+                WHERE 
+                    contactId = <cfqueryparam value="#arguments.intContactId#" cfsqltype="cf_sql_integer">
             </cfquery>
-            
 
-            <cfquery name="getExistingHobbies" datasource="DESKTOP-89AF345">
+            <cfquery name="getExistingHobbies" >
                 select hobbyId
                 from hobbies
                 where contactId = <cfqueryparam value="#arguments.intContactId#" cfsqltype="cf_sql_integer">
@@ -86,59 +88,52 @@
                 <cfset arrayAppend(existingHobbyIds, getExistingHobbies.hobbyId)>
             </cfloop>
 
-            <cfif arrayLen(local.hobbiesArray) GT 0>
-                <cfloop index="i" from="1" to="#arrayLen(local.hobbiesArray)#">
-                        <cfquery name="getHobbyId" result="getHobbyIdResult" datasource="DESKTOP-89AF345">
-                            DECLARE @hobbyId INT;
-                            IF EXISTS (SELECT 1 FROM hobbyTable WHERE hobbyName = <cfqueryparam value="#local.hobbiesArray[i]#" cfsqltype="cf_sql_varchar">)
-                            BEGIN
-                                SELECT @hobbyId = hobbyId FROM hobbyTable WHERE hobbyName = <cfqueryparam value="#local.hobbiesArray[i]#" cfsqltype="cf_sql_varchar">;
-                            END
-                            ELSE
-                            BEGIN
-                                INSERT INTO hobbyTable (hobbyName)
-                                VALUES (<cfqueryparam value="#local.hobbiesArray[i]#" cfsqltype="cf_sql_varchar">);
-                                SELECT @hobbyId = SCOPE_IDENTITY();
-                            END
-                            SELECT @hobbyId AS hobbyId;
+            <cfset hobbyIdsToKeep = []>
 
-                        </cfquery>
-                        
-                        <cfif isDefined("getHobbyId.hobbyId") AND isNumeric(getHobbyId.hobbyId)>
-                        
-                            <cfif not arrayFind(existingHobbyIds, getHobbyId.hobbyId)>
-                                <cfquery name="saveHobbies" result="saveHobbiesResult" datasource="DESKTOP-89AF345">
-                                    INSERT INTO hobbies (contactId, hobbyId)
-                                    VALUES (
-                                        <cfqueryparam value="#arguments.intContactId#" cfsqltype="cf_sql_integer">,
-                                        <cfqueryparam value="#getHobbyId.hobbyId#" cfsqltype="cf_sql_integer">
-                                    );
-                                </cfquery>
-                            </cfif>
+            <cfloop index="i" from="1" to="#arrayLen(local.hobbiesArray)#">
+                <cfset hobbyName = trim(local.hobbiesArray[i])>
+                <cfif len(hobbyName)>
+                    <cfquery name="getHobbyId" result="getHobbyIdResult" >
+                        DECLARE @hobbyId INT;
+                        IF EXISTS (SELECT 1 FROM hobbyTable WHERE hobbyName = <cfqueryparam value="#local.hobbiesArray[i]#" cfsqltype="cf_sql_varchar">)
+                        BEGIN
+                            SELECT @hobbyId = hobbyId FROM hobbyTable WHERE hobbyName = <cfqueryparam value="#local.hobbiesArray[i]#" cfsqltype="cf_sql_varchar">;
+                        END
+                        ELSE
+                        BEGIN
+                            INSERT INTO hobbyTable (hobbyName)
+                            VALUES (<cfqueryparam value="#local.hobbiesArray[i]#" cfsqltype="cf_sql_varchar">);
+                            SELECT @hobbyId = SCOPE_IDENTITY();
+                        END
+                        SELECT @hobbyId AS hobbyId;
+                    </cfquery>
+
+                    <cfif isDefined("getHobbyId.hobbyId") AND isNumeric(getHobbyId.hobbyId)>
+                        <cfset arrayAppend(hobbyIdsToKeep, getHobbyId.hobbyId)>
+                        <cfif not arrayFind(existingHobbyIds, getHobbyId.hobbyId)>
+                            <cfquery name="saveHobbies" >
+                                INSERT INTO hobbies (contactId, hobbyId)
+                                VALUES (
+                                    <cfqueryparam value="#arguments.intContactId#" cfsqltype="cf_sql_integer">,
+                                    <cfqueryparam value="#getHobbyId.hobbyId#" cfsqltype="cf_sql_integer">
+                                );
+                            </cfquery>
+
                         </cfif>
-                </cfloop>
-            </cfif>
-            
-
-            <cfquery name="getExistingHobbies" datasource="DESKTOP-89AF345">
-                SELECT hobbyId
-                FROM hobbies
-                WHERE contactId = <cfqueryparam value="#arguments.intContactId#" cfsqltype="cf_sql_integer">
-            </cfquery>
-            <cfset existingHobbyIds = []>
-            <cfloop query="getExistingHobbies">
-                <cfset arrayAppend(existingHobbyIds, getExistingHobbies.hobbyId)>
+                    </cfif>
+                </cfif>
             </cfloop>
             <cfif arrayLen(existingHobbyIds)>
-                <cfquery name="deleteHobbies" datasource="DESKTOP-89AF345">
+                <cfquery name="deleteHobbies" result="blah">
                     DELETE FROM hobbies
                     WHERE 
                         contactId = <cfqueryparam value="#arguments.intContactId#" cfsqltype="cf_sql_integer">
-                        AND hobbyId NOT IN (<cfqueryparam value="#ArrayToList(existingHobbyIds)#" cfsqltype="cf_sql_integer" list="true">)
+                        AND hobbyId NOT IN (<cfqueryparam value="#ArrayToList(hobbyIdsToKeep)#" cfsqltype="cf_sql_integer" list="true">)
                 </cfquery>
-                <cfreturn {"success":"edited"}>
             </cfif>
-            <cfreturn {"success":"edited"}>    
+
+            <cfreturn {"success": "edited"}>
+
         <cfelse>
             <cfquery name="newContact" result="newContactResult" datasource="DESKTOP-89AF345">
                 INSERT INTO contact (title, firstName, lastName, gender, dob, photo, address, street, email, phone, userId, pincode)
@@ -320,11 +315,16 @@
                         <cfset local.newContactId = excelResult.generatedKey>
                         <cfif arrayLen(local.hobbiesArray) GT 0>
                             <cfloop index="i" from="1" to="#arrayLen(local.hobbiesArray)#">
+                                <cfquery name="qryGetHobbyId">
+                                    select hobbyId 
+                                    from hobbyTable
+                                    where hobbyName=<cfqueryparam value="#local.hobbiesArray[i]#" cfsqltype="cf_sql_varchar">
+                                </cfquery>
                                 <cfquery name="saveHobbies">
-                                    insert into hobbies(contactId,hobby)
+                                    insert into hobbies(contactId,hobbyId)
                                     values(
                                         <cfqueryparam value="#local.newContactId#" cfsqltype="cf_sql_integer">,
-                                        <cfqueryparam value="#local.hobbiesArray[i]#" cfsqltype="cf_sql_varchar">
+                                        <cfqueryparam value="#qryGetHobbyId.hobbyId#" cfsqltype="cf_sql_varchar">
                                     )
                                 </cfquery>
                             </cfloop>
@@ -337,22 +337,18 @@
     </cffunction>
    
     <cffunction name="getContactDetails" access="remote" returnFormat="json">
+    
         <cfargument  name="intContactId" required="true">
-        <cfquery name="getHobbies">
-            select hobby 
-            from hobbies
-            where contactId=<cfqueryparam value="#arguments.intContactId#" cfsqltype="cf_sql_integer">
-        </cfquery>
-        <cfset local.viewHobbies = "">
-        <cfloop query="#getHobbies#">
-            <cfset local.viewHobbies &= getHobbies.hobby&" ">
-        </cfloop>
         <cfquery name="forDisplay" datasource="DESKTOP-89AF345">
-            select concat(title,'.',firstName,' ',lastName) as name,gender,dob,concat(address,', ',street) as address,pincode,email,phone ,photo 
-            from contact
-            where contactId=<cfqueryparam value="#arguments.intContactId#" cfsqltype="cf_sql_integer">
+            select concat(c.title,'.',c.firstName,' ',c.lastName) as name,c.gender,c.dob,concat(c.address,', ',c.street) as address,c.pincode,c.email,c.phone ,c.photo ,STRING_AGG(ht.hobbyName, ',') 
+            AS Hobby 
+            from hobbies h
+            inner join contact c ON h.contactId = c.contactId
+            inner join hobbyTable ht ON h.hobbyId = ht.hobbyId
+            where c.contactId = <cfqueryparam value="#arguments.intContactId#" cfsqltype="cf_sql_integer">
+            group by c.title,c.firstName,c.lastName,c.address,c.gender,c.street,c.dob,c.pincode,c.email,c.phone ,c.photo,c.photo 
         </cfquery>
-        <cfreturn {"success":true,"name":forDisplay.name,"gender":forDisplay.gender,"dob":forDisplay.dob,"address":forDisplay.address,"pincode":forDisplay.pincode,"email":forDisplay.email,"phone":forDisplay.phone,"photo":forDisplay.photo,"hobbies":local.viewHobbies}>
+        <cfreturn {"success":true,"name":forDisplay.name,"gender":forDisplay.gender,"dob":forDisplay.dob,"address":forDisplay.address,"pincode":forDisplay.pincode,"email":forDisplay.email,"phone":forDisplay.phone,"photo":forDisplay.photo,"hobbies":forDisplay.Hobby}>
     </cffunction>
 
     <cffunction name="getEditContactDetails" access="remote" returnFormat="json">

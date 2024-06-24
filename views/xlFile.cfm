@@ -12,12 +12,15 @@
                 <cfset local.address = contact.getaddress() & ", " & contact.getstreet()>
                 <cfset local.pincode = contact.getpincode()>
                 <cfset local.photo = contact.getphoto()>
-                <cfset local.hobby = EntityLoad("ormHobbies", { contact = contact})>
                 <cfset local.addHobby=''>
-                <cfif arrayLen(local.hobby)>
-                    <cfloop array="#local.hobby#" index="local.hobby">
-                        <cfset local.addHobby &= local.hobby.gethobby()&','>
+                
+                <cfset hobbies = EntityLoad("ormHobbies", { contact = contact })>
+                <cfif arrayLen(hobbies)>
+                    <cfloop array="#hobbies#" index="hobbie">
+                    <cfset hobbyList = EntityLoadByPK("ormHobbyTable", hobbie.gethobbyId())>
+                    <cfset local.addHobby &= hobbyList.gethobbyName()&','>
                     </cfloop>
+                <cfelse>
                 </cfif>
                 <cfset queryAddRow(excelQuery, 1)>
                 <cfset querySetCell(excelQuery, "Fullname", local.fullName)>
