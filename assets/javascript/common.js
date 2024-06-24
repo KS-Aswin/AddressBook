@@ -78,7 +78,7 @@ $(document).ready(function () {
         if (hobbies.length > 0) {
             $('.select-box').text(hobbies.join(', '));
         } else {
-            $('.select-box').text('');
+            $('.select-box').text('Select Hobbies');
         }
     }
 
@@ -108,9 +108,19 @@ $(document).ready(function () {
         var strEmailId = $('#strEmailId').val().trim();
         var intPinCode = $('#intPinCode').val().trim();
         var hobbies = [];
-        $('#optionsList option.selected').each(function() {
-            hobbies.push($(this).val());
-        });
+
+        if(intContactId == 0){
+            $('#optionsList option.selected').each(function() {
+                hobbies.push($(this).val());
+            });
+            if(hobbies.length==0)
+                hobbies='No Hobbies';
+        }else{
+            $('#optionsList option.selected').each(function() {
+                hobbies.push($(this).val());
+            });
+            
+        }
         var formData = new FormData();
         formData.append('intContactId', intContactId);
         formData.append('strTitle', strTitle);
@@ -173,7 +183,11 @@ $(document).ready(function () {
                     $('#pincode').html(response.pincode);
                     $('#email').html(response.email);
                     $('#phone').html(response.phone);
-                    $('#hobbie').html(response.hobbies);
+                    if(response.hobbies=="" || response.hobbies=="Select Hobbies"){
+                        $('#hobbie').html("No Hobbies");
+                    }else{
+                        $('#hobbie').html(response.hobbies);
+                    }
                     $('.modalImg').attr('src', '../assets/UploadImages/' + response.photo);
                 }
             },
@@ -230,9 +244,9 @@ $(document).ready(function () {
                         $('#intPinCode').prop("value", response.pincode);
                         $('.modalImg').attr('src', '../assets/UploadImages/' + response.photo);
                         if(response.hobbies ==""){
-                            $('.select-box').html("Select Options");
+                            $('.select-box').html("Select Hobbies");
                         }else{
-                            $('.select-box').html(response.hobbies);
+                            $('.select-box').text(response.hobbies);
                         }
                         $('#heading').html("EDIT CONTACT");
                         $('#formSubmit').html("SAVE");
@@ -331,7 +345,6 @@ $(document).ready(function () {
     });
     let params = {};
     params={"http://book.local":"list"};
-    //params={"http://book.local/views":"listPage"};
     let regex = /([^&=]+)=([^&]*)/g, m;
 
     while ((m = regex.exec(location.href)) !== null) {

@@ -38,9 +38,9 @@
                                             <cfset hobbies = EntityLoad("ormHobbies", { contact = contact })>
                                             <cfif arrayLen(hobbies)>
                                                 <cfloop array="#hobbies#" index="hobbie">
-                                                    #hobbie.gethobby()#,
+                                                    <cfset hobbyList = EntityLoadByPK("ormHobbyTable", hobbie.gethobbyId())>
+                                                    #hobbyList.gethobbyName()#,
                                                 </cfloop>
-                                            <cfelse>
                                             </cfif>
                                         </th>
                                     </tr>

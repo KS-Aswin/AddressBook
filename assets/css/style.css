@@ -386,8 +386,9 @@ th {
     width: 200px;
 }
 .hobbieDropdown .select-box {
-    width: 100%;
-    border: 1px solid #8f8c8c;
+    width: 168px;
+    border: 1px solid #8f8c8c;    
+    line-break: anywhere;
     padding: 5px 10px;
     font-size: 13px;
     cursor: pointer;
