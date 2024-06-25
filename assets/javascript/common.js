@@ -1,4 +1,31 @@
 $(document).ready(function () {
+    //$('#hobbyList').find('option').remove();
+    $.ajax({
+        type: "POST",
+        url: "../models/saveDetails.cfc?method=getHobbies",
+        dataType: "json",
+        success: function(response) {
+            console.log(response)  ;  
+            if (response.DATA || response.DATA.length > 0) {
+                for (var i = 0; i < response.DATA.length; i++) {
+                    var hobbyId = response.DATA[i][0];
+                    var hobbyName = response.DATA[i][1];
+                    optionValue=hobbyId;
+                    optionText=hobbyName;
+                    if(optionText!='No Hobbies'){
+                        let optionHTML = `<option value="${optionValue}"> ${optionText} </option>`;
+                        $('#hobbyList').append(optionHTML);
+                    }
+                }
+            }
+        },
+    
+        error: function(xhr, status, error) {
+            console.error('Error fetching hobbies:', status, error);
+        }
+    });
+
+
     $('#logInBtn').click(function () {
         $("#loginMsg").text("");
         var errorMsg = "";
@@ -70,29 +97,6 @@ $(document).ready(function () {
         return false;
     });
 
-    function updateSelectBox() {
-        var hobbies = [];
-        $('#optionsList option.selected').each(function() {
-            hobbies.push($(this).text());
-        });
-        if (hobbies.length > 0) {
-            $('.select-box').text(hobbies.join(', '));
-        } else {
-            $('.select-box').text('Select Hobbies');
-        }
-    }
-
-    $('.hobbieDropdown .select-box').click(function() {
-        $(this).toggleClass('active');
-        $('#optionsList').toggle();
-    });
-
-    $('#optionsList').on('click', 'option', function(event) {
-        event.preventDefault();
-        $(this).toggleClass('selected');
-        this.selected = $(this).hasClass('selected');
-        updateSelectBox();
-    });
 
     $('#formSubmit').click(function () {
         var intContactId = $('#intContactId').val().trim();
@@ -107,20 +111,7 @@ $(document).ready(function () {
         var intPhoneNumber = $('#intPhoneNumber').val().trim();
         var strEmailId = $('#strEmailId').val().trim();
         var intPinCode = $('#intPinCode').val().trim();
-        var hobbies = [];
-
-        if(intContactId == 0){
-            $('#optionsList option.selected').each(function() {
-                hobbies.push($(this).val());
-            });
-            if(hobbies.length==0)
-                hobbies='No Hobbies';
-        }else{
-            $('#optionsList option.selected').each(function() {
-                hobbies.push($(this).val());
-            });
-            
-        }
+        var hobbies = $("#hobbyList").val();
         var formData = new FormData();
         formData.append('intContactId', intContactId);
         formData.append('strTitle', strTitle);
@@ -243,11 +234,10 @@ $(document).ready(function () {
                         $('#strEmailId').prop("value", response.email);
                         $('#intPinCode').prop("value", response.pincode);
                         $('.modalImg').attr('src', '../assets/UploadImages/' + response.photo);
-                        if(response.hobbies ==""){
-                            $('.select-box').html("Select Hobbies");
-                        }else{
-                            $('.select-box').text(response.hobbies);
-                        }
+                        var hobbyValues=response.hobbyId;
+                        $.each(hobbyValues.split(","), function(i,e){
+                            $("#hobbyList option[value='" + e + "']").prop("selected", true);
+                        });
                         $('#heading').html("EDIT CONTACT");
                         $('#formSubmit').html("SAVE");
                     }
@@ -475,7 +465,6 @@ function contactValidation() {
     var strLastName = $('#strLastName').val().trim();
     var strGender = $('#strGender').val().trim();
     var strDate = $('#strDate').val().trim();
-    var filePhoto = $('#strUploadFile').val().trim();
     var strAddress = DOMPurify.sanitize($('#strAddress').val().trim());
     var strStreet = DOMPurify.sanitize($('#strStreet').val().trim());
     var intPhoneNumber = $('#intPhoneNumber').val().trim();
@@ -492,7 +481,7 @@ function contactValidation() {
     var regexWithoutCountryCode = /^\d{10}$/;
     var errorMsg = "";
     $("#addMsg").text("");
-    if (strTitle == "" || strFirstName == "" || strLastName == "" || strGender == "" || strDate == "" || filePhoto == "" || strAddress == "" || strStreet == "" || intPhoneNumber == "" || strEmailId == "" || intPinCode == "") {
+    if (strTitle == "" || strFirstName == "" || strLastName == "" || strGender == "" || strDate == ""  || strAddress == "" || strStreet == "" || intPhoneNumber == "" || strEmailId == "" || intPinCode == "") {
         errorMsg += "Please enter values in all fields!" + "<br>";
     } else {
         if (strFirstName.length >= 2 && strFirstName.length <= 50) {

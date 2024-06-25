@@ -91,7 +91,7 @@
                                                     <input type="text" id="strDate" name="strDate" value="">
                                                 </div>
                                             </div>
-                                            <div class="d-flex gap-3">
+                                            <div class="d-flex gap-3 " id="imgDisplay">
                                                 <div class="d-flex flex-column ">                                            
                                                     <label class="fs-7" for="strUploadFile" id="formPhoto">Upload Photo*</label>
                                                     <input type="file" id="strUploadFile" src="" name="strUploadFile" value="" accept=".png,.jpg,.jpeg,.webp,image/png">
@@ -127,17 +127,9 @@
                                                 <input type="text" id="intPinCode" name="intPinCode" value="">
                                             </div>
                                             <div class="addressInput d-flex flex-column">
-                                                <label for="hobbies" id="formFobbies">Hobbies</label>
-                                                <div class="hobbieDropdown" id="hobbies">
-                                                    <div class="select-box">Select Hobbies</div>
-                                                    <select id="optionsList" multiple>
-                                                        <option value="Cricket">Cricket</option>
-                                                        <option value="Football">Football</option>
-                                                        <option value="Singing">Singing</option>
-                                                        <option value="Dancing">Dancing</option>
-                                                        <option value="Drawing">Drawing</option>
-                                                    </select>
-                                                </div>
+                                                <label for="hobbyList">Hobbies</label>
+                                                <select multiple id="hobbyList" class="hobbyStyle">
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="d-flex flex-column mt-3 align-items-start justify-content-start gap-2">

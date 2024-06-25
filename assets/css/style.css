@@ -381,37 +381,23 @@ th {
     background: #165994;
 }
 
-.hobbieDropdown {
-    position: relative;
-    width: 200px;
-}
-.hobbieDropdown .select-box {
+
+#hobbyList {
     width: 168px;
+    max-height: 200px;
     border: 1px solid #8f8c8c;    
     line-break: anywhere;
-    padding: 5px 10px;
+    padding: 5px 0;
     font-size: 13px;
     cursor: pointer;
     background-color: #fff;
 }
-.hobbieDropdown .select-box.active {
-    border-bottom: none;
+#hobbyList option{
+    padding: 5px 11px;
+    margin: 3px 5px;
 }
-.hobbieDropdown select {
-    display: none;
-    position: absolute;
-    background-color: #fff;
-    width: 100%;
-    max-height: 150px;
-    border-top: 1px solid #8f8c8c;
-}
-.hobbieDropdown select option {
-    padding: 5px 10px;
-    font-size: 12px;
-    cursor: pointer;
-    border-top: 1px solid #fff;
-}
-.hobbieDropdown .selected {
+
+ option .selected {
     background-color: #337AB7;
     color: #fff;
 }
