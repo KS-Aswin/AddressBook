@@ -304,21 +304,16 @@
             FROM hobbyTable
             ORDER BY hobbyName
         </cfquery>
-        <cfset hobbyIds = []>
-        <cfset hobbyNames = []>
+        
+        <cfset options = []>
         
         <cfloop query="hobbyTable">
-            <cfset arrayAppend(hobbyIds, hobbyTable.hobbyId)>
-            <cfset arrayAppend(hobbyNames, hobbyTable.hobbyName)>
+            <cfset arrayAppend(options, '<option value="#hobbyTable.hobbyId#">#hobbyTable.hobbyName#</option>')>
         </cfloop>
         
-        <cfset hobbiesData = {
-            "hobbyIds": hobbyIds,
-            "hobbyNames": hobbyNames
-        }>
-        
-        <cfreturn serializeJSON(hobbiesData)>
+        <cfreturn serializeJSON(arrayToList(options))>
     </cffunction>
+
 
     <cffunction name="getEditContactDetails" access="remote" returnFormat="json">
         <cfargument  name="intContactId" required="true">
