@@ -14,7 +14,7 @@
     <script src="../assets/javascript/bootstrap-select.min.js"></script> 
     <script src="../assets/javascript/jquery-3.6.0.min.js"></script>  
     <script src="../assets/javascript/jspdf.umd.min.js"></script> 
-    <script src="../assets/javascript/purify.min.js.js"></script> 
+    <script src="../assets/javascript/purify.min.js"></script> 
     <script src="../assets/javascript/jquery-ui.js"></script> 
     <script src="../assets/javascript/common.js"></script> 
 </head>

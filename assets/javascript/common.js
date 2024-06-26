@@ -4,21 +4,12 @@ $(document).ready(function () {
         url: "../models/saveDetails.cfc?method=getHobbies",
         dataType: "json",
         success: function(response) {
-            if (response.hobbyIds.length === response.hobbyNames.length) {
-                $('#hobbyList').empty();
-                for (var i = 0; i < response.hobbyIds.length; i++) {
-                    var hobbyId = response.hobbyIds[i];
-                    var hobbyName = response.hobbyNames[i];
-                    if (hobbyName && hobbyId) {
-                        $('#hobbyList').append(`<option value="${hobbyId}">${hobbyName}</option>`);
-                    }
-                }
-            }
+            $('#hobbyList').empty().append(response);
         },
         error: function(xhr, status, error) {
             console.error('Error fetching hobbies:', status, error);
         }
-    });
+    });  
 
     $('#logInBtn').click(function () {
         $("#loginMsg").text("");
