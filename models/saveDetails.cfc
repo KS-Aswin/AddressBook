@@ -184,6 +184,7 @@
         <cfspreadsheet action="read" src="#local.FilePath#" query="spreadsheetData" headerrow="1"> 
         <cfset local.excelHead = getMetaData(spreadsheetData)>
         <cfset local.excelColumnNames = []>
+        
         <cfloop index="i" from="1" to="#arrayLen(local.excelHead)#">
             <cfset columnhead = local.excelHead[i].name>
             <cfset arrayAppend(local.excelColumnNames, columnhead)>
