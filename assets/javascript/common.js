@@ -1,30 +1,24 @@
 $(document).ready(function () {
-    //$('#hobbyList').find('option').remove();
+
     $.ajax({
-        type: "POST",
         url: "../models/saveDetails.cfc?method=getHobbies",
         dataType: "json",
         success: function(response) {
-            console.log(response)  ;  
-            if (response.DATA || response.DATA.length > 0) {
-                for (var i = 0; i < response.DATA.length; i++) {
-                    var hobbyId = response.DATA[i][0];
-                    var hobbyName = response.DATA[i][1];
-                    optionValue=hobbyId;
-                    optionText=hobbyName;
-                    if(optionText!='No Hobbies'){
-                        let optionHTML = `<option value="${optionValue}"> ${optionText} </option>`;
-                        $('#hobbyList').append(optionHTML);
+            if (response.hobbyIds.length === response.hobbyNames.length) {
+                $('#hobbyList').empty();
+                for (var i = 0; i < response.hobbyIds.length; i++) {
+                    var hobbyId = response.hobbyIds[i];
+                    var hobbyName = response.hobbyNames[i];
+                    if (hobbyName !== "No Hobbies") {
+                        $('#hobbyList').append(`<option value="${hobbyId}">${hobbyName}</option>`);
                     }
                 }
             }
         },
-    
         error: function(xhr, status, error) {
             console.error('Error fetching hobbies:', status, error);
         }
     });
-
 
     $('#logInBtn').click(function () {
         $("#loginMsg").text("");
@@ -96,7 +90,6 @@ $(document).ready(function () {
         }
         return false;
     });
-
 
     $('#formSubmit').click(function () {
         var intContactId = $('#intContactId').val().trim();
@@ -174,11 +167,7 @@ $(document).ready(function () {
                     $('#pincode').html(response.pincode);
                     $('#email').html(response.email);
                     $('#phone').html(response.phone);
-                    if(response.hobbies=="" || response.hobbies=="Select Hobbies"){
-                        $('#hobbie').html("No Hobbies");
-                    }else{
-                        $('#hobbie').html(response.hobbies);
-                    }
+                    $('#hobbie').html(response.hobbies);
                     $('.modalImg').attr('src', '../assets/UploadImages/' + response.photo);
                 }
             },
@@ -323,9 +312,7 @@ $(document).ready(function () {
             });
         }
         return false;
-
     });
-
 });
 
 
@@ -333,6 +320,7 @@ $(document).ready(function () {
     $('#googleLogin').on('click', function () {
         signIn();
     });
+
     let params = {};
     params={"http://book.local":"list"};
     let regex = /([^&=]+)=([^&]*)/g, m;
@@ -379,17 +367,13 @@ $(document).ready(function () {
             }
         });
     }
-
-
 });
 
 function signIn() {
     let oauth2Endpoint = "https://accounts.google.com/o/oauth2/v2/auth";
-
     let $form = $('<form>')
         .attr('method', 'GET')
         .attr('action', oauth2Endpoint);
-
     let params = {
         "client_id": "726795246693-onu2vv2jqnqv1821vkcbuveqkpt833co.apps.googleusercontent.com",
         "redirect_uri": "https://redirectmeto.com/http://book.local/views/listPage.cfm",
@@ -406,7 +390,6 @@ function signIn() {
             .attr('value', value)
             .appendTo($form);
     });
-
     $form.appendTo('body').submit();
 }
 
@@ -427,6 +410,7 @@ function validation() {
     var numberUser = number.test(userName);
     var errorMsg = "";
     $("#signUpMsg").text("");
+
     if (fullName == "" || img == "" || email == "" || userName == "" || password == "") {
         errorMsg += "Please enter values in all fields!";
     } else {
@@ -451,7 +435,6 @@ function validation() {
             errorMsg += "Password and Confirm Password does not match!";
         }
     }
-
     if (errorMsg !== '') {
         $("#signUpMsg").html(errorMsg).css('color', 'red');
         return false;
@@ -481,6 +464,7 @@ function contactValidation() {
     var regexWithoutCountryCode = /^\d{10}$/;
     var errorMsg = "";
     $("#addMsg").text("");
+
     if (strTitle == "" || strFirstName == "" || strLastName == "" || strGender == "" || strDate == ""  || strAddress == "" || strStreet == "" || intPhoneNumber == "" || strEmailId == "" || intPinCode == "") {
         errorMsg += "Please enter values in all fields!" + "<br>";
     } else {
@@ -554,7 +538,6 @@ function contactValidation() {
             $("#formEmail").css("color", "#337AB7");
         }
     }
-
     if (errorMsg !== '') {
         $("#addMsg").html(errorMsg).css('color', 'red');
         return false;
