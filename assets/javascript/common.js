@@ -9,7 +9,7 @@ $(document).ready(function () {
                 for (var i = 0; i < response.hobbyIds.length; i++) {
                     var hobbyId = response.hobbyIds[i];
                     var hobbyName = response.hobbyNames[i];
-                    if (hobbyName !== "No Hobbies") {
+                    if (hobbyName && hobbyId) {
                         $('#hobbyList').append(`<option value="${hobbyId}">${hobbyName}</option>`);
                     }
                 }
