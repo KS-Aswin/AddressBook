@@ -105,10 +105,10 @@ component{
     remote any function excelDetails(excelFile) returnFormat="JSON"{
         local.objExcel = createObject("component","models.saveDetails");
         local.checkExcelDetails = local.objExcel.checkExcelContactExists(excelFile = excelFile);
-        if(local.checkExcelDetails.success == "added"){  
-            return {"result":"added"};
-        }else if(local.checkExcelDetails.success == "exist"){
-            return {"result":"exist"};
+        if(local.checkExcelDetails.success == "success"){  
+            return {"result":true};
+        }else { 
+            return {"result":false};
         }
     } 
 

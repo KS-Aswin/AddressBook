@@ -20,10 +20,14 @@
                     <div class="modal-dialog modal-lg p-1">
                         <form action="" method="post" id="myFormExcel" enctype="multipart/form-data">
                             <div class="modal-content d-flex flex-column p-5">
-                                <div class="d-flex align-items-center justify-content-center addMsgStyle p-2">
+                                <div class="d-flex align-items-center justify-content-between addMsgStyle p-2">
                                     <h6 class="mb-0" id="excelMsg"><b></b></h6>
+                                    <div>
+                                        <button type="button" id="btnXlValue" class="btn btn-primary m-0">Template with data</button>
+                                        <button type="button" id="btnXlWithoutValue" class="btn btn-success m-0">Plain Template</button>
+                                    </div>
                                 </div>
-                                <div class="personalContact">
+                                <div class="personalContact w-100">
                                     <h4 class="mb-0">Upload Excel File</h4>
                                 </div>
                                 <div class="d-flex flex-column mt-3 gap-1">

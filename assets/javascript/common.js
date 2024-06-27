@@ -82,6 +82,14 @@ $(document).ready(function () {
         return false;
     });
 
+    $('#btnXlValue').click(function () {
+        window.location.href = 'xlWithData.cfm';
+    });  
+
+    $('#btnXlWithoutValue').click(function () {
+        window.location.href = 'xlWithoutData.cfm';
+    }); 
+
     $('#formSubmit').click(function () {
         var intContactId = $('#intContactId').val().trim();
         var strTitle = $('#strTitle').val().trim();
@@ -291,10 +299,10 @@ $(document).ready(function () {
                 processData: false,
                 dataType: "json",
                 success: function (response) {
-                    if (response.result == "added") {
-                        window.location.href = "../views/listPage.cfm";
-                    } else if (response.result == "exist") {
-                        $("#excelMsg").html("Contact with same Email ID already Existing").css('color', 'red');
+                    if (response.result == true) {
+                        window.location.href = "../views/resultUpload.cfm";
+                    }else {
+                        $("#excelMsg").html("Excel Upload Failed!").css('color', 'red');
                     }
                 },
                 error: function (xhr, status, error) {
