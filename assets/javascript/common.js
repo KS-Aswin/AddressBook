@@ -192,6 +192,7 @@ $(document).ready(function () {
     $('#formExcelClose').click(function (e) {
 		e.preventDefault();
 		$("#myFormExcel").get(0).reset();
+        window.location.href = "list";
 	});
 
     $('.editBtn').click(function () {
