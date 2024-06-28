@@ -250,65 +250,65 @@
                     </cfif>
                 </cfloop>
                 <cfif local.count NEQ 0>
-                    <cfset local.errorMsg &=','&'Invalid Hobbies'>
+                    <cfset local.errorMsg &='Invalid Hobbies'&', '>
                 </cfif>
 
                 <cfif len(trim(local.title)) EQ 0 and len(trim(local.firstName)) EQ 0 and len(trim(local.lastName)) EQ 0 and len(trim(local.gender)) EQ 0 and len(trim(local.dob)) EQ 0 and len(trim(local.photo)) EQ 0 and len(trim(local.address)) EQ 0 and len(trim(local.street)) EQ 0 and len(trim(local.email)) EQ 0 and len(trim(local.phone)) EQ 0 and len(trim(local.pincode)) EQ 0 and len(trim(local.hobbies)) EQ 0 >
-                    <cfset local.errorMsg &= "All fields are empty">
+                    <cfset local.errorMsg &= "All fields are empty"&', '>
                 <cfelse>
                     <cfif len(trim(local.title)) EQ 0>
-                        <cfset local.errorMsg &= "Title Missing ,">
+                        <cfset local.errorMsg &= "Title Missing"&', '>
                     </cfif>
 
                     <cfif len(trim(local.firstName)) EQ 0>
-                        <cfset local.errorMsg &= "FirstName Missing ,">
+                        <cfset local.errorMsg &= "FirstName Missing"&', '>
                     </cfif>
 
                     <cfif len(trim(local.lastName)) EQ 0>
-                        <cfset local.errorMsg &= "LastName Missing ,">
+                        <cfset local.errorMsg &= "LastName Missing"&', '>
                     </cfif>
 
                     <cfif len(trim(local.gender)) EQ 0>
-                        <cfset local.errorMsg &= "Gender Missing ,">
+                        <cfset local.errorMsg &= "Gender Missing"&', '>
                     </cfif>
 
                     <cfif len(trim(local.dob)) EQ 0>
-                        <cfset local.errorMsg &= "DOB Missing ,">
+                        <cfset local.errorMsg &= "DOB Missing"&', '>
                     <cfelse>
                         <cfif NOT isDate(local.dob)>
-                            <cfset local.errorMsg &= "Invalid DOB ,">
+                            <cfset local.errorMsg &= "Invalid DOB"&', '>
                         </cfif>
                     </cfif>
 
                     <cfif len(trim(local.photo)) EQ 0>
-                        <cfset local.errorMsg &= "Photo Missing ,">
+                        <cfset local.errorMsg &= "Photo Missing"&', '>
                     </cfif>
 
                     <cfif len(trim(local.address)) EQ 0>
-                        <cfset local.errorMsg &= "Street Missing ,">
+                        <cfset local.errorMsg &= "Street Missing"&', '>
                     </cfif>
 
                     <cfif len(trim(local.email)) EQ 0>
-                        <cfset local.errorMsg &= "Email Missing ,">
+                        <cfset local.errorMsg &= "Email Missing"&', '>
                     <cfelse>
                         <cfif len(trim(local.email)) AND NOT isValid("email", local.email)>
-                            <cfset local.errorMsg &= "Invalid Email ,">
+                            <cfset local.errorMsg &= "Invalid Email"&', '>
                         </cfif>
                     </cfif>
 
                     <cfif len(trim(local.phone)) EQ 0>
-                        <cfset local.errorMsg &= "Phone Missing ,">
+                        <cfset local.errorMsg &= "Phone Missing"&', '>
                     <cfelse>
                         <cfif len(trim(local.phone)) AND (NOT isNumeric(local.phone) OR len(trim(local.phone)) NEQ 10)>
-                            <cfset local.errorMsg &= "Invalid Phone ,">
+                            <cfset local.errorMsg &= "Invalid Phone"&', '>
                         </cfif>
                     </cfif>
 
                     <cfif len(trim(local.pincode)) EQ 0>
-                        <cfset local.errorMsg &= "Pincode Missing ,">
+                        <cfset local.errorMsg &= "Pincode Missing"&', '>
                     <cfelse>
                         <cfif len(trim(local.pincode)) AND (NOT isNumeric(local.pincode) OR len(trim(local.pincode)) NEQ 6)>
-                            <cfset local.errorMsg &= "Invalid Pincode ,">
+                            <cfset local.errorMsg &= "Invalid Pincode"&', '>
                         </cfif>
                     </cfif>
                 </cfif>
@@ -368,6 +368,24 @@
                                     </cfquery>
                                 </cfloop>
                             </cfif>
+                            <cfquery name="insertResult" result="resultInsert">
+                        insert into resultTable(Title,FirstName,LastName,Gender,DOB,Photo,Address,street,Email,userId,pincode,Phone,Result)
+                            values(
+                                <cfqueryparam value="#spreadsheetData.Title#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#spreadsheetData.FirstName#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#spreadsheetData.LastName#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#spreadsheetData.Gender#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#spreadsheetData.DOB#" cfsqltype="cf_sql_date">,
+                                <cfqueryparam value="#spreadsheetData.Photo#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#spreadsheetData.Address#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#spreadsheetData.Street#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#spreadsheetData.Email#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#session.intUid#" cfsqltype="cf_sql_integer">,
+                                <cfqueryparam value="#spreadsheetData.Pincode#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#spreadsheetData.Phone#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="Added" cfsqltype="cf_sql_varchar">
+                            )
+                    </cfquery>
                         </cfif>
                     <cfelse>
                         <cfquery name="getContactId">
@@ -441,6 +459,24 @@
                                 where contactId = <cfqueryparam value="#getContactId.contactId#" cfsqltype="cf_sql_integer">
                             </cfquery>
                         </cfif>
+                        <cfquery name="insertResult" result="resultInsert">
+                        insert into resultTable(Title,FirstName,LastName,Gender,DOB,Photo,Address,street,Email,userId,pincode,Phone,Result)
+                            values(
+                                <cfqueryparam value="#spreadsheetData.Title#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#spreadsheetData.FirstName#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#spreadsheetData.LastName#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#spreadsheetData.Gender#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#spreadsheetData.DOB#" cfsqltype="cf_sql_date">,
+                                <cfqueryparam value="#spreadsheetData.Photo#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#spreadsheetData.Address#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#spreadsheetData.Street#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#spreadsheetData.Email#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#session.intUid#" cfsqltype="cf_sql_integer">,
+                                <cfqueryparam value="#spreadsheetData.Pincode#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="#spreadsheetData.Phone#" cfsqltype="cf_sql_varchar">,
+                                <cfqueryparam value="Updated" cfsqltype="cf_sql_varchar">
+                            )
+                    </cfquery>
                     </cfif>
                 <cfelse>
                     <cfset local.result = local.errorMsg>
