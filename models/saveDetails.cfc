@@ -219,8 +219,6 @@
                 where userId=<cfqueryparam value="#session.intUid#" cfsqltype="cf_sql_integer">
             </cfquery>
 
-            
-
             <cfloop query="#spreadsheetData#">
                 <cfset local.title = spreadsheetData.Title> 
                 <cfset local.firstName = spreadsheetData.FirstName> 
@@ -243,18 +241,13 @@
                     select hobbyName
                     from hobbyTable
                 </cfquery>
-
-                <cfquery name='checkContact'>
-                    select contactId 
-                    from contact
-                    where email=<cfqueryparam value="#spreadsheetData.Email#" cfsqltype="cf_sql_varchar">
-                    AND userId=<cfqueryparam value="#session.intUid#" cfsqltype="cf_sql_integer">
-                </cfquery>
                     
                 <cfset local.hobbyList=valueList(hobbyList.hobbyName)>
+
                 <cfset local.count = 0>
                 <cfset local.hobbyIdArray = []>
-                <cfloop list="#local.hobbyIdList#" index="hobby">
+
+                <cfloop list="#spreadsheetData.Hobbies#" index="hobby">
                     <cfif NOT ListFind(local.hobbyList, hobby)>
                         <cfset local.count+=1>
                     <cfelse>
@@ -332,6 +325,13 @@
                 </cfif>
                 
                 <cfif len(local.errorMsg) EQ 0>
+                
+                    <cfquery name='checkContact'>
+                        select contactId 
+                        from contact
+                        where email=<cfqueryparam value="#spreadsheetData.Email#" cfsqltype="cf_sql_varchar">
+                        AND userId=<cfqueryparam value="#session.intUid#" cfsqltype="cf_sql_integer">
+                    </cfquery>
 
                     <cfset local.hobbyArray=ListToArray(spreadsheetData.Hobbies,',')>
 
@@ -360,59 +360,21 @@
                                     <cfqueryparam value="#spreadsheetData.Pincode#" cfsqltype="cf_sql_varchar">
                                 )
                             </cfquery>
-
                             <cfset local.id = insertExcelResult.generatedKey>
-                            
                             <cfif arrayLen(local.hobbyIdArray) GT 0>
                                 <cfloop index="i" from="1" to="#arrayLen(local.hobbyIdArray)#">
-                                    <cfquery name="saveHobby" result="qryAddHobby">
+                                    <cfquery name="saveHobby" result="hhhhh">
                                         insert into hobbies(contactId,hobbyId)
                                         values(
                                             <cfqueryparam value="#local.id#" cfsqltype="cf_sql_integer">,
-                                            <cfqueryparam value="#hobbyListId.hobbyId#" cfsqltype="cf_sql_integer">
+                                            <cfqueryparam value="#local.hobbyIdArray[i]#" cfsqltype="cf_sql_integer">
                                         )
                                     </cfquery>
                                 </cfloop>
                             </cfif>
-                            <cfquery name="insertResult" result="resultInsert">
-                                insert into resultTable(Title,FirstName,LastName,Gender,DOB,Photo,Address,street,Email,userId,pincode,Phone,Hobbies,Result)
-                                values(
-                                    <cfqueryparam value="#spreadsheetData.Title#" cfsqltype="cf_sql_varchar">,
-                                    <cfqueryparam value="#spreadsheetData.FirstName#" cfsqltype="cf_sql_varchar">,
-                                    <cfqueryparam value="#spreadsheetData.LastName#" cfsqltype="cf_sql_varchar">,
-                                    <cfqueryparam value="#spreadsheetData.Gender#" cfsqltype="cf_sql_varchar">,
-                                    <cfqueryparam value="#spreadsheetData.DOB#" cfsqltype="cf_sql_date">,
-                                    <cfqueryparam value="#spreadsheetData.Photo#" cfsqltype="cf_sql_varchar">,
-                                    <cfqueryparam value="#spreadsheetData.Address#" cfsqltype="cf_sql_varchar">,
-                                    <cfqueryparam value="#spreadsheetData.Street#" cfsqltype="cf_sql_varchar">,
-                                    <cfqueryparam value="#spreadsheetData.Email#" cfsqltype="cf_sql_varchar">,
-                                    <cfqueryparam value="#session.intUid#" cfsqltype="cf_sql_integer">,
-                                    <cfqueryparam value="#spreadsheetData.Pincode#" cfsqltype="cf_sql_varchar">,
-                                    <cfqueryparam value="#spreadsheetData.Phone#" cfsqltype="cf_sql_varchar">,
-                                    <cfqueryparam value="#spreadsheetData.Hobbies#" cfsqltype="cf_sql_varchar">,
-                                    <cfqueryparam value="Added" cfsqltype="cf_sql_varchar">
-                                )
-                            </cfquery>
+                            <cfset local.errorMsg &= "Added">
                         <cfelse>
-                            <cfquery name="insertResult" result="resultInsert">
-                                insert into resultTable(Title,FirstName,LastName,Gender,DOB,Photo,Address,street,Email,userId,pincode,Phone,Hobbies,Result)
-                                values(
-                                    <cfqueryparam value="#spreadsheetData.Title#" cfsqltype="cf_sql_varchar">,
-                                    <cfqueryparam value="#spreadsheetData.FirstName#" cfsqltype="cf_sql_varchar">,
-                                    <cfqueryparam value="#spreadsheetData.LastName#" cfsqltype="cf_sql_varchar">,
-                                    <cfqueryparam value="#spreadsheetData.Gender#" cfsqltype="cf_sql_varchar">,
-                                    <cfqueryparam value="#spreadsheetData.DOB#" cfsqltype="cf_sql_date">,
-                                    <cfqueryparam value="#spreadsheetData.Photo#" cfsqltype="cf_sql_varchar">,
-                                    <cfqueryparam value="#spreadsheetData.Address#" cfsqltype="cf_sql_varchar">,
-                                    <cfqueryparam value="#spreadsheetData.Street#" cfsqltype="cf_sql_varchar">,
-                                    <cfqueryparam value="#spreadsheetData.Email#" cfsqltype="cf_sql_varchar">,
-                                    <cfqueryparam value="#session.intUid#" cfsqltype="cf_sql_integer">,
-                                    <cfqueryparam value="#spreadsheetData.Pincode#" cfsqltype="cf_sql_varchar">,
-                                    <cfqueryparam value="#spreadsheetData.Phone#" cfsqltype="cf_sql_varchar">,
-                                    <cfqueryparam value="#spreadsheetData.Hobbies#" cfsqltype="cf_sql_varchar">,
-                                    <cfqueryparam value="Failed(Same email for contact and user)" cfsqltype="cf_sql_varchar">
-                                )
-                            </cfquery>
+                            <cfset local.errorMsg &= "Failed(Same email for contact and user)">
                         </cfif>
                     <cfelse>
                         <cfquery name="updateContact" result="updateContactResult">
@@ -432,19 +394,23 @@
                             where 
                                 contactId = <cfqueryparam value="#checkContact.contactId#" cfsqltype="cf_sql_varchar">
                         </cfquery>
-
                         <cfif arrayLen(local.hobbyIdArray) GT 0>
 
-                            <cfset local.hobbyList = listToArray(valueList(hobbyListId.hobbyId))>
+                            <cfquery name="hobbyIdList">
+                                select hobbyId
+                                from hobbies
+                                where contactId=<cfqueryparam value="#checkContact.contactId#" cfsqltype="cf_sql_varchar">
+                            </cfquery>
+                        
+                            <cfset local.hobbyList = listToArray(valueList(hobbyIdList.hobbyId))>
 
                             <cfloop array="#local.hobbyIdArray#" index="hobby">
                                 <cfif NOT arrayFind(local.hobbyList, hobby)>
-                                    
                                     <cfquery name="insertHobby">
                                         insert into hobbies(contactId,hobbyId)
                                             values(
                                                 <cfqueryparam value="#checkContact.contactId#" cfsqltype="cf_sql_integer">,
-                                                <cfqueryparam value="#hobbyListId.hobbyId#" cfsqltype="cf_sql_integer">
+                                                <cfqueryparam value="#hobby#" cfsqltype="cf_sql_integer">
                                             )
                                     </cfquery>
                                 </cfif>
@@ -453,12 +419,8 @@
                                 delete from hobbies
                                 where contactId =  <cfqueryparam value="#checkContact.contactId#" cfsqltype="cf_sql_integer">
                                 and hobbyId NOT IN (
-                                    select hobbyId 
-                                    from hobbyTable
-                                    where hobbyName in(
-                                        <cfqueryparam value="#ArrayToList(local.hobbyArray)#" cfsqltype="cf_sql_varchar" list="true">
-                                        )
-                                    );
+                                    <cfqueryparam value="#ArrayToList(local.hobbyIdArray)#" cfsqltype="cf_sql_integer" list="true">
+                                );
                             </cfquery>      
                         <cfelse>
                             <cfquery name="deleteHobby">
@@ -466,49 +428,31 @@
                                 where contactId = <cfqueryparam value="#checkContact.contactId#" cfsqltype="cf_sql_integer">
                             </cfquery>
                         </cfif>
-                        <cfquery name="insertResult" result="resultInsert">
-                            insert into resultTable(Title,FirstName,LastName,Gender,DOB,Photo,Address,street,Email,userId,pincode,Phone,Hobbies,Result)
-                            values(
-                                <cfqueryparam value="#spreadsheetData.Title#" cfsqltype="cf_sql_varchar">,
-                                <cfqueryparam value="#spreadsheetData.FirstName#" cfsqltype="cf_sql_varchar">,
-                                <cfqueryparam value="#spreadsheetData.LastName#" cfsqltype="cf_sql_varchar">,
-                                <cfqueryparam value="#spreadsheetData.Gender#" cfsqltype="cf_sql_varchar">,
-                                <cfqueryparam value="#spreadsheetData.DOB#" cfsqltype="cf_sql_date">,
-                                <cfqueryparam value="#spreadsheetData.Photo#" cfsqltype="cf_sql_varchar">,
-                                <cfqueryparam value="#spreadsheetData.Address#" cfsqltype="cf_sql_varchar">,
-                                <cfqueryparam value="#spreadsheetData.Street#" cfsqltype="cf_sql_varchar">,
-                                <cfqueryparam value="#spreadsheetData.Email#" cfsqltype="cf_sql_varchar">,
-                                <cfqueryparam value="#session.intUid#" cfsqltype="cf_sql_integer">,
-                                <cfqueryparam value="#spreadsheetData.Pincode#" cfsqltype="cf_sql_varchar">,
-                                <cfqueryparam value="#spreadsheetData.Phone#" cfsqltype="cf_sql_varchar">,
-                                <cfqueryparam value="#spreadsheetData.Hobbies#" cfsqltype="cf_sql_varchar">,
-                                <cfqueryparam value="Updated" cfsqltype="cf_sql_varchar">
-                            )
-                        </cfquery>
+                        <cfset local.errorMsg &= "Updated">
                     </cfif>
-                <cfelse>
-                    <cfset local.result = local.errorMsg>
-                    <cfquery name="insertResult" result="resultInsert">
-                        insert into resultTable(Title,FirstName,LastName,Gender,DOB,Photo,Address,street,Email,userId,pincode,Phone,Hobbies,Result)
-                            values(
-                                <cfqueryparam value="#spreadsheetData.Title#" cfsqltype="cf_sql_varchar">,
-                                <cfqueryparam value="#spreadsheetData.FirstName#" cfsqltype="cf_sql_varchar">,
-                                <cfqueryparam value="#spreadsheetData.LastName#" cfsqltype="cf_sql_varchar">,
-                                <cfqueryparam value="#spreadsheetData.Gender#" cfsqltype="cf_sql_varchar">,
-                                <cfqueryparam value="#spreadsheetData.DOB#" cfsqltype="cf_sql_date">,
-                                <cfqueryparam value="#spreadsheetData.Photo#" cfsqltype="cf_sql_varchar">,
-                                <cfqueryparam value="#spreadsheetData.Address#" cfsqltype="cf_sql_varchar">,
-                                <cfqueryparam value="#spreadsheetData.Street#" cfsqltype="cf_sql_varchar">,
-                                <cfqueryparam value="#spreadsheetData.Email#" cfsqltype="cf_sql_varchar">,
-                                <cfqueryparam value="#session.intUid#" cfsqltype="cf_sql_integer">,
-                                <cfqueryparam value="#spreadsheetData.Pincode#" cfsqltype="cf_sql_varchar">,
-                                <cfqueryparam value="#spreadsheetData.Phone#" cfsqltype="cf_sql_varchar">,
-                                <cfqueryparam value="#spreadsheetData.Hobbies#" cfsqltype="cf_sql_varchar">,
-                                <cfqueryparam value="#local.errorMsg#" cfsqltype="cf_sql_varchar">
-                            )
-                    </cfquery>
                 </cfif> 
+                <cfset local.result = local.errorMsg>
+                <cfquery name="insertResult" result="resultInsert">
+                    insert into resultTable(Title,FirstName,LastName,Gender,DOB,Photo,Address,street,Email,userId,pincode,Phone,Hobbies,Result)
+                        values(
+                            <cfqueryparam value="#spreadsheetData.Title#" cfsqltype="cf_sql_varchar">,
+                            <cfqueryparam value="#spreadsheetData.FirstName#" cfsqltype="cf_sql_varchar">,
+                            <cfqueryparam value="#spreadsheetData.LastName#" cfsqltype="cf_sql_varchar">,
+                            <cfqueryparam value="#spreadsheetData.Gender#" cfsqltype="cf_sql_varchar">,
+                            <cfqueryparam value="#spreadsheetData.DOB#" cfsqltype="cf_sql_date">,
+                            <cfqueryparam value="#spreadsheetData.Photo#" cfsqltype="cf_sql_varchar">,
+                            <cfqueryparam value="#spreadsheetData.Address#" cfsqltype="cf_sql_varchar">,
+                            <cfqueryparam value="#spreadsheetData.Street#" cfsqltype="cf_sql_varchar">,
+                            <cfqueryparam value="#spreadsheetData.Email#" cfsqltype="cf_sql_varchar">,
+                            <cfqueryparam value="#session.intUid#" cfsqltype="cf_sql_integer">,
+                            <cfqueryparam value="#spreadsheetData.Pincode#" cfsqltype="cf_sql_varchar">,
+                            <cfqueryparam value="#spreadsheetData.Phone#" cfsqltype="cf_sql_varchar">,
+                            <cfqueryparam value="#spreadsheetData.Hobbies#" cfsqltype="cf_sql_varchar">,
+                            <cfqueryparam value="#local.errorMsg#" cfsqltype="cf_sql_varchar">
+                        )
+                </cfquery>
             </cfloop>
+
             <cfreturn {"success":"success"}>         
         </cfif>
     </cffunction>
