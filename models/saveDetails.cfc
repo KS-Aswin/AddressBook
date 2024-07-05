@@ -179,7 +179,6 @@
         <cfargument name = "excelFile" required="true" type="any">
 
         <cfset local.FileUploadPath=Expandpath("../assets/excelUpload/")>
-        <cfset local.ResultFilePath = Expandpath("../assets/excelResult/")>
 
         <cffile action="upload" destination="#local.FileUploadPath#" nameConflict="MakeUnique">
         <cfset local.fileName=cffile.serverFile>
@@ -213,11 +212,7 @@
         <cfset local.ListRemoveDuplicate=(ListRemoveDuplicates(local.allHeader,",",true))>
         <cfif (ListLen(local.dbColumnNames) EQ ListLen(local.ListRemoveDuplicate)) AND (ListLen(local.dbColumnNames) EQ ListLen(trim(local.excelColumnNames)))>        
             <cfspreadsheet action="read" src="#local.FilePath#" query="spreadsheetData" headerrow='1' rows='2-50'>
-            
-            <cfquery name="deleteFromResult">
-                delete from resultTable
-                where userId=<cfqueryparam value="#session.intUid#" cfsqltype="cf_sql_integer">
-            </cfquery>
+            <cfset local.excelSheetRow = []>
 
             <cfloop query="#spreadsheetData#">
                 <cfset local.title = spreadsheetData.Title> 
@@ -431,27 +426,50 @@
                         <cfset local.errorMsg &= "Updated">
                     </cfif>
                 </cfif> 
-                <cfset local.result = local.errorMsg>
-                <cfquery name="insertResult" result="resultInsert">
-                    insert into resultTable(Title,FirstName,LastName,Gender,DOB,Photo,Address,street,Email,userId,pincode,Phone,Hobbies,Result)
-                        values(
-                            <cfqueryparam value="#spreadsheetData.Title#" cfsqltype="cf_sql_varchar">,
-                            <cfqueryparam value="#spreadsheetData.FirstName#" cfsqltype="cf_sql_varchar">,
-                            <cfqueryparam value="#spreadsheetData.LastName#" cfsqltype="cf_sql_varchar">,
-                            <cfqueryparam value="#spreadsheetData.Gender#" cfsqltype="cf_sql_varchar">,
-                            <cfqueryparam value="#spreadsheetData.DOB#" cfsqltype="cf_sql_date">,
-                            <cfqueryparam value="#spreadsheetData.Photo#" cfsqltype="cf_sql_varchar">,
-                            <cfqueryparam value="#spreadsheetData.Address#" cfsqltype="cf_sql_varchar">,
-                            <cfqueryparam value="#spreadsheetData.Street#" cfsqltype="cf_sql_varchar">,
-                            <cfqueryparam value="#spreadsheetData.Email#" cfsqltype="cf_sql_varchar">,
-                            <cfqueryparam value="#session.intUid#" cfsqltype="cf_sql_integer">,
-                            <cfqueryparam value="#spreadsheetData.Pincode#" cfsqltype="cf_sql_varchar">,
-                            <cfqueryparam value="#spreadsheetData.Phone#" cfsqltype="cf_sql_varchar">,
-                            <cfqueryparam value="#spreadsheetData.Hobbies#" cfsqltype="cf_sql_varchar">,
-                            <cfqueryparam value="#local.errorMsg#" cfsqltype="cf_sql_varchar">
-                        )
-                </cfquery>
+
+                <cfset local.excelRowData = {
+                    "Title": spreadsheetData.Title,
+                    "FirstName": spreadsheetData.FirstName,
+                    "LastName": spreadsheetData.LastName,
+                    "Gender": spreadsheetData.Gender,
+                    "DOB": spreadsheetData.DOB,
+                    "Photo":spreadsheetData.Photo,
+                    "Address": spreadsheetData.Address,
+                    "Street": spreadsheetData.Street,
+                    "Email": spreadsheetData.Email,
+                    "Pincode": spreadsheetData.Pincode,
+                    "Phone":spreadsheetData.Phone,
+                    "Hobbies": spreadsheetData.Hobbies,
+                    "Result":local.errorMsg
+                }>
+                <cfset arrayAppend(local.excelSheetRow, local.excelRowData)>
+
             </cfloop>
+
+            <cfset local.excelResultPath = ExpandPath("../assets/excelResult/")>
+            <cfset local.excelSheet = spreadsheetNew("local.excelSheet")>
+            <cfset spreadsheetAddRow(local.excelSheet, "Title, First Name, Last Name, Gender, DOB, Photo, Address, Street, Email, Pincode, Phone, Hobbies, Result")>
+            <cfset local.rowValue = 2>
+            
+            <cfloop from="1" to="#arrayLen(local.excelSheetRow)#" index="i">
+                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].Title, local.rowValue, 1)>
+                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].FirstName, local.rowValue, 2)>
+                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].LastName, local.rowValue, 3)>
+                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].Gender, local.rowValue, 4)>
+                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].DOB, local.rowValue, 5)>
+                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].Photo, local.rowValue, 6)>
+                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].Address, local.rowValue, 7)>
+                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].Street, local.rowValue, 8)>
+                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].Email, local.rowValue, 9)>
+                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].Pincode, local.rowValue, 10)>
+                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].Phone, local.rowValue, 11)>
+                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].Hobbies, local.rowValue, 12)>
+                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].Result, local.rowValue, 13)>
+                <cfset local.rowValue = local.rowValue + 1>
+            </cfloop>
+        
+            <cfspreadsheet action ="write" filename="#local.excelResultPath#" name="local.excelSheet" overwrite="true">
+            <cfset session.excelResultSave = local.excelResultPath>
 
             <cfreturn {"success":"success"}>         
         </cfif>
