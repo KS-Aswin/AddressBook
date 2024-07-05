@@ -1,5 +1,10 @@
 <cfoutput>
     <cfif session.login>
+        <cfif structKeyExists(url,"fileName")>  
+            <cfset local.excelFileName="contactDetail">   
+        <cfelse>
+            <cfset local.excelFileName="Template_with_data">  
+        </cfif>
         <cfset contacts = EntityLoad("ormContactFunction",{userId="#session.intUid#"})>
         <cfset excelQuery = queryNew("Title,FirstName,LastName,Gender,DOB,Photo,Address,Street,Email,Pincode,Phone,Hobbies","varchar,varchar,varchar,varchar,date,varchar,varchar,varchar,varchar,integer,varchar,varchar")> 
         <cfloop array="#contacts#" index="contact">
@@ -22,7 +27,6 @@
                     <cfset hobbyList = EntityLoadByPK("ormHobbyTable", hobbie.gethobbyId())>
                     <cfset local.addHobby &=hobbyList.gethobbyName()&','>
                 </cfloop>
-            <cfelse>
             </cfif>
             <cfset queryAddRow(excelQuery, 1)>
             <cfset querySetCell(excelQuery, "Title", local.title)>
@@ -40,7 +44,7 @@
         </cfloop>
         <cfset excelPath = ExpandPath("./Template_with_data.xlsx")>
         <cfspreadsheet action="write" filename="#excelPath#" query="excelQuery" sheetname="contacts">
-        <cfheader name="Content-Disposition" value="attachment; filename=Template_with_data.xlsx">
+        <cfheader name="Content-Disposition" value="attachment; filename=#local.excelFileName#.xlsx">
         <cfcontent type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" file="#excelPath#" deleteFile="true">
     </cfif>
 </cfoutput>

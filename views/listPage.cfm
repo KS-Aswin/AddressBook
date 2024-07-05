@@ -6,7 +6,7 @@
         <div class="download d-flex align-items-center justify-content-center mb-4">
             <div class="downloadContainer d-flex align-items-center justify-content-end py-3 gap-4 pe-5">
                 <a href='pdfFile.cfm'><img src="../assets/images/pdf.png" class="downloadIcon" id="pdf" alt="pdf"></a>
-                 <a href='xlFile.cfm'><img src="../assets/images/xl.png" class="downloadIcon" id="xl" alt="xlsheet"></a>
+                <a href='views/xlWithData.cfm?fileName=contactDetail'><img src="../assets/images/xl.png" class="downloadIcon" id="xl" alt="xlsheet"></a>
                 <img src="../assets/images/print.png" class="downloadIcon pe-5" id="print" alt="print">
             </div>
         </div>

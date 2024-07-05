@@ -25,7 +25,7 @@ component
 		session.ssoImg = "";
 		session.sso = false;
         session.intUid = "";
-		session.excelResultSave = "";
+		session.resultFile="";
 	}
 
 	function onRequestStart( String scriptName ){
