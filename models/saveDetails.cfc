@@ -446,7 +446,6 @@
 
             </cfloop>
 
-            <cfset local.excelResultPath = ExpandPath("../assets/excelResult/")>
             <cfset local.excelSheet = spreadsheetNew("local.excelSheet")>
             <cfset spreadsheetAddRow(local.excelSheet, "Title, First Name, Last Name, Gender, DOB, Photo, Address, Street, Email, Pincode, Phone, Hobbies, Result")>
             <cfset local.rowValue = 2>
@@ -467,7 +466,11 @@
                 <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].Result, local.rowValue, 13)>
                 <cfset local.rowValue = local.rowValue + 1>
             </cfloop>
-        
+
+            <cfset local.currentTime = timeFormat(now(), "hhmmss,l")>
+            <cfset local.uniqueFilename = "excelDataResult_#local.currentTime#.xlsx">
+            <cfset local.excelResultPath = ExpandPath("../assets/#local.uniqueFilename#")>
+            
             <cfspreadsheet action ="write" filename="#local.excelResultPath#" name="local.excelSheet" overwrite="true">
             <cfset session.excelResultSave = local.excelResultPath>
 
