@@ -444,26 +444,40 @@
                 }>
                 <cfset arrayAppend(local.excelSheetRow, local.excelRowData)>
 
+                <cfset local.sortedExcelSheetRow = []>
+
+                <cfloop array="#local.excelSheetRow#" index="row">
+                    <cfif row.Result NEQ "Added" AND row.Result NEQ "Updated">
+                        <cfset arrayAppend(local.sortedExcelSheetRow, row)>
+                    </cfif>
+                </cfloop>
+
+                <cfloop array="#local.excelSheetRow#" index="row">
+                    <cfif row.Result EQ "Added" OR row.Result EQ "Updated">
+                        <cfset arrayAppend(local.sortedExcelSheetRow, row)>
+                    </cfif>
+                </cfloop>
+
             </cfloop>
 
             <cfset local.excelSheet = spreadsheetNew("local.excelSheet")>
             <cfset spreadsheetAddRow(local.excelSheet, "Title, First Name, Last Name, Gender, DOB, Photo, Address, Street, Email, Pincode, Phone, Hobbies, Result")>
             <cfset local.rowValue = 2>
             
-            <cfloop from="1" to="#arrayLen(local.excelSheetRow)#" index="i">
-                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].Title, local.rowValue, 1)>
-                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].FirstName, local.rowValue, 2)>
-                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].LastName, local.rowValue, 3)>
-                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].Gender, local.rowValue, 4)>
-                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].DOB, local.rowValue, 5)>
-                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].Photo, local.rowValue, 6)>
-                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].Address, local.rowValue, 7)>
-                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].Street, local.rowValue, 8)>
-                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].Email, local.rowValue, 9)>
-                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].Pincode, local.rowValue, 10)>
-                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].Phone, local.rowValue, 11)>
-                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].Hobbies, local.rowValue, 12)>
-                <cfset spreadsheetSetCellValue(local.excelSheet, local.excelSheetRow[i].Result, local.rowValue, 13)>
+            <cfloop array="#local.sortedExcelSheetRow#" index="rowData">
+                <cfset spreadsheetSetCellValue(local.excelSheet, rowData.Title, local.rowValue, 1)>
+                <cfset spreadsheetSetCellValue(local.excelSheet, rowData.FirstName, local.rowValue, 2)>
+                <cfset spreadsheetSetCellValue(local.excelSheet, rowData.LastName, local.rowValue, 3)>
+                <cfset spreadsheetSetCellValue(local.excelSheet, rowData.Gender, local.rowValue, 4)>
+                <cfset spreadsheetSetCellValue(local.excelSheet, rowData.DOB, local.rowValue, 5)>
+                <cfset spreadsheetSetCellValue(local.excelSheet, rowData.Photo, local.rowValue, 6)>
+                <cfset spreadsheetSetCellValue(local.excelSheet, rowData.Address, local.rowValue, 7)>
+                <cfset spreadsheetSetCellValue(local.excelSheet, rowData.Street, local.rowValue, 8)>
+                <cfset spreadsheetSetCellValue(local.excelSheet, rowData.Email, local.rowValue, 9)>
+                <cfset spreadsheetSetCellValue(local.excelSheet, rowData.Pincode, local.rowValue, 10)>
+                <cfset spreadsheetSetCellValue(local.excelSheet, rowData.Phone, local.rowValue, 11)>
+                <cfset spreadsheetSetCellValue(local.excelSheet, rowData.Hobbies, local.rowValue, 12)>
+                <cfset spreadsheetSetCellValue(local.excelSheet, rowData.Result, local.rowValue, 13)>
                 <cfset local.rowValue = local.rowValue + 1>
             </cfloop>
 
