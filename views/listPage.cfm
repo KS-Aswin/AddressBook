@@ -16,7 +16,7 @@
                 <h4 class="userName mb-0" id="nameSOS"><b>#session.strfullName#</b></h4>
                 <button type="button" id="createContactButton" class="createContact m-0 " data-bs-toggle="modal" data-bs-target="##myModal">CREATE CONTACT</button>
                 <button type="button" class="createExcelContact m-0  " data-bs-toggle="modal" data-bs-target="##excelModal">CREATE ACCOUNT USING EXCEL</button>
-                <div class="modal bd-example-modal-lg fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="excelModal">
+                <div class="modal bd-example-modal-lg fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true" id="excelModal">
                     <div class="modal-dialog modal-lg p-1">
                         <form action="" method="post" id="myFormExcel" enctype="multipart/form-data">
                             <div class="modal-content d-flex flex-column p-5">
@@ -44,7 +44,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="modal bd-example-modal-lg fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="myModal">
+                <div class="modal bd-example-modal-lg fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true" id="myModal">
                     <div class="modal-dialog modal-lg p-1">
                         <div class="modal-content d-flex ps-3 formBorder modalFullBody">
                             <div class="d-flex justify-content-between gap-3 ">
@@ -195,7 +195,7 @@
                                         <th><button type="button" class="listBtn tableBtn deleteBtn m-0" data-id="#variables.contactId#">DELETE</button></th>
                                         <th>
                                             <button type="button" class="listBtn tableBtn viewBtn m-0" data-id="#variables.contactId#" data-bs-toggle="modal" data-bs-target="##viewAccount">VIEW</button>
-                                            <div class="modal bd-example-modal-lg fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="viewAccount">
+                                            <div class="modal bd-example-modal-lg fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true" id="viewAccount">
                                                 <div class="modal-dialog modal-lg p-1">
                                                     <div class="modal-content d-flex ps-3 formBorder">
                                                         <div class="d-flex justify-content-between gap-3">
